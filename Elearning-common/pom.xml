@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.darod</groupId>
+    <artifactId>Elearning-common</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <name>Elearning-common</name>
+
+    <!-- 子模块的parent要使用顶层的父模块-->
+    <parent>
+        <groupId>org.darod</groupId>
+        <artifactId>Elearning</artifactId>
+        <version>0.0.3-SNAPSHOT</version>
+    </parent>
+
+    <dependencies>
+
+        <!--        <dependency>-->
+        <!--            <groupId>org.springframework.boot</groupId>-->
+        <!--            <artifactId>spring-boot-starter-test</artifactId>-->
+        <!--            <scope>test</scope>-->
+        <!--        </dependency>-->
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+        </dependency>
+
+        <!--新增后续dubbo项目中所需依赖，dubbo、zk。
+           父模块pom中使用dependencyManagement来管理依赖版本号，子模块pom中不需要再写版本号，exclusion也不需要-->
+
+
+        <!--        <dependency>-->
+        <!--            <groupId>com.101tec</groupId>-->
+        <!--            <artifactId>zkclient</artifactId>-->
+        <!--        </dependency>-->
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!--            <plugin>-->
+            <!--                <groupId>org.springframework.boot</groupId>-->
+            <!--                <artifactId>spring-boot-maven-plugin</artifactId>-->
+            <!--            </plugin>-->
+
+            <!--mybatis-generator插件-->
+            <plugin>
+                <groupId>org.mybatis.generator</groupId>
+                <artifactId>mybatis-generator-maven-plugin</artifactId>
+                <version>1.3.7</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.mybatis.generator</groupId>
+                        <artifactId>mybatis-generator-core</artifactId>
+                        <version>1.3.7</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>mysql</groupId>
+                        <artifactId>mysql-connector-java</artifactId>
+                        <version>8.0.16</version>
+                    </dependency>
+                </dependencies>
+                <executions>
+                    <execution>
+                        <id>mybatis generator</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <!--允许移动生成-->
+                    <verbose>true</verbose>
+                    <!--允许自动覆盖-->
+                    <overwrite>false</overwrite>
+                    <configurationFile>
+                        src/main/resources/mybatis-generator.xml
+                    </configurationFile>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
