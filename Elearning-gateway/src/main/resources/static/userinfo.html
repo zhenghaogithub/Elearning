@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/jquery.color-2.1.2.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="myjs/ajaxutils.js"></script>
+    <script type="text/javascript" src="myjs/base.js"></script>
+    <script type="text/javascript" src="myjs/userinfo.js"></script>
+    <script type="text/javascript" src="myjs/domobject.js"></script>
+
+    <!--    <script type="text/javascript" src="js/popper.min.js"></script>-->
+    <link rel="stylesheet" href="css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="css/bootstrap-reboot.css"/>
+    <link rel="stylesheet" href="css/bootstrap-grid.css"/>
+    <link rel="stylesheet" href="mycss/base.css">
+    <link rel="stylesheet" href="mycss/userinfo.css">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.1.0/css/bootstrap.min.css">-->
+    <!--    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>-->
+    <!--    <script src="https://cdn.staticfile.org/popper.js/1.12.5/umd/popper.min.js"></script>-->
+    <!--    <script src="https://cdn.staticfile.org/twitter-bootstrap/4.1.0/js/bootstrap.min.js"></script>-->
+
+</head>
+<body>
+<nav id="nav_bar" class="navbar navbar-expand-md bg-dark navbar-dark justify-content-center align-items-center">
+    <!-- Brand -->
+    <div class="d-flex  justify-content-center align-items-center flex-wrap" style="width: 95rem;margin: 0 auto">
+        <a class="navbar-brand my-auto" href="#" style="font-size: 1.8rem;font-weight: bold">
+            <!--            <img src="https://edu-image.nosdn.127.net/C0124E0336721FF65563B76A16A8143F.png?imageView&thumbnail=190y28&quality=100"-->
+            <!--                 alt="Logo">-->
+            <span class="glyphicon glyphicon-book" style="color: lawngreen"></span> Elearning
+        </a>
+
+        <!-- Toggler/collapsibe Button -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Navbar links -->
+        <div class="collapse navbar-collapse justify-content-between" id="collapsibleNavbar">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a href="#" class="nav-link">首页</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">所有课程</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">我的课程</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">直播课程</a>
+                </li>
+            </ul>
+        </div>
+        <div class="form-inline d-flex justify-content-center">
+            <input class="form-control " type="text" placeholder="搜索课程"/>
+            <button class="btn btn-primary" type="submit">搜索</button>
+        </div>
+        <div id="head_div" class="text-center d-flex justify-content-center align-items-center position-relative"
+             style="height: 45px;width: 130px;">
+            <div id="alarm_ico_div">
+                <a id="alarm_ico" href="#" class="p-1 m-2" style="font-size: 25px;position: relative">
+                    <span id="alarm_ico_word" class="glyphicon glyphicon-bell"></span>
+                    <span id="alarm_ico_count" style="color: white;text-decoration: none">99</span>
+                </a>
+            </div>
+            <img class="user_head_img" id="user_head" src="resources/test_head.png"
+                 style="width: 44px;height: 44px;border: 2px solid #343a40;cursor: pointer" alt="头像">
+            <!--用户菜单悬浮框-->
+            <div id="user_flex" class="card m-0" style="overflow: hidden;right: 0;top: 100%">
+                <div class="card-body d-flex justify-content-center flex-wrap">
+                    <div id="user_head_name" class="d-flex">
+                        <img class="user_head_img" alt="头像"/>
+                        <div class="ml-4">
+                            <h4 class="user_name_all" id="flex_user_name" style="font-size: 1.5rem"></h4>
+                            <span style="font-size: 13px;color: #6c757d">手机号:</span><span class="user_phone_all"
+                                                                                          id="flex_user_phone"
+                                                                                          style="font-size: 13px;color: #6c757d">13483813213</span>
+                        </div>
+                    </div>
+                    <div id="user_flex_btn_div" class="p-1 mt-2 d-flex flex-wrap justify-content-around">
+                        <a href="#" class="user_flex_btn">
+                            <span class="glyphicon glyphicon-book"></span>
+                            <span>&ensp;我的课程</span>
+                        </a>
+                        <a href="#" class="user_flex_btn">
+                            <span class="glyphicon glyphicon-list-alt"></span>
+                            <span>&ensp;订单管理</span>
+                        </a>
+                        <a href="#" class="user_flex_btn mt-2">
+                            <span class="glyphicon glyphicon-upload"></span>
+                            <span>&ensp;发布课程</span>
+                        </a>
+                        <a href="#" class="user_flex_btn mt-2">
+                            <span class="glyphicon glyphicon-cog "></span>
+                            <span>&ensp;个人设置</span>
+                        </a>
+                    </div>
+                    <button type="button" class="btn btn-primary mx-auto mt-1" style="border-radius: 100px;">开启直播
+                    </button>
+                    <button type="button" class="btn btn-danger mx-auto mt-1" style="border-radius: 100px;">注销登录
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</nav>
+<div id="back_img_div" class="d-flex" style="min-width: 95rem">
+    <div id="user_short_info_div" class="d-flex align-items-center">
+        <div class="p-2 ml-4">
+            <img class="user_head_img" id="user_big_head_img">
+        </div>
+        <div id="user_short_info" class="ml-3">
+            <h1 class="user_name user_name_all"></h1>
+            <p>
+                <span>普通用户</span>
+                <span>手机:<span class="user_phone_all"></span></span>
+            </p>
+            <p>签名:<span class="user_description_all">啥也没有</span></p>
+        </div>
+    </div>
+</div>
+<div id="main_div" class="d-flex">
+    <section class="d-flex" style="width: 95rem;margin: 0 auto">
+        <div id="user_slider_div" class="">
+            <ul style="list-style-type: none" class="p-0 mt-3 ml-5">
+                <li>
+                    <a id="courses_history_btn" href="#/user/courses_history" class="user_slider_btn active">
+                        <span class="glyphicon glyphicon-time"></span>
+                        <span>&ensp;浏览历史</span>
+                    </a>
+                </li>
+                <li>
+                    <a id="courses_info_btn" href="#/user/courses_info" class="user_slider_btn">
+                        <span class="glyphicon glyphicon-book"></span>
+                        <span>&ensp;参与课程</span>
+                    </a>
+                </li>
+                <li>
+                    <a id="courses_published_btn" href="#/user/courses_published" class="user_slider_btn">
+                        <span class="glyphicon glyphicon-cloud-upload"></span>
+                        <span>&ensp;发布课程</span>
+                    </a>
+                </li>
+                <li>
+                    <a id="order_info_btn" href="#/user/order_info" class="user_slider_btn">
+                        <span class="glyphicon glyphicon-list-alt"></span>
+                        <span>&ensp;订单管理</span>
+                    </a>
+                </li>
+                <li>
+                    <a id="user_info_btn" href="#/user/user_info" class="user_slider_btn">
+                        <span class="glyphicon glyphicon-user"></span>
+                        <span>&ensp;个人信息</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div id="tabs_div" class="d-flex w-100">
+            <div id="courses_history_page" class="tabs_content p-3 active">
+                <div class="reserved_div w-100 bg-dark border-bottom" style="height:3rem">
+                </div>
+                <div id="courses_history_box" class="d-flex p-3 w-auto my_box">
+                    <div class="courses_history_item  d-flex p-0  border-bottom justify-content-around">
+                        <img class="course_img"
+                             src="https://10.url.cn/qqcourse_logo_ng/ajNVdqHZLLC08B9HDxI6BrAyznCvqVuyYabPqAElDJrJlorKZy8iamBvsbHrJElh8yRvQt6nicaXc/356?tp=webp">
+                        <div class="course_info_desc p-3">
+                            <p>
+                                <strong class="course_name_label">ASP.NET-MVC网站开发【实战与技能详解】</strong>
+                                <span class="course_status">学习中</span>
+                            </p>
+                            <p>
+                                <!--                                <span class="learn_percent">进度:23%</span>-->
+                                <span class="ml-1">上次学到 : </span>
+                                <span class="last_chapter_label" style="color: #b9bbbe;">路由匹配原理分析与多个路由定义规范</span>
+                            </p>
+                        </div>
+                        <p class="start_time_label p-2"><span>添加时间 : </span><span
+                                style="color:#b9bbbe;">2019-06-11</span></p>
+                        <!--                        <p class="learn_time_label p-2"><span>学习总时长 : </span><span style="color: #b9bbbe;">23h</span>-->
+                        <!--                        </p>-->
+                        <div class="d-flex flex-wrap" style="width: 6rem">
+                            <button id="history_remuse_learn_btn" class="btn btn-primary my-1">继续学习</button>
+                            <button id="history_delete_course_btn" class="btn btn-danger my-1">删除课程</button>
+                        </div>
+                    </div>
+                </div>
+                <ul id="courses_history_pagination" class="pagination pagination-lg mx-auto " style="width: fit-content;">
+                    <li class="page-item"><a class="page-link" href="#">上一页</a></li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">下一页</a></li>
+                </ul>
+            </div>
+            <div id="courses_info_page" class="tabs_content p-3">
+                <div class="reserved_div w-100 bg-dark border-bottom" style="height:3rem">
+                </div>
+                <div id="courses_info_box" class="d-flex p-3 w-auto my_box">
+                    <div class="courses_info_item  d-flex p-0  border-bottom justify-content-around">
+                        <img class="course_img"
+                             src="https://10.url.cn/qqcourse_logo_ng/ajNVdqHZLLC08B9HDxI6BrAyznCvqVuyYabPqAElDJrJlorKZy8iamBvsbHrJElh8yRvQt6nicaXc/356?tp=webp">
+                        <div class="course_info_desc p-3">
+                            <p>
+                                <strong class="course_name_label">ASP.NET-MVC网站开发【实战与技能详解】</strong>
+                                <span class="course_status">学习中</span>
+                            </p>
+                            <p>
+<!--                                <span class="learn_percent">进度:23%</span>-->
+                                <span class="ml-1">上次学到 : </span>
+                                <span class="last_chapter_label" style="color: #b9bbbe;">路由匹配原理分析与多个路由定义规范</span>
+                            </p>
+                        </div>
+                        <p class="start_time_label p-2"><span>添加时间 : </span><span
+                                style="color:#b9bbbe;">2019-06-11</span></p>
+<!--                        <p class="learn_time_label p-2"><span>学习总时长 : </span><span style="color: #b9bbbe;">23h</span>-->
+<!--                        </p>-->
+                        <div class="d-flex flex-wrap" style="width: 6rem">
+                            <button id="remuse_learn_btn" class="btn btn-primary my-1">继续学习</button>
+                            <button id="delete_course_btn" class="btn btn-danger my-1">删除课程</button>
+                        </div>
+                    </div>
+                </div>
+                <ul id="courses_info_pagination" class="pagination pagination-lg mx-auto " style="width: fit-content;">
+                    <li class="page-item"><a class="page-link" href="#">上一页</a></li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">下一页</a></li>
+                </ul>
+            </div>
+
+            <div id="courses_published_page" class="tabs_content p-3">
+                <div class="reserved_div w-100 bg-dark border-bottom" style="height:3rem">
+                </div>
+                <div id="courses_published_box" class="d-flex p-3 w-auto  my_box">
+                    <div class="courses_published_item  d-flex p-0  border-bottom justify-content-around">
+                        <img class="course_img"
+                             src="https://10.url.cn/qqcourse_logo_ng/ajNVdqHZLLC08B9HDxI6BrAyznCvqVuyYabPqAElDJrJlorKZy8iamBvsbHrJElh8yRvQt6nicaXc/356?tp=webp">
+                        <div class="published_info_desc p-3">
+                            <p class="mb-2">
+                                <strong class="course_name_label">ASP.NET-MVC网站开发【实战与技能详解】</strong>
+                            </p>
+                            <div class="course_label_div mb-2">
+                                <span class="course_label label_first">后端开发</span>
+                                <span class="course_label label_second">网站搭建</span>
+                                <span class="course_label label_third">.net</span>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <span>课程状态 : <span class="course_state_open">开放中</span></span>
+                                <span>价格 : <span class="course_price">998.0元</span></span>
+                                <span>学习人数 : <span class="learn_count gray_font_color">30</span></span>
+                                <span>评论 : <span class="comment_count gray_font_color">56</span></span>
+                                <!--                                <span class="last_time_label">3 : 12</span>-->
+                            </div>
+                        </div>
+                        <p class="start_time_label p-2"><span>发布时间 : </span><span
+                                class="gray_font_color">2019-06-11</span></p>
+                        <div class="d-flex flex-wrap" style="width: 6rem">
+                            <button id="course_info_btn" class="btn btn-primary my-1">课程详细</button>
+                            <button id="withdraw_course_btn" class="btn btn-danger my-1">下架课程</button>
+                        </div>
+                    </div>
+                </div>
+                <ul id="courses_published_pagination" class="pagination pagination-lg mx-auto "
+                    style="width: fit-content;">
+                    <li class="page-item"><a class="page-link" href="#">上一页</a></li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">下一页</a></li>
+                </ul>
+            </div>
+
+            <div id="order_info_page" class="tabs_content p-3">
+                <div class="reserved_div w-100 bg-dark border-bottom" style="height:3rem">
+
+                </div>
+                <div id="order_info_box" class="d-flex p-3 w-auto  my_box">
+                    <div class="order_info_item  d-flex p-0  border-bottom justify-content-around">
+                        <img class="course_img"
+                             src="https://10.url.cn/qqcourse_logo_ng/ajNVdqHZLLC08B9HDxI6BrAyznCvqVuyYabPqAElDJrJlorKZy8iamBvsbHrJElh8yRvQt6nicaXc/356?tp=webp">
+                        <div class="order_info_desc p-3">
+                            <p>
+                                <strong class="course_name_label">ASP.NET-MVC网站开发【实战与技能详解】</strong>
+                            </p>
+                            <div class="d-flex justify-content-between">
+                                <span>订单号 : <span class="gray_font_color">2019061100001</span></span>
+                                <span>订单状态 : <span class="course_state_open">已支付</span></span>
+                                <span>价格 : <span class="course_price">998.0元</span></span>
+                            </div>
+                        </div>
+                        <p class="start_time_label p-2"><span>下单时间 : </span><span
+                                style="color:#b9bbbe;">2019-06-11</span></p>
+                        </p>
+                    </div>
+                </div>
+                <ul id="order_info_pagination" class="pagination pagination-lg mx-auto " style="width: fit-content;">
+                    <li class="page-item"><a class="page-link" href="#">上一页</a></li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">下一页</a></li>
+                </ul>
+            </div>
+            <div id="user_info_page" class="tabs_content p-3">
+                <div class="reserved_div w-100 bg-dark border-bottom  d-flex align-items-center justify-content-end"
+                     style="height:3rem">
+                    <div id="edit_user_info_div" class="mr-4" style="cursor: pointer;" data-toggle="modal"
+                         data-target="#edit_user_info_modal">
+                        <span id="edit_user_info_btn" class="glyphicon glyphicon-pencil"
+                              style="color: white;font-size: 1.3rem"> </span>
+                        <span style="color: white;font-size: 1.3rem">&ensp;编辑信息</span>
+                    </div>
+                    <div class="modal fade mx-auto my-auto" id="edit_user_info_modal">
+                        <div class="modal-dialog modal-dialog-centered" style="min-width: 40rem;">
+                            <!-- modal-dialog-centered 可以使模态框居中显示  设置宽度要在modal-dialog里指定min-width才有效 -->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">编辑信息</h4>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                </div>
+                                <div class="modal-body">
+                                    <div id="user_info_edit_div" class=" d-flex flex-wrap">
+                                        <span class="my_label badge badge-secondary mx-3">名称 :</span>
+                                        <input type="text" class="form-control d-inline"
+                                               id="user_name"
+                                               value="Darod" maxlength="30">
+                                        <span class="my_label badge badge-secondary mx-3">手机号 :</span>
+                                        <input type="number" class="form-control d-inline"
+                                               id="user_phone"
+                                               value="13483813213" maxlength="11"
+                                               oninput="if(value.length>11)value=value.slice(0,11)">
+                                        <span class="my_label badge badge-secondary mx-3">邮箱 :</span>
+                                        <input type="email" class="form-control d-inline"
+                                               id="user_email"
+                                               value="123456@abc.com">
+                                        <span class="my_label badge badge-secondary mx-3">年龄 :</span>
+                                        <input min="0" max="150" type="number" class="form-control d-inline"
+                                               id="user_age"
+                                               value="99" maxlength="3"
+                                               oninput="if(value>150)value=150;if(value<0)value=0;">
+                                        <span class="my_label badge badge-secondary mx-3">性别 :</span>
+                                        <select name="gender" type="text" class="form-control d-inline"
+                                                id="user_gender"
+                                                value="男">
+                                            <option>男</option>
+                                            <option>女</option>
+                                        </select>
+                                        <span class="my_label badge badge-secondary mx-3">简介 :</span>
+                                        <textarea id="user_introduction" class="form-control ml-3 mt-3" rows="5"
+                                                  style="resize: none" placeholder="未填写个人简介" maxlength="256"></textarea>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary" data-dismiss="modal">保存</button>
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="user_info_box" class="d-flex p-4  w-auto h-100 my_box">
+                    <div id="head_modify_div">
+                        <div id="head_modify_img_div">
+                            <img id="head_img_preview" src="resources/test_head.png">
+                        </div>
+                        <div class="d-flex justify-content-center mt-3">
+                            <button class="btn btn-primary mx-1" data-toggle="modal"
+                                    data-target="#edit_user_head_modal">修改头像
+                            </button>
+                            <button class="btn btn-danger mx-1">修改密码</button>
+
+                            <!-- 修改头像模态框 -->
+                            <div class="modal fade mx-auto my-auto" id="edit_user_head_modal">
+                                <div class="modal-dialog modal-dialog-centered" style="min-width: 40rem;">
+                                    <!-- modal-dialog-centered 可以使模态框居中显示  设置宽度要在modal-dialog里指定min-width才有效 -->
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title">修改头像</h4>
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        </div>
+                                        <div class="modal-body d-flex">
+                                            <div id="head_upload_preview_div">
+                                                <img id="preview_head_img" src="resources/test_head.png">
+                                            </div>
+                                            <div class="mx-auto my-auto">
+                                                <label id="upload_head_btn" for="id_avatar" class="p-2">选择图片</label>
+                                                <input type="file" id="id_avatar" name="file" style="display:none">
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button id="apply_head_btn" type="button" class="btn btn-primary">
+                                                应用
+                                            </button>
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-start justify-content-between flex-wrap mx-auto"
+                         style="width: 50rem">
+                        <span class="my_label badge badge-secondary mx-3">名称 :</span>
+                        <input type="text" class="form-control d-inline"
+                               id="user_name_label" disabled="disabled"
+                               value="Darod">
+                        <span class="my_label badge badge-secondary mx-3">用户ID :</span>
+                        <input type="text" class="form-control d-inline"
+                               id="user_id_label" disabled="disabled"
+                               value="12732314">
+                        <span class="my_label badge badge-secondary mx-3">手机号 :</span>
+                        <input type="text" class="form-control d-inline"
+                               id="user_phone_label" disabled="disabled"
+                               value="13483813213">
+                        <span class="my_label badge badge-secondary mx-3">邮箱 :</span>
+                        <input type="email" class="form-control d-inline"
+                               id="user_email_label" disabled="disabled"
+                               value="123456@abc.com">
+                        <span class="my_label badge badge-secondary mx-3">年龄 :</span>
+                        <input type="text" class="form-control d-inline"
+                               id="user_age_label" disabled="disabled"
+                               value="99">
+                        <span class="my_label badge badge-secondary mx-3">性别 :</span>
+                        <input type="text" class="form-control d-inline"
+                               id="user_gender_label" disabled="disabled"
+                               value="男">
+                        <span class="my_label badge badge-secondary mx-3">简介 :</span>
+                        <textarea id="user_introduction_label" class="form-control ml-3 mt-3" rows="5" id="comment"
+                                  disabled="disabled"
+                                  style="resize: none" placeholder="未填写个人简介"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<div id="footer_div" class=" mx-auto" style="color: white">
+    Copyright &copy; Elearning
+</div>
+
+<!--dummy-->
+<!--<div>-->
+<!--    &lt;!&ndash;弹出框&ndash;&gt;-->
+<!--    <div class="modal fade" id="myModal">-->
+<!--        <div class="modal-dialog modal-sm modal-dialog-centered">-->
+<!--            <div class="modal-content">-->
+<!--                <p class="text-center mb-0">-->
+<!--                    提交成功-->
+<!--                </p>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+
+</body>
+</html>

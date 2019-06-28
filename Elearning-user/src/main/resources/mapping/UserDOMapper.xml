@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.darod.elearning.common.dao.UserDOMapper">
+<!DOCTYPE org.darod.elearning.gateway.mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-org.darod.elearning.gateway.mapper.dtd">
+<org.darod.elearning.gateway.mapper namespace="org.darod.elearning.gateway.dao.UserDOMapper">
   <resultMap id="BaseResultMap" type="org.darod.elearning.common.dao.dataobject.UserDO">
     <!--
       WARNING - @mbg.generated
@@ -154,4 +154,4 @@
       third_party_id = #{thirdPartyId,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
-</mapper>
+</org.darod.elearning.gateway.mapper>

@@ -1,0 +1,154 @@
+
+#main_div {
+    width: 95rem;
+    margin: 0 auto;
+    background-color: white;
+    min-height: 10rem;
+    height: auto;
+}
+
+.center_div {
+    width: 85rem;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.swiper-container {
+    width: 85rem;
+    height: auto;
+    border: 2px solid #6c757d;
+    box-shadow: 0 0 5px 0 #b9bbbe;
+    border-radius: 5px;
+    padding: 3px;
+    /*padding: 5px;*/
+}
+
+.swiper-slide {
+    /*!* Center slide text vertically *!*/
+    /*display: -webkit-box;*/
+    /*display: -ms-flexbox;*/
+    /*display: -webkit-flex;*/
+    /*display: flex;*/
+    /*-webkit-box-pack: center;*/
+    /*-ms-flex-pack: center;*/
+    /*-webkit-justify-content: center;*/
+    /*justify-content: center;*/
+    /*-webkit-box-align: center;*/
+    /*-ms-flex-align: center;*/
+    /*-webkit-align-items: center;*/
+    /*align-items: center;*/
+}
+
+.swiper-slide > div {
+    text-align: center;
+    background: #fff;
+    box-shadow: 0 0 5px 0 #007bff;
+    display: block;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    height: 8rem;
+    border: 2px solid dodgerblue;
+}
+
+.chapter_info {
+    height: 5.8rem;
+    color: #b9bbbe;
+    padding: 3px;
+    font-size: 15px;
+    overflow: hidden;
+}
+
+.chapter_name_div {
+    height: 4.4rem;
+}
+
+.chapter_name {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3; /*截取到第三行*/
+    overflow: hidden;
+}
+
+.chapter_length {
+    height: 1rem;
+}
+
+#course_img {
+    width: 13rem;
+    height: 7rem;
+    border-radius: 5px;
+}
+
+#course_info_div {
+    width: 85rem;
+}
+
+.course_label {
+    background-color: white;
+    border-radius: 3px;
+    border-width: 1px;
+    border-style: solid;
+    margin-right: 15px;
+    padding: 3px;
+}
+
+.label_first {
+    border-color: dodgerblue;
+    color: dodgerblue;
+}
+
+.label_second {
+    border-color: limegreen;
+    color: limegreen;
+}
+
+.label_third {
+    border-color: red;
+    color: red;
+}
+
+.course_state_open {
+    color: limegreen;
+}
+
+.course_price {
+    color: red;
+}
+
+.gray_font_color {
+    color: #b9bbbe;
+}
+
+#course_desc_div {
+    width: 85rem;
+}
+
+.my_label {
+    width: 20%;
+    height: auto;
+    font-size: 1rem;
+    padding: 1rem;
+    margin: 0.5rem;
+}
+
+#course_info_edit_div > input, #chapter_info_add_div > input {
+    width: 70%;
+    margin: 0.5rem;
+}
+
+#course_info_edit_div > textarea, #chapter_info_add_div > textarea {
+    margin: 0.5rem;
+}
+
+@media screen and (max-device-width: 960px) {
+    #main_div {
+        width: auto;
+        margin: 0 auto;
+    }
+
+    .swiper-container {
+        width: auto;
+        margin: 0 auto;
+    }
+
+}

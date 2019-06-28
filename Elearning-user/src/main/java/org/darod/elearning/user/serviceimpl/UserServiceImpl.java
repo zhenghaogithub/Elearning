@@ -1,9 +1,9 @@
 package org.darod.elearning.user.serviceimpl;
 
 import org.apache.dubbo.config.annotation.Service;
+import org.darod.elearning.common.dto.UserModel;
 import org.darod.elearning.common.exception.BusinessException;
 import org.darod.elearning.common.service.user.UserService;
-import org.darod.elearning.common.service.user.model.UserModel;
 
 /**
  * @author Darod

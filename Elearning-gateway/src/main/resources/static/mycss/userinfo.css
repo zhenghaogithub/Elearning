@@ -1,0 +1,211 @@
+
+#back_img_div {
+    background-image: url("../resources/background.jpg");
+    width: auto;
+    height: 13rem;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+
+#user_short_info_div {
+    margin: 0 auto;
+    width: 95rem;
+}
+
+#user_big_head_img {
+    border-radius: 50%;
+    width: 10rem;
+    height: 10rem;
+    border: 3px solid white;
+}
+
+#user_short_info_div * {
+    color: white;
+}
+
+#user_short_info p span {
+    margin-right: 1rem;
+}
+
+#main_div {
+    width: 95rem;
+    margin: 0 auto;
+    background-color: white;
+}
+
+.user_slider_btn {
+    width: 8rem;
+    height: 4rem;
+    background-color: #eceef0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    text-decoration: none;
+    color: black;
+    font-size: 1.2rem;
+    margin-top: 2rem;
+
+}
+
+.user_slider_btn:hover {
+    text-decoration: none;
+    color: black;
+}
+
+#tabs_div {
+    height: auto;
+}
+
+.tabs_content {
+    width: 100%;
+    display: none;
+    height: auto;
+    min-height: 51.5rem;
+    /*min-height: 30rem;*/
+}
+
+#tabs_div .active {
+    display: block;
+}
+
+.my_box {
+    display: flex;
+    flex-wrap: wrap;
+    align-content:start;
+    min-height: 42rem;
+}
+
+.courses_info_item, .order_info_item, .courses_published_item, .courses_history_item {
+    width: 100%;
+    height: 10rem;
+    flex-wrap: wrap;
+    align-items: center;
+    /*border-bottom: #6c757d;*/
+}
+
+.course_img {
+    width: 13rem;
+    height: 7rem;
+    border-radius: 5px;
+}
+
+.course_name_label {
+    font-size: 1.5rem;
+}
+
+.course_status {
+    color: #b9bbbe;
+}
+
+.learn_percent {
+    color: red;
+}
+
+.reserved_div {
+    border-radius: 4px;
+}
+
+.my_label {
+    font-size: 1.3rem;
+    height: 2.3rem;
+}
+
+#head_img_preview {
+    width: 20rem;
+    height: 20rem;
+    border-radius: 50%;
+    border: 5px solid #b9bbbe;
+}
+
+#user_info_box > div > input {
+    width: 12rem;
+    margin-top: 2rem;
+}
+
+#user_info_box > div > span {
+    width: 7rem;
+    margin-top: 2rem;
+}
+
+#user_info_edit_div span {
+    width: 6rem;
+    margin-top: 2rem;
+}
+
+#user_info_edit_div input, #user_info_edit_div select {
+    width: 10rem;
+    margin-top: 2rem;
+}
+
+#preview_head_img {
+    width: 20rem;
+    height: 20rem;
+    border-radius: 50%;
+    border: 5px solid #b9bbbe;
+}
+
+#upload_head_btn {
+    color: #007bff;
+    border: 1px solid #007bff;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.course_label {
+    background-color: white;
+    border-radius: 3px;
+    border-width: 1px;
+    border-style: solid;
+    margin-right: 15px;
+    padding: 3px;
+}
+
+.label_first {
+    border-color: dodgerblue;
+    color: dodgerblue;
+}
+
+.label_second {
+    border-color: limegreen;
+    color: limegreen;
+}
+
+.label_third {
+    border-color: red;
+    color: red;
+}
+
+.course_state_open {
+    color: limegreen;
+}
+
+.course_price {
+    color: red;
+}
+
+/*#user_slider_div .active {*/
+/*    background-color: dodgerblue;*/
+/*    color: white;*/
+/*}*/
+
+
+@media screen and (max-device-width: 960px) {
+    .course_img {
+        width: 6.5rem;
+        height: 3.5rem;
+    }
+
+    #user_slider_div ul {
+        margin: 0 0 0 0 !important;
+    }
+
+    #main_div {
+        width: auto;
+        margin: 0 auto;
+    }
+
+    #back_img_div {
+        min-width: 0 !important;
+    }
+}

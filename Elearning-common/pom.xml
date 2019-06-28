@@ -14,7 +14,7 @@
     <parent>
         <groupId>org.darod</groupId>
         <artifactId>Elearning</artifactId>
-        <version>0.0.3-SNAPSHOT</version>
+        <version>0.0.4-SNAPSHOT</version>
     </parent>
 
     <dependencies>
@@ -36,6 +36,19 @@
         <dependency>
             <groupId>joda-time</groupId>
             <artifactId>joda-time</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.16.10</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.58</version>
         </dependency>
 
         <!--新增后续dubbo项目中所需依赖，dubbo、zk。
@@ -85,7 +98,7 @@
                     <!--允许移动生成-->
                     <verbose>true</verbose>
                     <!--允许自动覆盖-->
-                    <overwrite>false</overwrite>
+                    <overwrite>true</overwrite>
                     <configurationFile>
                         src/main/resources/mybatis-generator.xml
                     </configurationFile>

@@ -7,7 +7,7 @@
     <groupId>org.darod</groupId>
     <artifactId>Elearning</artifactId>
     <packaging>pom</packaging>
-    <version>0.0.3-SNAPSHOT</version>
+    <version>0.0.4-SNAPSHOT</version>
     <modules>
         <module>Elearning-common</module>
         <module>Elearning-gateway</module>
@@ -34,6 +34,8 @@
         <mybatis-spring-boot-starter.version>2.0.1</mybatis-spring-boot-starter.version>
         <junit.version>4.12</junit.version>
         <dubbo-spring-boot-starter.version>2.7.1</dubbo-spring-boot-starter.version>
+        <springfox-swagger-ui.version>2.9.2</springfox-swagger-ui.version>
+        <springfox-swagger2.version>2.9.2</springfox-swagger2.version>
     </properties>
 
     <!--声明子项目可能用到的jar包版本-->
@@ -135,6 +137,23 @@
                     </exclusion>
                 </exclusions>
                 <type>pom</type>
+            </dependency>
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger-ui</artifactId>
+                <version>${springfox-swagger-ui.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger2</artifactId>
+                <version>${springfox-swagger2.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>1.16.10</version>
+                <scope>provided</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>

@@ -1,7 +1,7 @@
 package org.darod.elearning.common.service.user;
 
+import org.darod.elearning.common.dto.UserModel;
 import org.darod.elearning.common.exception.BusinessException;
-import org.darod.elearning.common.service.user.model.UserModel;
 
 /**
  * @author Darod
