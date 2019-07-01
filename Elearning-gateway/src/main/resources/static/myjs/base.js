@@ -85,7 +85,7 @@ $(document).ready(function () {
 window.updateUserFlex = function () {
     send_ajax({
         type: "POST",
-        url: "/all/user/getUserCurrent",
+        url: "/api/all/user/getUserCurrent",
         success: function (data) {
             if (data.status === 200) {
                 $(".user_name_all").text(data.data.username);

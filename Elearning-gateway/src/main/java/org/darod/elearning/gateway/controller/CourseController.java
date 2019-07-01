@@ -1,8 +1,11 @@
 package org.darod.elearning.gateway.controller;
 
+import com.alibaba.fastjson.JSON;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.SecurityUtils;
+import org.darod.elearning.common.dto.CommonCountModel;
+import org.darod.elearning.common.dto.CourseModel;
 import org.darod.elearning.common.exception.BusinessException;
 import org.darod.elearning.common.exception.EmException;
 import org.darod.elearning.common.response.CommonResponse;
@@ -10,11 +13,14 @@ import org.darod.elearning.common.response.ResponseUtils;
 import org.darod.elearning.common.service.user.UserLearnService;
 import org.darod.elearning.common.service.user.UserService;
 import org.darod.elearning.gateway.dataobject.UserDO;
+import org.darod.elearning.gateway.serviceimpl.CourseServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.security.auth.Subject;
+import java.util.List;
 
 /**
  * @author Darod
@@ -28,14 +34,13 @@ public class CourseController {
     UserService userService;
     @Autowired
     UserLearnService userLearnService;
+    @Autowired
+    CourseServiceImpl courseService;
 
-    @GetMapping("/user/learned_course")
-    @ApiOperation(value = "获取用户已学课程",httpMethod = "GET")
-    public CommonResponse getUserLearnedCourse() throws BusinessException {
-        UserDO userDO = (UserDO)SecurityUtils.getSubject().getPrincipal();
-        if(userDO == null){
-            throw new BusinessException(EmException.UNKNOWN_ERROR);
-        }
-        return ResponseUtils.getOKResponse(userLearnService.getCourseLearned(userDO.getId()));
+    @GetMapping("/course")
+    @ApiOperation(value = "获取所有课程", httpMethod = "GET")
+    public CommonResponse getAllCourse(@RequestParam("page") Integer page, @RequestParam("row") Integer row) throws BusinessException {
+        CommonCountModel<List<CourseModel>> allCourseInfo = courseService.getAllCourseInfo(page, row);
+        return ResponseUtils.getOKResponse(allCourseInfo.toJSONObject("courses"));
     }
 }

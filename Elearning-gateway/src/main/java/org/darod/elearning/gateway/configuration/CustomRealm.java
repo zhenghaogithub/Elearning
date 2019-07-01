@@ -52,7 +52,7 @@ public class CustomRealm extends AuthorizingRealm {
         UserDO userDO = userDOMapper.selectByUserName(token.getUsername());
         if (userDO == null)
             return null;
-        UserPasswordDO userPasswordDO = userPasswordDOMapper.selectByUserId(userDO.getId());
+        UserPasswordDO userPasswordDO = userPasswordDOMapper.selectByUserId(userDO.getUserId());
         if (userPasswordDO == null)
             return null;
         String encryptPassword = userPasswordDO.getEncryptPassword();
@@ -62,7 +62,7 @@ public class CustomRealm extends AuthorizingRealm {
 //        else if (!password.equals(new String((char[]) token.getCredentials()))) {
 //            throw new AccountException("密码不正确");
 //        }
-        SimpleAuthenticationInfo simpleAuthenticationInfo = new SimpleAuthenticationInfo(token.getPrincipal(), encryptPassword, getName());
+        SimpleAuthenticationInfo simpleAuthenticationInfo = new SimpleAuthenticationInfo(userDO, encryptPassword, getName());
         simpleAuthenticationInfo.setCredentialsSalt(ByteSource.Util.bytes(userDO.getName()));
         return simpleAuthenticationInfo;
     }

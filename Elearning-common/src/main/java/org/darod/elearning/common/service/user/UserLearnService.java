@@ -1,5 +1,6 @@
 package org.darod.elearning.common.service.user;
 
+import org.darod.elearning.common.dto.CommonCountModel;
 import org.darod.elearning.common.dto.UserLearnModel;
 
 import java.util.List;
@@ -10,5 +11,5 @@ import java.util.List;
  * @date 2019/7/1 0001 8:29
  */
 public interface UserLearnService {
-    List<UserLearnModel> getCourseLearned(Integer userId);
+    CommonCountModel<List<UserLearnModel>> getCourseLearnedInfo(Integer userId, int page, int row);
 }

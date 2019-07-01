@@ -134,7 +134,8 @@
                     <span model="labelThird" class="course_label label_third">.net</span>
                 </div>
                 <div class="d-flex justify-content-between">
-                    <span>课程状态 : <span model="courseState" model_class='courseStateColor' class="course_state_open">开放中</span></span>
+                    <span>课程状态 : <span model="courseState" model_class='courseStateColor'
+                                       class="course_state_open">开放中</span></span>
                     <span>价格 : <span model="cost" class="course_price">998.0元</span></span>
                     <span>学习人数 : <span model="learnTotal" class="learn_count gray_font_color">30</span></span>
                     <span>评论 : <span model="commentTotal" class="comment_count gray_font_color">56</span></span>
@@ -165,15 +166,16 @@
     <div class="swiper-container my-3">
         <div class="swiper-wrapper">
             <div class="swiper-slide">
-                <div>
-                    <h5 class="course_chapter_num">第1章</h5>
+                <div class="position-relative">
+                    <span model="chapterNumber" class="course_chapter_num h5">第1章</span>
+                    <span model="chapterState" class="chapter_state_label">开放中</span>
                     <div class="chapter_info">
                         <div class="chapter_name_div d-flex align-items-center justify-content-center">
-                            <div class="chapter_name">
+                            <div model="chapterName" class="chapter_name">
                                 ASP.NET-MVC课程介绍
                             </div>
                         </div>
-                        <div class="chapter_length">3:12</div>
+                        <div model="chapterLength" class="chapter_length">3:12</div>
                     </div>
                 </div>
             </div>
@@ -369,28 +371,28 @@
             <div class="modal-body">
                 <div id="course_info_edit_div" class=" d-flex flex-wrap p-3">
                     <span class="my_label badge badge-secondary">课程名称 :</span>
-                    <input type="text" class="form-control d-inline"
+                    <input model="courseName" type="text" class="form-control d-inline"
                            id="course_name_label"
                            value="ASP.NET-MVC网站开发【实战与技能详解】" maxlength="30">
                     <span class="my_label badge badge-secondary ">价格 :</span>
-                    <input type="number" class="form-control d-inline"
+                    <input model="cost" type="number" class="form-control d-inline"
                            id="course_price_label"
                            value="998"
                            oninput="if(value>99999)value=99999;if(value<0)value=0;">
                     <span class="my_label badge badge-secondary">第一标签 :</span>
-                    <input type="email" class="form-control d-inline"
+                    <input model="labelFirst" type="email" class="form-control d-inline"
                            id="user_email"
                            value="后端开发">
                     <span class="my_label badge badge-secondary">第二标签 :</span>
-                    <input type="text" class="form-control d-inline"
+                    <input model="labelSecond" type="text" class="form-control d-inline"
                            id="user_age"
                            value="网站搭建">
                     <span class="my_label badge badge-secondary">第三标签 :</span>
-                    <input name="gender" type="text" class="form-control d-inline"
+                    <input model="labelThird" name="gender" type="text" class="form-control d-inline"
                            id="user_gender"
                            value=".net">
                     <span class="my_label badge badge-secondary">课程简介 :</span>
-                    <textarea id="user_introduction" class="form-control " rows="5"
+                    <textarea model="courseIntroduction" id="user_introduction" class="form-control " rows="5"
                               style="resize: none" placeholder="未填写课程简介" maxlength="256"></textarea>
                 </div>
             </div>

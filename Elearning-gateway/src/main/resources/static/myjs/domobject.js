@@ -103,7 +103,7 @@ $(document).ready(function () {
             "                        <p class=\"start_time_label p-2\"><span>发布时间 : </span><span\n" +
             "                                class=\"gray_font_color\"  model='courseTime' ></span></p>\n" +
             "                        <div model='courseId' model_target='courseId' class=\"d-flex flex-wrap\" style=\"width: 6rem\">\n" +
-            "                            <a href='course_manage.html?a=1' id=\"course_info_btn\"  class=\"btn btn-primary my-1\">课程详细</a>\n" +
+            "                            <a model='course_url' model_target='href' href='' id=\"course_info_btn\"  class=\"btn btn-primary my-1\">课程详细</a>\n" +
             "                            <button id=\"withdraw_course_btn\" class=\"btn btn-danger my-1\">下架课程</button>\n" +
             "                        </div>\n" +
             "                    </div>",
@@ -123,7 +123,24 @@ $(document).ready(function () {
             "                        <p class=\"start_time_label p-2\"><span>下单时间 : </span><span\n" +
             "                                style=\"color:#b9bbbe;\" model='learnTime'></span></p>\n" +
             "                        </p>\n" +
+            "                        <div class=\"d-flex flex-wrap\" style=\"width: 6rem\">" +
+            "                           <button id=\"evaluate_btn\" class=\"btn btn-warning my-1\">评价课程</button>" +
+            "                        </div>" +
             "                    </div>",
+        chapter_info_item: "<div class=\"swiper-slide\">\n" +
+            "                <div model='chapterId' model_target='chapter_id' class=\"position-relative\">\n" +
+            "                    <span model=\"chapterNumber\" class=\"course_chapter_num h5\">第1章</span>\n" +
+            "                    <span model=\"chapterState\" model_class='chapterStateColor' class=\"chapter_state_label\">开放中</span>\n" +
+            "                    <div class=\"chapter_info\">\n" +
+            "                        <div class=\"chapter_name_div d-flex align-items-center justify-content-center\">\n" +
+            "                            <div model=\"chapterName\" class=\"chapter_name\">\n" +
+            "                                ASP.NET-MVC课程介绍\n" +
+            "                            </div>\n" +
+            "                        </div>\n" +
+            "                        <div model=\"chapterLength\" class=\"chapter_length\">3:12</div>\n" +
+            "                    </div>\n" +
+            "                </div>\n" +
+            "            </div>",
     });
 });
 

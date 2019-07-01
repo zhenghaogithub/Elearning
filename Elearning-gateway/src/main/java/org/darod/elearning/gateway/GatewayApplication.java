@@ -40,7 +40,7 @@ public class GatewayApplication {
         FastJsonConfig fastJsonConfig = new FastJsonConfig();
         fastJsonConfig.setSerializerFeatures(SerializerFeature.PrettyFormat);
         //日期格式化
-        fastJsonConfig.setDateFormat("yyyy-MM-dd HH:mm:ss");
+//        fastJsonConfig.setDateFormat("yyyy-MM-dd HH:mm:ss"); 若指定全局配置 则JsonField(format=)失效
         converter.setFastJsonConfig(fastJsonConfig);
         converter.setSupportedMediaTypes(fastMediaTypes);
         HttpMessageConverter array[] = new HttpMessageConverter[]{stringHttpMessageConverter(), converter};
@@ -48,7 +48,7 @@ public class GatewayApplication {
         return httpMessageConverters;
     }
 
-    public StringHttpMessageConverter stringHttpMessageConverter() {
+    private StringHttpMessageConverter stringHttpMessageConverter() {
         StringHttpMessageConverter stringHttpMessageConverter = new StringHttpMessageConverter();
         stringHttpMessageConverter.setWriteAcceptCharset(false);
         return stringHttpMessageConverter;

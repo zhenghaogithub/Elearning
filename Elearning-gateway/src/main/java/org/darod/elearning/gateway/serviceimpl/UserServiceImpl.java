@@ -57,10 +57,10 @@ public class UserServiceImpl implements UserService {
         } catch (DuplicateKeyException e) {
             throw new BusinessException(EmException.PARAMETER_VALIDATION_ERROR, "手机号重复");
         }
-        userModel.setId(userDO.getId());
+        userModel.setId(userDO.getUserId());
         UserPasswordDO userPasswordDO = new UserPasswordDO();
         BeanUtils.copyProperties(userModel, userPasswordDO);
-        userPasswordDO.setUserId(userDO.getId());
+        userPasswordDO.setUserId(userDO.getUserId());
         userPasswordDOMapper.insertSelective(userPasswordDO); //selective 只会把不为null的字段插入数据库，为null的字段会是默认值
     }
 

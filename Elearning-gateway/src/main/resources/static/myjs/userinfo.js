@@ -7,7 +7,7 @@ $(document).ready(function () {
     //更新个人信息背景栏
     send_ajax({
         type: "POST",
-        url: "/all/user/getUserCurrent",
+        url: "/api/all/user/getUserCurrent",
         success: function (data) {
             if (data.status === 200) {
                 // $(".user_name_all").text(data.data.username);
@@ -199,7 +199,7 @@ function refresh_my_box(url, page_num, pageId, path, mapper) {
 };
 
 function refresh_courses_info(page_num) {
-    refresh_my_box("/all/course/selectCourseLearned", page_num,
+    refresh_my_box("/api/all/course/selectCourseLearned", page_num,
         "courses_info", ["courses"]);
 }
 
@@ -209,9 +209,10 @@ function refresh_courses_history(page_num) {
 }
 
 function refresh_courses_published(page_num) {
-    refresh_my_box("/teacher/course/selectCourseByUserId", page_num,
+    refresh_my_box("/api/teacher/course/selectCourseByUserId", page_num,
         "courses_published", ["courses"], function (data) {
             data["cost"] = data["cost"].toFixed(1) + "元";
+            data["course_url"] = "course_manage.html?courseId=" + data["courseId"];
             $.mapAndAddProperties(data, { //注意顺序不要换，mapAndAddProperties只会添加，不会其他属性
                 courseState: {
                     target: "courseStateColor",
@@ -231,7 +232,7 @@ function refresh_courses_published(page_num) {
 }
 
 function refresh_order_info(page_num) {
-    refresh_my_box("/all/course/selectCourseLearned", page_num,
+    refresh_my_box("/api/all/course/selectCourseLearned", page_num,
         "order_info", ["courses"], function (data) {
             data["cost"] = data["cost"].toFixed(1) + "元";
             data["orderState"] = data["orderState"] === 0 ? "已支付" : "待支付";
@@ -241,7 +242,7 @@ function refresh_order_info(page_num) {
 function refresh_user_info() {
     send_ajax({
         type: "POST",
-        url: "/all/user/getUserCurrent",
+        url: "/api/all/user/getUserCurrent",
         success: function (data) {
             if (data.status === 200) {
                 $(".user_name_all").text(data.data.username);

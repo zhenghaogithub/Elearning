@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Api(tags = "测试资源")
 public class TestController {
 
-    @RequestMapping(value = "/all/user/getUserCurrent", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
+    @RequestMapping(value = "/api/all/user/getUserCurrent", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
     @ResponseBody
     public String getUserInfo() {
         return "{\n" +
@@ -33,13 +33,13 @@ public class TestController {
                 "\t\t\"phone\":\"12345678912\",\n" +
                 "\t\t\"email\":\"123@zxc.com\",\n" +
                 "\t\t\"userImage\":\"resources/test_head_2.png\", \n" +
-                "\t\t\"power\":1,\n" +
+                "\t\t\"power\":2,\n" +
                 "\t\t\"gender\":\"男\"\n" +
                 "\t}\n" +
                 "}\n";
     }
 
-    @RequestMapping(value = "/all/course/selectCourseLearned", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
+    @RequestMapping(value = "/api/all/course/selectCourseLearned", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
     @ResponseBody
     public String getCourseLearned() {
 //        return "{\n" +
@@ -175,7 +175,7 @@ public class TestController {
                 "}";
     }
 
-    @RequestMapping(value = "/all/course/selectCourseByCouserId", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
+    @RequestMapping(value = "/api/all/course/selectCourseByCouserId", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
     @ResponseBody
     public String getCourseInfo() {
         return "{\n" +
@@ -227,7 +227,7 @@ public class TestController {
                 "}";
     }
 
-    @RequestMapping(value = "/teacher/course/selectCourseByUserId", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
+    @RequestMapping(value = "/api/teacher/course/selectCourseByUserId", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
     @ResponseBody
     public String selectCourseByUserId() {
         return "{\n" +
@@ -268,7 +268,7 @@ public class TestController {
                 "}";
     }
 
-    @RequestMapping(value = "/teacher/course/selectCourseByCourseId", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
+    @RequestMapping(value = "/api/teacher/course/selectCourseByCourseId", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
     @ResponseBody
     public String selectCourseByCourseId() {
         return "{\n" +
@@ -280,7 +280,7 @@ public class TestController {
                 "\t\t\"courserImage\":\"https://10.url.cn/qqcourse_logo_ng/ajNVdqHZLLC08B9HDxI6BrAyznCvqVuyYabPqAElDJrJlorKZy8iamBvsbHrJElh8yRvQt6nicaXc/356?tp=webp\",\n" +
                 "\t\t\"cost\":998,\n" +
                 "\t\t\"courseIntroduction\":\"您想学最流行ASP.NET-MVC框架开发技术吗？您选对了课程！本课程由常老师和技术团队原创开发和精心录制，是从基础、进阶，再到项目，学习ASP.NE-MVC开发的系统课程，视频+讲义+代码+配套练习+在线答疑！\",\n" +
-                "\t\t\"labelFirst\":\"后端\",\n" +
+                "\t\t\"labelFirst\":\"后端开发\",\n" +
                 "\t\t\"labelSecond\":\"网站搭建\",\n" +
                 "\t\t\"labelThird\":\".net\",\n" +
                 "\t\t\"courseTime\":\"2019-01-01\",\n" +
@@ -288,19 +288,36 @@ public class TestController {
                 "\t\t\"commentTotal\":123,\n" +
                 "\t\t\"courseState\":0,\t\n" +
                 "\t\t\"chapters\":[{\n" +
-                "\t\t\t\"chapterId\":\"chapterId\",\n" +
-                "\t\t\t\"chapterName\":\"chapterName\",\n" +
-                "\t\t\t\"chapterNumber\":\"chapterNumber\",\n" +
+                "\t\t\t\"chapterId\":1,\n" +
+                "\t\t\t\"chapterName\":\"APS.NET-MVC课程介绍\",\n" +
+                "\t\t\t\"chapterNumber\":1,\n" +
                 "\t\t\t\"chapterIntroduction\":\"chapterIntroduction\",\n" +
                 "\t\t\t\"chapterUrl\":\"chapterUrl\",\n" +
                 "\t\t\t\"chapterTime\":\"chapterTime\",\n" +
-                "\t\t\t\"chapterLength\":\"chapterLength\",\n" +
-                "\t\t\t\"chapterState\":\"chapterState\"\n" +
+                "\t\t\t\"chapterLength\":\"3:12\",\n" +
+                "\t\t\t\"chapterState\":0\n" +
+                "\t\t},\n" +
+                "\t\t{\n" +
+                "\t\t\t\"chapterId\":2,\n" +
+                "\t\t\t\"chapterName\":\"APS.NET-MVC概述\",\n" +
+                "\t\t\t\"chapterNumber\":2,\n" +
+                "\t\t\t\"chapterIntroduction\":\"chapterIntroduction\",\n" +
+                "\t\t\t\"chapterUrl\":\"chapterUrl\",\n" +
+                "\t\t\t\"chapterTime\":\"chapterTime\",\n" +
+                "\t\t\t\"chapterLength\":\"13:32\",\n" +
+                "\t\t\t\"chapterState\":1\n" +
                 "\t\t}\n" +
                 "\t\t]\n" +
                 "\t}\n" +
                 "}";
     }
+
+//    @RequestMapping(value = "/api/teacher/course/selectCourseByCourseId", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
+//    @ResponseBody
+//    public String selectTeacherCourseByCourseId() {
+//
+//        return "";
+//    }
 
 
 //    @RequestMapping(value = "user/getUser", method = RequestMethod.POST)

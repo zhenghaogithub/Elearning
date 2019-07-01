@@ -1,5 +1,8 @@
 package org.darod.elearning.gateway.serviceimpl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import org.darod.elearning.common.dto.CommonCountModel;
 import org.darod.elearning.common.dto.UserLearnModel;
 import org.darod.elearning.common.service.user.UserLearnService;
 import org.darod.elearning.gateway.dao.UserLearnDOMapper;
@@ -9,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @author Darod
@@ -22,12 +24,16 @@ public class UserLearnServiceImpl implements UserLearnService {
     UserLearnDOMapper userLearnDOMapper;
 
     @Override
-    public List<UserLearnModel> getCourseLearned(Integer userId) {
+    public CommonCountModel<List<UserLearnModel>> getCourseLearnedInfo(Integer userId, int page, int row) {
+        CommonCountModel<List<UserLearnModel>> commonCountModel = new CommonCountModel<>();
+        Page pages = PageHelper.startPage(page, row);
         List<UserLearnDO> userLearnDOList = userLearnDOMapper.selectByUserId(userId);
-        List<UserLearnModel> userLearnModelList = userLearnDOList.stream().map(userLearnDO -> {
-            UserLearnModel userLearnModel = CopyPropertiesUtils.copyProperties(userLearnDO, UserLearnModel.class);
-            return userLearnModel;
-        }).collect(Collectors.toList());
-        return userLearnModelList;
+        commonCountModel.setTotal(pages.getTotal());
+        List<UserLearnModel> userLearnModelList = CopyPropertiesUtils.mapListObject(userLearnDOList,UserLearnModel.class);
+
+        commonCountModel.setDataList(userLearnModelList);
+        return  commonCountModel;
     }
+
+
 }
