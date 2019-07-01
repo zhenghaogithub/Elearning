@@ -1,0 +1,79 @@
+<html>
+<head>
+    <title>账号注册</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <link href="css/weui.min.css" rel="stylesheet">
+    <link href="css/weuix.css" rel="stylesheet">
+    <script src="js/jquery.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/zepto.min.js"></script>
+    <script src="js/zepto.weui.js"></script>
+</head>
+<body>
+<header>
+    <h1 class="f-green m-4" align="center">用户注册</h1>
+</header>
+<div class="weui-cells__title">个人信息</div>
+<div class="weui-cells weui-cells_form">
+    <form action="user/register" method="post">
+        <div class="weui-cell">
+            <div class="weui-cell__hd"><label class="weui-label">用户名</label></div>
+            <div class="weui-cell__bd">
+                <input class="weui-input" placeholder="请输入名称" type="text" name="uname">
+            </div>
+        </div>
+        <div class="weui-cell">
+            <div class="weui-cell__hd"><label class="weui-label">密码</label></div>
+            <div class="weui-cell__bd">
+                <input class="weui-input" placeholder="请输入密码" type="password" name="uname">
+            </div>
+        </div>
+        <div class="weui-cell weui-cell_select weui-cell_select-after">
+            <div class="weui-cell__hd">
+                <label class="weui-label">性别</label>
+            </div>
+            <div class="weui-cell__bd">
+                <select class="weui-select" name="sex">
+                    <option value="0">男</option>
+                    <option value="1">女</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="weui-cell">
+        </div>
+        <div class="weui-cell weui-cell_select weui-cell_select-before">
+            <div class="weui-cell__hd">
+                <select class="weui-select" name="phoneNum_pre">
+                    <option value="1">+86</option>
+                    <option value="2">+80</option>
+                    <option value="3">+84</option>
+                    <option value="4">+87</option>
+                </select>
+            </div>
+            <div class="weui-cell__bd">
+                <input class="weui-input" pattern="[0-9]*" placeholder="请输入号码" name="phoneNum" type="tel">
+            </div>
+        </div>
+        <div class="weui-cell">
+            <div class="weui-cell__hd"><label class="weui-label">出生日期</label></div>
+            <div class="weui-cell__bd">
+                <input class="weui-input" value="" type="date" name="birthday">
+            </div>
+        </div>
+        <div class="weui-btn-area">
+            <button class="weui-btn weui-btn_primary">注册</button>
+        </div>
+    </form>
+</div>
+<div class="weui-footer weui-footer_fixed-bottom">
+    <p class="weui-footer__links">
+        <a href="login.html" class="weui-footer__link">返回首页</a>
+    </p>
+    <p class="weui-footer__text">Copyright &copy; Darod</p>
+</div>
+
+</body>
+</html>

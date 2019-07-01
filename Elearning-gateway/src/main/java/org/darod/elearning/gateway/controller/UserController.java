@@ -4,10 +4,15 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.darod.elearning.common.dto.UserModel;
 import org.darod.elearning.common.exception.BusinessException;
-import org.darod.elearning.common.exception.EnumBusinessException;
-import org.darod.elearning.common.response.CommonReturnType;
+import org.darod.elearning.common.exception.EmException;
+import org.darod.elearning.common.response.CommonResponse;
+import org.darod.elearning.common.response.ResponseUtils;
 import org.darod.elearning.common.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -40,23 +45,19 @@ public class UserController {
 
     @ResponseBody
     @RequestMapping(value = "/login", method = {RequestMethod.POST}, consumes = {"application/x-www-form-urlencoded"})
-    public CommonReturnType login(@RequestParam("telphone") String telphone, @RequestParam("password") String password) throws BusinessException, UnsupportedEncodingException, NoSuchAlgorithmException {
-        if (StringUtils.isEmpty(password) || StringUtils.isEmpty(telphone)) {
-            throw new BusinessException(EnumBusinessException.PARAMETER_VALIDATION_ERROR);
+    @ApiOperation(value = "登录", httpMethod = "POST")
+    public CommonResponse login(@RequestParam("username") String username, @RequestParam("password") String password) throws BusinessException, UnsupportedEncodingException, NoSuchAlgorithmException {
+        if (StringUtils.isEmpty(password) || StringUtils.isEmpty(username)) {
+            throw new BusinessException(EmException.PARAMETER_VALIDATION_ERROR);
         }
-        //验证密码
-        UserModel userModel = userService.validataLogin(telphone, EncodeByMD5(password));
-        //没有异常 则登录成功
-        httpServletRequest.getSession().setAttribute("LOGIN", true);
-        httpServletRequest.getSession().setAttribute("LOGIN_USER", userModel);
-        return CommonReturnType.create(null);
-    }
-
-    private String EncodeByMD5(String str) throws NoSuchAlgorithmException, UnsupportedEncodingException {
-        MessageDigest md5 = MessageDigest.getInstance("MD5");
-        BASE64Encoder base64Encoder = new BASE64Encoder();
-        String newStr = base64Encoder.encode(md5.digest(str.getBytes("utf-8")));
-        return newStr;
+        Subject subject = SecurityUtils.getSubject();
+        UsernamePasswordToken token = new UsernamePasswordToken(username, password);
+        try {
+            subject.login(token);
+        } catch (AuthenticationException e) {
+            throw new BusinessException(EmException.USER_LOGIN_FAIL);
+        }
+        return ResponseUtils.getOKResponse(null);
     }
 
 

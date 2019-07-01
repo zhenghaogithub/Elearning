@@ -23,7 +23,7 @@ CREATE TABLE `user_info`
 CREATE TABLE `user_password`
 (
     `id`              int(11)      NOT NULL AUTO_INCREMENT,
-    `encrpt_password` varchar(128) NOT NULL,
+    `encrypt_password` varchar(128) NOT NULL,
     `user_id`         int(11)      NOT NULL,
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB

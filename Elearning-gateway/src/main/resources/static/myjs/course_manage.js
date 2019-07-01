@@ -12,7 +12,39 @@ $(document).ready(function () {
             //...
 
         })
-    }
+    };
+    //更新课程信息
+    send_ajax({
+        type: "POST",
+        url: "/teacher/course/selectCourseByCourseId",
+        success: function (data) {
+            if (data.status === 200) {
+                data = data.data;
+                data["cost"] = data["cost"].toFixed(1) + "元";
+                $.mapAndAddProperties(data, { //注意顺序不要换，mapAndAddProperties只会添加，不会其他属性
+                    courseState: {
+                        target: "courseStateColor",
+                        mapper: {
+                            0: "green_font_color",
+                            1: "red_font_color",
+                        }
+                    },
+                });
+                $.mapProperties(data, {
+                    courseState: {
+                        0: "开放中",
+                        1: "审核中",
+                    },
+                });
+                $.bindModel($("#course_model_div"), data);
+            } else {
+                fail_toast(data.message);
+            }
+        },
+        error: function () {
+            fail_toast("获取用户信息失败!");
+        },
+    });
 
 
     $(".swiper-slide").each(addChapterDivClickEvent);

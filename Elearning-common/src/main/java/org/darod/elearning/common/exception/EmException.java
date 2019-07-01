@@ -5,20 +5,20 @@ package org.darod.elearning.common.exception;
  * @version 1.0
  * @date 2019/6/20 0020 9:09
  */
-public enum  EnumBusinessException implements CommonError {
+public enum  EmException implements CommonError {
 
     PARAMETER_VALIDATION_ERROR(10000,"参数不合法"),
     UNKNOWN_ERROR(10001,"未知错误"),
 
     USER_NOT_EXIST(20001,"用户不存在"),
-    USER_LOGIN_FAIL(20002,"用户手机号或密码错误"),
+    USER_LOGIN_FAIL(20002,"用户名或密码错误"),
     USER_NOT_LOGIN(20003,"用户还未登录"),
 
 
     ;
     private int errCode;
     private String msg;
-    EnumBusinessException(int errCode ,String msg){
+    EmException(int errCode ,String msg){
         this.errCode = errCode;
         this.msg = msg;
     }

@@ -18,6 +18,15 @@
     color: #b9bbbe;
 }
 
+.green_font_color {
+    color: limegreen;
+}
+
+.red_font_color {
+    color: red;
+}
+
+
 /*自定义的按钮组件*/
 .my_button {
     border-width: 1px;

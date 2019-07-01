@@ -9,8 +9,11 @@
     <script type="text/javascript" src="js/bootstrap.bundle.min.js"></script>
     <script type="text/javascript" src="js/swiper.js"></script>
 
+
+    <script type="text/javascript" src="myjs/ajaxutils.js"></script>
     <script type="text/javascript" src="myjs/base.js"></script>
     <script type="text/javascript" src="myjs/course_manage.js"></script>
+    <script type="text/javascript" src="myjs/domobject.js"></script>
     <!--    <script type="text/javascript" src="js/swiper.esm.js"></script>-->
     <!--    <script type="text/javascript" src="js/swiper.esm.bundle.js"></script>-->
 
@@ -73,16 +76,16 @@
                     <span id="alarm_ico_count" style="color: white;text-decoration: none">99</span>
                 </a>
             </div>
-            <img id="user_head" src="resources/test_head.png"
+            <img class="user_head_img" id="user_head" src="resources/test_head.png"
                  style="width: 44px;height: 44px;border: 2px solid #343a40;cursor: pointer" alt="头像">
             <!--用户菜单悬浮框-->
             <div id="user_flex" class="card m-0" style="overflow: hidden;right: 0;top: 100%">
                 <div class="card-body d-flex justify-content-center flex-wrap">
                     <div id="user_head_name" class="d-flex">
-                        <img src="resources/test_head.png" alt="头像"/>
+                        <img class="user_head_img" src="resources/test_head.png" alt="头像"/>
                         <div class="ml-4">
-                            <h4 style="font-size: 1.5rem">Darod</h4>
-                            <span style="font-size: 13px;color: #6c757d">手机号:13483813213</span>
+                            <h4 class="user_name_all" style="font-size: 1.5rem">Darod</h4>
+                            <span class="user_phone_all" style="font-size: 13px;color: #6c757d">手机号:13483813213</span>
                         </div>
                     </div>
                     <div id="user_flex_btn_div" class="p-1 mt-2 d-flex flex-wrap justify-content-around">
@@ -114,90 +117,47 @@
     </div>
 </nav>
 <div id="main_div" class="">
-    <div class="jumbotron p-4">
-        <h1 class="p-0">课程管理</h1>
-    </div>
-    <div id="course_info_div" class="mx-auto d-flex my-5 justify-content-between align-items-center">
-        <div id="course_img_div">
-            <img id="course_img"
-                 src="https://10.url.cn/qqcourse_logo_ng/ajNVdqHZLLC08B9HDxI6BrAyznCvqVuyYabPqAElDJrJlorKZy8iamBvsbHrJElh8yRvQt6nicaXc/356?tp=webp">
+    <div id="course_model_div">
+        <div class="jumbotron p-4">
+            <h1 class="p-0 ml-5">课程管理</h1>
         </div>
-        <div class="mr-5">
-            <h3 id="course_name" class="mb-3">ASP.NET-MVC网站开发【实战与技能详解】</h3>
-            <div class="course_label_div mb-3">
-                <span class="course_label label_first">后端开发</span>
-                <span class="course_label label_second">网站搭建</span>
-                <span class="course_label label_third">.net</span>
+        <div id="course_info_div" class="mx-auto d-flex my-5 justify-content-between align-items-center">
+            <div id="course_img_div">
+                <img model="courserImage" id="course_img"
+                     src="https://10.url.cn/qqcourse_logo_ng/ajNVdqHZLLC08B9HDxI6BrAyznCvqVuyYabPqAElDJrJlorKZy8iamBvsbHrJElh8yRvQt6nicaXc/356?tp=webp">
             </div>
-            <div class="d-flex justify-content-between">
-                <span>课程状态 : <span class="course_state_open">开放中</span></span>
-                <span>价格 : <span class="course_price">998.0元</span></span>
-                <span>学习人数 : <span class="learn_count gray_font_color">30</span></span>
-                <span>评论 : <span class="comment_count gray_font_color">56</span></span>
-                <!--                                <span class="last_time_label">3 : 12</span>-->
-            </div>
-        </div>
-        <p class="start_time_label p-2"><span>发布时间 : </span><span
-                class="gray_font_color">2019-06-11</span></p>
-        <div class="d-flex flex-wrap" style="width: 6rem">
-            <button id="course_info_edit_btn" class="btn btn-primary my-1" data-toggle="modal"
-                    data-target="#edit_course_info_modal">编辑信息
-            </button>
-            <button id="withdraw_course_btn" class="btn btn-danger my-1">下架课程</button>
-        </div>
-        <!--课程编辑模态-->
-        <div class="modal fade mx-auto my-auto" id="edit_course_info_modal">
-            <div class="modal-dialog modal-dialog-centered" style="min-width: 40rem;">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">课程信息编辑</h4>
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    </div>
-                    <div class="modal-body">
-                        <div id="course_info_edit_div" class=" d-flex flex-wrap p-3">
-                            <span class="my_label badge badge-secondary">课程名称 :</span>
-                            <input type="text" class="form-control d-inline"
-                                   id="course_name_label"
-                                   value="ASP.NET-MVC网站开发【实战与技能详解】" maxlength="30">
-                            <span class="my_label badge badge-secondary ">价格 :</span>
-                            <input type="number" class="form-control d-inline"
-                                   id="course_price_label"
-                                   value="998"
-                                   oninput="if(value>99999)value=99999;if(value<0)value=0;">
-                            <span class="my_label badge badge-secondary">第一标签 :</span>
-                            <input type="email" class="form-control d-inline"
-                                   id="user_email"
-                                   value="后端开发">
-                            <span class="my_label badge badge-secondary">第二标签 :</span>
-                            <input type="text" class="form-control d-inline"
-                                   id="user_age"
-                                   value="网站搭建">
-                            <span class="my_label badge badge-secondary">第三标签 :</span>
-                            <input name="gender" type="text" class="form-control d-inline"
-                                   id="user_gender"
-                                   value=".net">
-                            <span class="my_label badge badge-secondary">课程简介 :</span>
-                            <textarea id="user_introduction" class="form-control " rows="5"
-                                      style="resize: none" placeholder="未填写课程简介" maxlength="256"></textarea>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" data-dismiss="modal">保存</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
-                    </div>
+            <div class="mr-5">
+                <h3 model="courseName" id="course_name" class="mb-3">ASP.NET-MVC网站开发【实战与技能详解】</h3>
+                <div class="course_label_div mb-3">
+                    <span model="labelFirst" class="course_label label_first">后端开发</span>
+                    <span model="labelSecond" class="course_label label_second">网站搭建</span>
+                    <span model="labelThird" class="course_label label_third">.net</span>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <span>课程状态 : <span model="courseState" model_class='courseStateColor' class="course_state_open">开放中</span></span>
+                    <span>价格 : <span model="cost" class="course_price">998.0元</span></span>
+                    <span>学习人数 : <span model="learnTotal" class="learn_count gray_font_color">30</span></span>
+                    <span>评论 : <span model="commentTotal" class="comment_count gray_font_color">56</span></span>
+                    <!--                                <span class="last_time_label">3 : 12</span>-->
                 </div>
             </div>
+            <p class="start_time_label p-2"><span>发布时间 : </span><span
+                    class="gray_font_color" model="courseTime">2019-06-11</span></p>
+            <div class="d-flex flex-wrap" style="width: 6rem">
+                <button id="course_info_edit_btn" class="btn btn-primary my-1" data-toggle="modal"
+                        data-target="#edit_course_info_modal">编辑信息
+                </button>
+                <button id="withdraw_course_btn" class="btn btn-danger my-1">下架课程</button>
+            </div>
+        </div>
+        <div id="course_desc_div" class="mx-auto">
+            <p>课程简介:</p>
+            <textarea model="courseIntroduction" id="user_introduction_label" class="form-control" rows="5" id="comment"
+                      disabled="disabled"
+                      style="resize: none" placeholder="未填写课程简介">您想学最流行ASP.NET-MVC框架开发技术吗？您选对了课程！
+本课程由常老师和技术团队原创开发和精心录制，是从基础、进阶，再到项目，学习ASP.NE-MVC开发的系统课程，视频+讲义+代码+配套练习+在线答疑！</textarea>
         </div>
     </div>
-    <div id="course_desc_div" class="mx-auto">
-        <p>课程简介:</p>
-        <textarea id="user_introduction_label" class="form-control" rows="5" id="comment"
-                  disabled="disabled"
-                  style="resize: none" placeholder="未填写课程简介">您想学最流行ASP.NET-MVC框架开发技术吗？您选对了课程！
-本课程由常老师和技术团队原创开发和精心录制，是从基础、进阶，再到项目，学习ASP.NE-MVC开发的系统课程，视频+讲义+代码+配套练习+在线答疑！</textarea>
-    </div>
-
-
     <!--    章节滑动窗口-->
     <div class="center_div mt-3">
         <p>章节信息:</p>
@@ -396,8 +356,50 @@
             </div>
         </div>
     </div>
+</div>
 
-
+<!--课程编辑模态-->
+<div class="modal fade mx-auto my-auto" id="edit_course_info_modal">
+    <div class="modal-dialog modal-dialog-centered" style="min-width: 40rem;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">课程信息编辑</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="course_info_edit_div" class=" d-flex flex-wrap p-3">
+                    <span class="my_label badge badge-secondary">课程名称 :</span>
+                    <input type="text" class="form-control d-inline"
+                           id="course_name_label"
+                           value="ASP.NET-MVC网站开发【实战与技能详解】" maxlength="30">
+                    <span class="my_label badge badge-secondary ">价格 :</span>
+                    <input type="number" class="form-control d-inline"
+                           id="course_price_label"
+                           value="998"
+                           oninput="if(value>99999)value=99999;if(value<0)value=0;">
+                    <span class="my_label badge badge-secondary">第一标签 :</span>
+                    <input type="email" class="form-control d-inline"
+                           id="user_email"
+                           value="后端开发">
+                    <span class="my_label badge badge-secondary">第二标签 :</span>
+                    <input type="text" class="form-control d-inline"
+                           id="user_age"
+                           value="网站搭建">
+                    <span class="my_label badge badge-secondary">第三标签 :</span>
+                    <input name="gender" type="text" class="form-control d-inline"
+                           id="user_gender"
+                           value=".net">
+                    <span class="my_label badge badge-secondary">课程简介 :</span>
+                    <textarea id="user_introduction" class="form-control " rows="5"
+                              style="resize: none" placeholder="未填写课程简介" maxlength="256"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">保存</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 <div id="footer_div" class="mx-auto" style="color: white">

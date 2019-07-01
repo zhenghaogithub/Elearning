@@ -1,0 +1,73 @@
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    <title>用户登录</title>
+    <link href="css/weui.min.css" rel="stylesheet">
+    <link href="css/weuix.css" rel="stylesheet">
+    <script src="js/jquery.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/zepto.weui.js"></script>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <script src="js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#login_button").click(function () {
+                $("#login_button").addClass("weui-btn_loading");
+                $("#login_button").text("正在登录");
+                $("#login_button").prepend("<i class=\"weui-loading\"></i>");
+
+                $.ajax({
+                    type: "POST",
+                    datatype: "json",
+                    url: "user/login",
+                    data: $("#login_form").serialize(),
+                    contentType: "application/x-www-form-urlencoded",
+                    success: function (data) {
+                        if (data["status"] == "400") {
+                            $.toptip('密码错误', 'error');
+                        } else if (data["status"] == "200") {
+                            $.toptip('登录成功', 'success');
+                            window.location = "userinfo.html";
+                        } else {
+                            $.toptip('发生未知错误', 'error');
+                        }
+                    }
+                });
+
+                $("#login_button").removeClass("weui-btn_loading");
+                $("#login_button").text("登录")
+                $("#login_button i").remove();
+            });
+        });
+    </script>
+</head>
+<body>
+<div class="page">
+    <header>
+        <h1 class="f-green m-4" align="center">用户登录</h1>
+    </header>
+    <div class="weui-cells weui-cells-form">
+        <form id="login_form" action="user/login/" method="post">
+            <div class="weui-cell">
+                <div class="weui-cell-hd"><label class="weui-label">账户</label></div>
+                <div class="weui-cell-bd weui-cell-primary"><input name="username" type="tel" class="weui-input"
+                                                                   placeholder="手机号码"/></div>
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell-hd"><label class="weui-label">密码</label></div>
+                <div class="weui-cell-bd weui-cell-primary"><input name="password" type="password" class="weui-input"
+                                                                   placeholder="不少于6位"/></div>
+            </div>
+        </form>
+        <div class="weui-btn-area">
+            <button id="login_button" class="weui-btn weui-btn_primary">登录</button>
+        </div>
+    </div>
+    <a href="register.html" class="right f-green yahei pr-2 pt-2">没有账号？点击注册</a>
+
+</div>
+<div class="weui-footer weui-footer_fixed-bottom">
+    <p class="weui-footer__text">Copyright &copy; Darod</p>
+</div>
+</body>
+</html>

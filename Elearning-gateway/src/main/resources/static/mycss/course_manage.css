@@ -107,9 +107,9 @@
     color: red;
 }
 
-.course_state_open {
-    color: limegreen;
-}
+/*.course_state_open {*/
+/*    color: limegreen;*/
+/*}*/
 
 .course_price {
     color: red;
@@ -131,6 +131,10 @@
     margin: 0.5rem;
 }
 
+#course_info_edit_div input, #course_info_edit_div select {
+    height: 3rem;
+}
+
 #course_info_edit_div > input, #chapter_info_add_div > input {
     width: 70%;
     margin: 0.5rem;
@@ -139,6 +143,7 @@
 #course_info_edit_div > textarea, #chapter_info_add_div > textarea {
     margin: 0.5rem;
 }
+
 
 @media screen and (max-device-width: 960px) {
     #main_div {

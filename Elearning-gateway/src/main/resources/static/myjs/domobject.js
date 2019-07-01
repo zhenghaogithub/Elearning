@@ -1,16 +1,60 @@
 $(document).ready(function () {
     $.extend({
-        bindModel: function (view, model) {
-            if (view == null || model == null) return;
-            let dom = $(view);
+        bindModel: function (dom, model) {
+            if (dom == null || model == null) return;
             dom.find("*[model]").each(function () {
+                const tagName = $(this)[0].tagName;
+                const propertyName = $(this).attr("model");
+                if (model[propertyName] == null) return;
                 if ($(this)[0].hasAttribute("model_target")) {
-                    $(this).attr($(this).attr("model_target"), model[$(this).attr("model")]);
+                    $(this).attr($(this).attr("model_target"), model[propertyName]).removeAttr("model_target");
+                } else if (tagName === "INPUT" || tagName === "TEXTAREA" || tagName === "SELECT") {
+                    $(this).val(model[propertyName]);
                 } else {
-                    $(this).text(model[$(this).attr("model")]);
+                    $(this).text(model[propertyName]);
                 }
-            });
+            }).removeAttr("model");
+            dom.find("*[model_class]").each(function () {
+                let clazz = $(this).attr("model_class");
+                if (clazz != null) {
+                    $(this).addClass(model[clazz]);
+                }
+            }).removeAttr("model_class");
             return dom[0];
+        },
+        mapProperties: function (object, mapper) {
+            for (let property in mapper) {
+                if (mapper.hasOwnProperty(property)) {
+                    let mapperObject = mapper[property];
+                    if (mapperObject != null) {
+                        let mapValue = mapperObject[object[property]];
+                        if (mapValue != null)
+                            object[property] = mapValue;
+                        else
+                            object[property] = "unknown";
+                    }
+                }
+            }
+        },
+        mapAndAddProperties: function (object, mapper) {
+            for (let property in mapper) {
+                if (mapper.hasOwnProperty(property)) {
+                    let mapperObject = mapper[property];
+                    if (mapperObject != null) {
+                        let targetProperty = mapperObject.target;
+                        let realMapper = mapperObject.mapper;
+                        if (targetProperty != null && realMapper != null) {
+                            let mapValue = realMapper[object[property]];
+                            if (mapValue != null) {
+                                if (!(targetProperty in object))
+                                    object[targetProperty] = mapValue;
+                            } else {
+                                object[targetProperty] = "unknown";
+                            }
+                        }
+                    }
+                }
+            }
         },
         courses_info_item: " <div class=\"courses_info_item  d-flex p-0  border-bottom justify-content-around\">\n" +
             "                        <img model='courserImage' model_target='src' class=\"course_img\"\n" +
@@ -49,7 +93,7 @@ $(document).ready(function () {
             "                                <span model='labelThird'  class=\"course_label label_third\"></span>\n" +
             "                            </div>\n" +
             "                            <div class=\"d-flex justify-content-between\">\n" +
-            "                                <span>课程状态 : <span model='courseState'  class=\"course_state_open\"></span></span>\n" +
+            "                                <span>课程状态 : <span model_class='courseStateColor' model='courseState'  class=\"course_state_open\"></span></span>\n" +
             "                                <span>价格 : <span  model='cost'  class=\"course_price\"></span></span>\n" +
             "                                <span>学习人数 : <span model='learnTotal' class=\"learn_count gray_font_color\"></span></span>\n" +
             "                                <span>评论 : <span model='comment_count' class=\"comment_count gray_font_color\"></span></span>\n" +
@@ -59,7 +103,7 @@ $(document).ready(function () {
             "                        <p class=\"start_time_label p-2\"><span>发布时间 : </span><span\n" +
             "                                class=\"gray_font_color\"  model='courseTime' ></span></p>\n" +
             "                        <div model='courseId' model_target='courseId' class=\"d-flex flex-wrap\" style=\"width: 6rem\">\n" +
-            "                            <button href='course_manage.html?a=1' id=\"course_info_btn\" onclick='goto_course_info(this)' class=\"btn btn-primary my-1\">课程详细</button>\n" +
+            "                            <a href='course_manage.html?a=1' id=\"course_info_btn\"  class=\"btn btn-primary my-1\">课程详细</a>\n" +
             "                            <button id=\"withdraw_course_btn\" class=\"btn btn-danger my-1\">下架课程</button>\n" +
             "                        </div>\n" +
             "                    </div>",
@@ -72,7 +116,7 @@ $(document).ready(function () {
             "                            </p>\n" +
             "                            <div class=\"d-flex justify-content-between\">\n" +
             // "                                <span>订单号 : <span class=\"gray_font_color\">2019061100001</span></span>\n" +
-            "                                <span>订单状态 : <span model='orderState'  class=\"course_state_open\">已支付</span></span>\n" +
+            "                                <span>订单状态 : <span model='orderState'  class=\"course_state_open\"></span></span>\n" +
             "                                <span>价格 : <span model='cost' class=\"course_price\"></span></span>\n" +
             "                            </div>\n" +
             "                        </div>\n" +

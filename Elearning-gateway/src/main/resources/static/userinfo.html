@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-    <meta charset="UTF-8">
+<!--    <meta charset="UTF-8">-->
     <title>Title</title>
     <script type="text/javascript" src="js/jquery.min.js"></script>
     <script type="text/javascript" src="js/jquery.color-2.1.2.min.js"></script>
@@ -143,10 +143,17 @@
                         <span>&ensp;参与课程</span>
                     </a>
                 </li>
-                <li>
+                <li id="courses_published_btn_li">
                     <a id="courses_published_btn" href="#/user/courses_published" class="user_slider_btn">
                         <span class="glyphicon glyphicon-cloud-upload"></span>
                         <span>&ensp;发布课程</span>
+                    </a>
+                </li>
+                <li id="teacher_apply_btn_li">
+                    <a id="teacher_apply_btn" data-toggle="modal"
+                       data-target="#apply_teacher_info_modal">
+                        <span class="glyphicon glyphicon-education"></span>
+                        <span>&ensp;讲师申请</span>
                     </a>
                 </li>
                 <li>
@@ -161,6 +168,40 @@
                         <span>&ensp;个人信息</span>
                     </a>
                 </li>
+                <!--申请教师模态-->
+                <div class="modal fade mx-auto my-auto" id="apply_teacher_info_modal">
+                    <div class="modal-dialog modal-dialog-centered" style="min-width: 40rem;">
+                        <!-- modal-dialog-centered 可以使模态框居中显示  设置宽度要在modal-dialog里指定min-width才有效 -->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">申请信息</h4>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+                            <div class="modal-body">
+                                <div id="teacher_info_apply_div" class=" d-flex flex-wrap">
+                                    <span class="my_label badge badge-secondary mx-3">教师名称 :</span>
+                                    <input model="teacherName" type="text" class="form-control d-inline"
+                                           id="teacher_apply_name"
+                                           maxlength="30">
+                                    <span class="my_label badge badge-secondary mx-3">职业 :</span>
+                                    <input model="career" type="text" class="form-control d-inline"
+                                           id="teacher_apply_career"
+                                           maxlength="10">
+                                    <span class="my_label badge badge-secondary mx-3">简介 :</span>
+                                    <textarea model="teacherIntroduction" id="teacher_apply_introduction"
+                                              class="form-control ml-3 mt-3" rows="5"
+                                              style="resize: none" placeholder="教师简介" maxlength="256"></textarea>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button id="send_teacher_apply_btn" type="button" class="btn btn-success"
+                                        data-dismiss="modal">申请
+                                </button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </ul>
         </div>
         <div id="tabs_div" class="d-flex w-100">
@@ -188,11 +229,12 @@
                         <!--                        </p>-->
                         <div class="d-flex flex-wrap" style="width: 6rem">
                             <button id="history_remuse_learn_btn" class="btn btn-primary my-1">继续学习</button>
-                            <button id="history_delete_course_btn" class="btn btn-danger my-1">删除课程</button>
+                            <button id="history_delete_course_btn" class="btn btn-danger my-1">删除记录</button>
                         </div>
                     </div>
                 </div>
-                <ul id="courses_history_pagination" class="pagination pagination-lg mx-auto " style="width: fit-content;">
+                <ul id="courses_history_pagination" class="pagination pagination-lg mx-auto "
+                    style="width: fit-content;">
                     <li class="page-item"><a class="page-link" href="#">上一页</a></li>
                     <li class="page-item"><a class="page-link" href="#">1</a></li>
                     <li class="page-item"><a class="page-link" href="#">下一页</a></li>
@@ -211,15 +253,15 @@
                                 <span class="course_status">学习中</span>
                             </p>
                             <p>
-<!--                                <span class="learn_percent">进度:23%</span>-->
+                                <!--                                <span class="learn_percent">进度:23%</span>-->
                                 <span class="ml-1">上次学到 : </span>
                                 <span class="last_chapter_label" style="color: #b9bbbe;">路由匹配原理分析与多个路由定义规范</span>
                             </p>
                         </div>
                         <p class="start_time_label p-2"><span>添加时间 : </span><span
                                 style="color:#b9bbbe;">2019-06-11</span></p>
-<!--                        <p class="learn_time_label p-2"><span>学习总时长 : </span><span style="color: #b9bbbe;">23h</span>-->
-<!--                        </p>-->
+                        <!--                        <p class="learn_time_label p-2"><span>学习总时长 : </span><span style="color: #b9bbbe;">23h</span>-->
+                        <!--                        </p>-->
                         <div class="d-flex flex-wrap" style="width: 6rem">
                             <button id="remuse_learn_btn" class="btn btn-primary my-1">继续学习</button>
                             <button id="delete_course_btn" class="btn btn-danger my-1">删除课程</button>
@@ -234,7 +276,96 @@
             </div>
 
             <div id="courses_published_page" class="tabs_content p-3">
-                <div class="reserved_div w-100 bg-dark border-bottom" style="height:3rem">
+                <div class="reserved_div w-100 bg-dark border-bottom  d-flex align-items-center justify-content-end"
+                     style="height:3rem">
+                    <div id="publish_course_div" class="edit_btn_div mr-5" style="cursor: pointer;" data-toggle="modal"
+                         data-target="#edit_course_info_modal">
+                        <span id="publish_course_btn" class="glyphicon glyphicon-plus-sign"
+                              style="color: white;font-size: 1.3rem"> </span>
+                        <span style="color: white;font-size: 1.3rem">发布新课程</span>
+                    </div>
+                    <div id="edit_teacher_info_div" class="edit_btn_div mr-5" style="cursor: pointer;"
+                         data-toggle="modal"
+                         data-target="#edit_teacher_info_modal">
+                        <span id="edit_teacher_info_btn" class="glyphicon glyphicon-edit"
+                              style="color: white;font-size: 1.3rem"> </span>
+                        <span style="color: white;font-size: 1.3rem">修改讲师信息</span>
+                    </div>
+                    <!--课程发布模态-->
+                    <div class="modal fade mx-auto my-auto" id="edit_course_info_modal">
+                        <div class="modal-dialog modal-dialog-centered" style="min-width: 40rem;">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">发布新课程</h4>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                </div>
+                                <div class="modal-body">
+                                    <div id="course_info_edit_div" class=" d-flex flex-wrap p-3">
+                                        <span class="my_label_sm badge badge-secondary">课程名称 :</span>
+                                        <input type="text" class="form-control d-inline"
+                                               id="course_name_label"
+                                               value="" maxlength="30">
+                                        <span class="my_label_sm badge badge-secondary ">价格 :</span>
+                                        <input type="number" class="form-control d-inline"
+                                               id="course_price_label"
+                                               value=""
+                                               oninput="if(value>99999)value=99999;if(value<0)value=0;">
+                                        <span class="my_label_sm badge badge-secondary">第一标签 :</span>
+                                        <input type="email" class="form-control d-inline"
+                                               id="label_first"
+                                               value="">
+                                        <span class="my_label_sm badge badge-secondary">第二标签 :</span>
+                                        <input type="text" class="form-control d-inline"
+                                               id="label_second"
+                                               value="">
+                                        <span class="my_label_sm badge badge-secondary">第三标签 :</span>
+                                        <input name="gender" type="text" class="form-control d-inline"
+                                               id="label_third"
+                                               value="">
+                                        <span class="my_label_sm badge badge-secondary">课程简介 :</span>
+                                        <textarea id="course_introduction" class="form-control " rows="5"
+                                                  style="resize: none" placeholder="未填写课程简介" maxlength="256"></textarea>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary" data-dismiss="modal">保存</button>
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--编辑教师信息模态-->
+                    <div class="modal fade mx-auto my-auto" id="edit_teacher_info_modal">
+                        <div class="modal-dialog modal-dialog-centered" style="min-width: 40rem;">
+                            <!-- modal-dialog-centered 可以使模态框居中显示  设置宽度要在modal-dialog里指定min-width才有效 -->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">编辑讲师信息</h4>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                </div>
+                                <div class="modal-body">
+                                    <div id="teacher_info_edit_div" class=" d-flex flex-wrap">
+                                        <span class="my_label badge badge-secondary mx-3">教师名称 :</span>
+                                        <input model="teacherName" type="text" class="form-control d-inline"
+                                               id="teacher_name"
+                                               maxlength="30">
+                                        <span class="my_label badge badge-secondary mx-3">职业 :</span>
+                                        <input model="career" type="text" class="form-control d-inline"
+                                               id="teacher_career"
+                                               maxlength="10">
+                                        <span class="my_label badge badge-secondary mx-3">简介 :</span>
+                                        <textarea model="teacherIntroduction" id="teacher_introduction"
+                                                  class="form-control ml-3 mt-3" rows="5"
+                                                  style="resize: none" placeholder="教师简介" maxlength="256"></textarea>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary" data-dismiss="modal">保存</button>
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div id="courses_published_box" class="d-flex p-3 w-auto  my_box">
                     <div class="courses_published_item  d-flex p-0  border-bottom justify-content-around">
@@ -305,11 +436,11 @@
             <div id="user_info_page" class="tabs_content p-3">
                 <div class="reserved_div w-100 bg-dark border-bottom  d-flex align-items-center justify-content-end"
                      style="height:3rem">
-                    <div id="edit_user_info_div" class="mr-4" style="cursor: pointer;" data-toggle="modal"
+                    <div id="edit_user_info_div" class="mr-5 edit_btn_div" style="cursor: pointer;" data-toggle="modal"
                          data-target="#edit_user_info_modal">
-                        <span id="edit_user_info_btn" class="glyphicon glyphicon-pencil"
+                        <span id="edit_user_info_btn" class="glyphicon glyphicon-edit"
                               style="color: white;font-size: 1.3rem"> </span>
-                        <span style="color: white;font-size: 1.3rem">&ensp;编辑信息</span>
+                        <span style="color: white;font-size: 1.3rem">编辑信息</span>
                     </div>
                     <div class="modal fade mx-auto my-auto" id="edit_user_info_modal">
                         <div class="modal-dialog modal-dialog-centered" style="min-width: 40rem;">
@@ -322,32 +453,32 @@
                                 <div class="modal-body">
                                     <div id="user_info_edit_div" class=" d-flex flex-wrap">
                                         <span class="my_label badge badge-secondary mx-3">名称 :</span>
-                                        <input type="text" class="form-control d-inline"
+                                        <input model="username" type="text" class="form-control d-inline"
                                                id="user_name"
-                                               value="Darod" maxlength="30">
+                                               maxlength="30">
                                         <span class="my_label badge badge-secondary mx-3">手机号 :</span>
-                                        <input type="number" class="form-control d-inline"
+                                        <input model="phone" type="number" class="form-control d-inline"
                                                id="user_phone"
-                                               value="13483813213" maxlength="11"
+                                               maxlength="11"
                                                oninput="if(value.length>11)value=value.slice(0,11)">
                                         <span class="my_label badge badge-secondary mx-3">邮箱 :</span>
-                                        <input type="email" class="form-control d-inline"
-                                               id="user_email"
-                                               value="123456@abc.com">
+                                        <input model="email" type="email" class="form-control d-inline"
+                                               id="user_email">
                                         <span class="my_label badge badge-secondary mx-3">年龄 :</span>
-                                        <input min="0" max="150" type="number" class="form-control d-inline"
-                                               id="user_age"
-                                               value="99" maxlength="3"
+                                        <input model="age" min="0" max="150" type="number"
+                                               class="form-control d-inline"
+                                               id="user_age" maxlength="3"
                                                oninput="if(value>150)value=150;if(value<0)value=0;">
                                         <span class="my_label badge badge-secondary mx-3">性别 :</span>
-                                        <select name="gender" type="text" class="form-control d-inline"
+                                        <select model="gender" name="gender" type="text" class="form-control d-inline"
                                                 id="user_gender"
                                                 value="男">
-                                            <option>男</option>
-                                            <option>女</option>
+                                            <option value="男">男</option>
+                                            <option value="女">女</option>
                                         </select>
                                         <span class="my_label badge badge-secondary mx-3">简介 :</span>
-                                        <textarea id="user_introduction" class="form-control ml-3 mt-3" rows="5"
+                                        <textarea model="userIntroduction" id="user_introduction"
+                                                  class="form-control ml-3 mt-3" rows="5"
                                                   style="resize: none" placeholder="未填写个人简介" maxlength="256"></textarea>
                                     </div>
                                 </div>
@@ -362,13 +493,15 @@
                 <div id="user_info_box" class="d-flex p-4  w-auto h-100 my_box">
                     <div id="head_modify_div">
                         <div id="head_modify_img_div">
-                            <img id="head_img_preview" src="resources/test_head.png">
+                            <img id="head_img_preview" class="user_head_img" src="resources/test_head.png">
                         </div>
                         <div class="d-flex justify-content-center mt-3">
                             <button class="btn btn-primary mx-1" data-toggle="modal"
                                     data-target="#edit_user_head_modal">修改头像
                             </button>
-                            <button class="btn btn-danger mx-1">修改密码</button>
+                            <button class="btn btn-danger mx-1" data-toggle="modal"
+                                    data-target="#edit_user_password_modal">修改密码
+                            </button>
 
                             <!-- 修改头像模态框 -->
                             <div class="modal fade mx-auto my-auto" id="edit_user_head_modal">
@@ -381,7 +514,8 @@
                                         </div>
                                         <div class="modal-body d-flex">
                                             <div id="head_upload_preview_div">
-                                                <img id="preview_head_img" src="resources/test_head.png">
+                                                <img id="preview_head_img" class="user_head_img"
+                                                     src="resources/test_head.png">
                                             </div>
                                             <div class="mx-auto my-auto">
                                                 <label id="upload_head_btn" for="id_avatar" class="p-2">选择图片</label>
@@ -398,36 +532,71 @@
                                     </div>
                                 </div>
                             </div>
+                            <!-- 修改密码 -->
+                            <div class="modal fade mx-auto my-auto" id="edit_user_password_modal">
+                                <div class="modal-dialog modal-dialog-centered" style="min-width: 40rem;">
+                                    <!-- modal-dialog-centered 可以使模态框居中显示  设置宽度要在modal-dialog里指定min-width才有效 -->
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title">修改密码</h4>
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="mx-5">
+                                                <p class="d-flex">
+                                                    <span class="my_label badge badge-secondary mx-3">旧密码 :</span>
+                                                    <input type="password" class="form-control d-inline"
+                                                           id="old_password" maxlength="20">
+                                                </p>
+                                                <p class="d-flex">
+                                                    <span class="my_label badge badge-secondary mx-3">新密码 :</span>
+                                                    <input type="password" class="form-control d-inline"
+                                                           id="new_password" maxlength="20">
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button id="apply_password_btn" type="button" class="btn btn-primary">
+                                                确定
+                                            </button>
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="d-flex align-items-start justify-content-between flex-wrap mx-auto"
+                    <div id="user_info_detail"
+                         class="d-flex align-items-start justify-content-between flex-wrap mx-auto"
                          style="width: 50rem">
                         <span class="my_label badge badge-secondary mx-3">名称 :</span>
-                        <input type="text" class="form-control d-inline"
+                        <input model="username" type="text" class="form-control d-inline"
                                id="user_name_label" disabled="disabled"
                                value="Darod">
                         <span class="my_label badge badge-secondary mx-3">用户ID :</span>
-                        <input type="text" class="form-control d-inline"
+                        <input model="userId" type="text" class="form-control d-inline"
                                id="user_id_label" disabled="disabled"
                                value="12732314">
                         <span class="my_label badge badge-secondary mx-3">手机号 :</span>
-                        <input type="text" class="form-control d-inline"
+                        <input model="phone" type="text" class="form-control d-inline"
                                id="user_phone_label" disabled="disabled"
                                value="13483813213">
                         <span class="my_label badge badge-secondary mx-3">邮箱 :</span>
-                        <input type="email" class="form-control d-inline"
+                        <input model="email" type="email" class="form-control d-inline"
                                id="user_email_label" disabled="disabled"
                                value="123456@abc.com">
                         <span class="my_label badge badge-secondary mx-3">年龄 :</span>
-                        <input type="text" class="form-control d-inline"
+                        <input model="age" type="text" class="form-control d-inline"
                                id="user_age_label" disabled="disabled"
                                value="99">
                         <span class="my_label badge badge-secondary mx-3">性别 :</span>
-                        <input type="text" class="form-control d-inline"
+                        <input model="gender" type="text" class="form-control d-inline"
                                id="user_gender_label" disabled="disabled"
                                value="男">
                         <span class="my_label badge badge-secondary mx-3">简介 :</span>
-                        <textarea id="user_introduction_label" class="form-control ml-3 mt-3" rows="5" id="comment"
+                        <textarea model="userIntroduction" id="user_introduction_label" class="form-control ml-3 mt-3"
+                                  rows="5" id="comment"
                                   disabled="disabled"
                                   style="resize: none" placeholder="未填写个人简介"></textarea>
                     </div>

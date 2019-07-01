@@ -13,7 +13,7 @@ public interface UserService {
 
     void register(UserModel userModel) throws BusinessException;
 
-    UserModel validataLogin(String telphone, String encrptPassword) throws BusinessException;
+    UserModel validateLogin(String telphone, String encryptPassword) throws BusinessException;
 
     String hello();
 }

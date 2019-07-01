@@ -53,6 +53,27 @@
     color: black;
 }
 
+
+#teacher_apply_btn {
+    width: 8rem;
+    height: 4rem;
+    background-color: limegreen;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    text-decoration: none;
+    color: white;
+    font-size: 1.2rem;
+    margin-top: 2rem;
+    cursor: pointer;
+}
+
+#teacher_apply_btn :hover {
+    text-decoration: none;
+    color: white;
+}
+
 #tabs_div {
     height: auto;
 }
@@ -72,7 +93,7 @@
 .my_box {
     display: flex;
     flex-wrap: wrap;
-    align-content:start;
+    align-content: start;
     min-height: 42rem;
 }
 
@@ -111,6 +132,18 @@
     height: 2.3rem;
 }
 
+.my_label_sm {
+    width: 20%;
+    height: auto;
+    font-size: 1rem;
+    padding: 1rem;
+    margin: 0.5rem;
+}
+
+#course_info_edit_div input, #course_info_edit_div select {
+    height: 3rem;
+}
+
 #head_img_preview {
     width: 20rem;
     height: 20rem;
@@ -128,12 +161,12 @@
     margin-top: 2rem;
 }
 
-#user_info_edit_div span {
+#user_info_edit_div span, #teacher_info_edit_div span,#teacher_info_apply_div span {
     width: 6rem;
     margin-top: 2rem;
 }
 
-#user_info_edit_div input, #user_info_edit_div select {
+#user_info_edit_div input, #user_info_edit_div select, #teacher_info_apply_div input {
     width: 10rem;
     margin-top: 2rem;
 }
@@ -176,12 +209,21 @@
     color: red;
 }
 
-.course_state_open {
-    color: limegreen;
-}
+/*.course_state_open {*/
+/*    color: limegreen;*/
+/*}*/
 
 .course_price {
     color: red;
+}
+
+#course_info_edit_div > input, #chapter_info_add_div > input {
+    width: 70%;
+    margin: 0.5rem;
+}
+
+#course_info_edit_div > textarea, #chapter_info_add_div > textarea {
+    margin: 0.5rem;
 }
 
 /*#user_slider_div .active {*/

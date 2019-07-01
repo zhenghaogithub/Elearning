@@ -25,7 +25,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserModel validataLogin(String telphone, String encrptPassword) throws BusinessException {
+    public UserModel validateLogin(String telphone, String encryptPassword) throws BusinessException {
         return null;
     }
 

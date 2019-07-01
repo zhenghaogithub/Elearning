@@ -4,6 +4,33 @@ $(document).ready(function () {
     window.onhashchange = function (e) {
         refreshByIdentifier();
     };
+    //更新个人信息背景栏
+    send_ajax({
+        type: "POST",
+        url: "/all/user/getUserCurrent",
+        success: function (data) {
+            if (data.status === 200) {
+                // $(".user_name_all").text(data.data.username);
+                // $(".user_phone_all").text(data.data.phone);
+                // //这需要后端给出具体的url格式后修改
+                // $(".user_head_img").attr("src", "http://" + window.location.host + "/" + data.data.userImage);
+                $(".user_description_all").text(data.data.userIntroduction);
+                //显示、隐藏申请讲师按钮   power的含义需要与后端确认
+                if (data.data.power === 2) {
+                    $("#courses_published_btn_li").show();
+                    $("#teacher_apply_btn_li").hide();
+                } else {
+                    $("#courses_published_btn_li").hide();
+                    $("#teacher_apply_btn_li").show();
+                }
+            } else {
+                fail_toast(data.message);
+            }
+        },
+        error: function () {
+            fail_toast("获取用户信息失败!");
+        },
+    });
     //侧边栏动画
     $("#user_slider_div .active").css({  //给当前active的侧边栏按钮添加样式
         backgroundColor: "dodgerblue",
@@ -20,14 +47,24 @@ $(document).ready(function () {
             color: $(this).hasClass("active") ? "white" : "black",
         }, 250);
     });
+    //申请按钮
+    $("#teacher_apply_btn").mouseenter(function () {
+        $(this).stop(true, false).animate({
+            backgroundColor: "#32BD32",
+        }, 250);
+    }).mouseleave(function () {
+        $(this).stop(true, false).animate({
+            backgroundColor: "#32CD32"
+        }, 250);
+    });
 
     //个人信息编辑按钮
-    $("#edit_user_info_div").mouseenter(function () {
-        $("#edit_user_info_div *").stop(true, false).animate({
-            color: "#2270ef",
+    $(".edit_btn_div").mouseenter(function () {
+        $(this).find("*").stop(true, false).animate({
+            color: "#2271f7",
         }, 100);
     }).mouseleave(function () {
-        $("#edit_user_info_div *").stop(true, false).animate({
+        $(this).find("*").stop(true, false).animate({
             color: "white",
         }, 100);
     });
@@ -68,29 +105,6 @@ $(document).ready(function () {
             $(this).text("应用");
         }
     });
-
-
-    //更新个人信息背景栏
-    send_ajax({
-        type: "POST",
-        url: "/all/user/getUserCurrent",
-        success: function (data) {
-            if (data.status === 200) {
-                // $(".user_name_all").text(data.data.username);
-                // $(".user_phone_all").text(data.data.phone);
-                // //这需要后端给出具体的url格式后修改
-                // $(".user_head_img").attr("src", "http://" + window.location.host + "/" + data.data.userImage);
-                $(".user_description_all").text(data.data.userIntroduction);
-            } else {
-                fail_toast(data.message);
-            }
-        },
-        error: function () {
-            fail_toast("获取用户信息失败!");
-        },
-    });
-
-
 });
 
 //根据标签刷新页面
@@ -175,7 +189,7 @@ function refresh_my_box(url, page_num, pageId, path, mapper) {
                 for (let i of data) {
                     if (mapper != null)
                         mapper(i);
-                    box.append($.bindModel($[pageId + "_item"], i));
+                    box.append($.bindModel($($[pageId + "_item"]), i));
                 }
             } else {
                 fail_toast(data.message);
@@ -198,7 +212,21 @@ function refresh_courses_published(page_num) {
     refresh_my_box("/teacher/course/selectCourseByUserId", page_num,
         "courses_published", ["courses"], function (data) {
             data["cost"] = data["cost"].toFixed(1) + "元";
-            data["courseState"] = data["courseState"] === 0 ? "开放中" : "审核中";
+            $.mapAndAddProperties(data, { //注意顺序不要换，mapAndAddProperties只会添加，不会其他属性
+                courseState: {
+                    target: "courseStateColor",
+                    mapper: {
+                        0: "green_font_color",
+                        1: "red_font_color",
+                    }
+                },
+            });
+            $.mapProperties(data, {
+                courseState: {
+                    0: "开放中",
+                    1: "审核中",
+                },
+            });
         });
 }
 
@@ -210,8 +238,26 @@ function refresh_order_info(page_num) {
         });
 }
 
-function refresh_user_info(page_num) {
-
+function refresh_user_info() {
+    send_ajax({
+        type: "POST",
+        url: "/all/user/getUserCurrent",
+        success: function (data) {
+            if (data.status === 200) {
+                $(".user_name_all").text(data.data.username);
+                $(".user_phone_all").text(data.data.phone);
+                $(".user_head_img").attr("src", "http://" + window.location.host + "/" + data.data.userImage);
+                //绑定其他个人信息
+                $.bindModel($("#user_info_detail"), data.data);
+                $.bindModel($("#user_info_edit_div"), data.data);
+            } else {
+                fail_toast(data.message);
+            }
+        },
+        error: function () {
+            fail_toast("获取用户信息失败!");
+        },
+    });
 }
 
 
