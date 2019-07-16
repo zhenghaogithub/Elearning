@@ -14,6 +14,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -38,19 +39,20 @@ public class GatewayApplication {
         List<MediaType> fastMediaTypes = new ArrayList<>();
         fastMediaTypes.add(MediaType.APPLICATION_JSON_UTF8);
         FastJsonConfig fastJsonConfig = new FastJsonConfig();
-        fastJsonConfig.setSerializerFeatures(SerializerFeature.PrettyFormat);
+        fastJsonConfig.setSerializerFeatures(SerializerFeature.PrettyFormat,SerializerFeature.WriteMapNullValue);
         //日期格式化
-//        fastJsonConfig.setDateFormat("yyyy-MM-dd HH:mm:ss"); 若指定全局配置 则JsonField(format=)失效
+//        fastJsonConfig.setDateFormat("yyyy-MM-dd HH:mm:ss"); //若指定全局配置 则JsonField(format=)失效
         converter.setFastJsonConfig(fastJsonConfig);
         converter.setSupportedMediaTypes(fastMediaTypes);
-        HttpMessageConverter array[] = new HttpMessageConverter[]{stringHttpMessageConverter(), converter};
-        HttpMessageConverters httpMessageConverters = new HttpMessageConverters(false, Arrays.asList(array));
+//        HttpMessageConverter array[] = new HttpMessageConverter[]{stringHttpMessageConverter(), converter};
+//        HttpMessageConverters httpMessageConverters = new HttpMessageConverters(false, Arrays.asList(array));
+        HttpMessageConverters httpMessageConverters = new HttpMessageConverters(converter);
         return httpMessageConverters;
     }
 
-    private StringHttpMessageConverter stringHttpMessageConverter() {
-        StringHttpMessageConverter stringHttpMessageConverter = new StringHttpMessageConverter();
-        stringHttpMessageConverter.setWriteAcceptCharset(false);
-        return stringHttpMessageConverter;
-    }
+//    private StringHttpMessageConverter stringHttpMessageConverter() {
+//        StringHttpMessageConverter stringHttpMessageConverter = new StringHttpMessageConverter();
+//        stringHttpMessageConverter.setWriteAcceptCharset(false);
+//        return stringHttpMessageConverter;
+//    }
 }

@@ -3,10 +3,11 @@ package org.darod.elearning.gateway.controller;
 import io.swagger.annotations.Api;
 import org.darod.elearning.common.dto.UserModel;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 
 
 /**
@@ -19,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Api(tags = "测试资源")
 public class TestController {
 
-    @RequestMapping(value = "/api/all/user/getUserCurrent", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
+    @RequestMapping(value = "/api/user/user/getUserCurrent", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
     @ResponseBody
     public String getUserInfo() {
         return "{\n" +
@@ -39,7 +40,7 @@ public class TestController {
                 "}\n";
     }
 
-    @RequestMapping(value = "/api/all/course/selectCourseLearned", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
+    @RequestMapping(value = "/api/user/learn/selectLearnByUserId", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
     @ResponseBody
     public String getCourseLearned() {
 //        return "{\n" +
@@ -50,7 +51,7 @@ public class TestController {
 //                "\t\t\"courses\":[{\n" +
 //                "\t\t\t\"courseId\":1,\n" +
 //                "\t\t\t\"courseName\":\"ASP.NET-MVC网站开发【实战与技能详解】\",\n" +
-//                "\t\t\t\"courserImage\":\"https://10.url.cn/qqcourse_logo_ng/ajNVdqHZLLC08B9HDxI6BrAyznCvqVuyYabPqAElDJrJlorKZy8iamBvsbHrJElh8yRvQt6nicaXc/356?tp=webp\",\n" +
+//                "\t\t\t\"courseImage\":\"https://10.url.cn/qqcourse_logo_ng/ajNVdqHZLLC08B9HDxI6BrAyznCvqVuyYabPqAElDJrJlorKZy8iamBvsbHrJElh8yRvQt6nicaXc/356?tp=webp\",\n" +
 //                "\t\t\t\"cost\":5,\n" +
 //                "\t\t\t\"courseIntroduction\":\"没有\",\n" +
 //                "\t\t\t\"labelFirst\":\"后端开发\",\n" +
@@ -80,8 +81,8 @@ public class TestController {
                 "\t\t\"total\":4,\n" +
                 "\t\t\"courses\":[{\n" +
                 "\t\t\t\"courseId\":1,\n" +
-                "\t\t\t\"courseName\":\"ASP.NET-MVC网站开发【实战与技能详解】\",\n" +
-                "\t\t\t\"courserImage\":\"https://10.url.cn/qqcourse_logo_ng/ajNVdqHZLLC08B9HDxI6BrAyznCvqVuyYabPqAElDJrJlorKZy8iamBvsbHrJElh8yRvQt6nicaXc/356?tp=webp\",\n" +
+                "\t\t\t\"courseName\":\"课程1\",\n" +
+                "\t\t\t\"courseImage\":\"https://10.url.cn/qqcourse_logo_ng/ajNVdqHZLLC08B9HDxI6BrAyznCvqVuyYabPqAElDJrJlorKZy8iamBvsbHrJElh8yRvQt6nicaXc/356?tp=webp\",\n" +
                 "\t\t\t\"cost\":5,\n" +
                 "\t\t\t\"courseIntroduction\":\"没有\",\n" +
                 "\t\t\t\"labelFirst\":\"后端开发\",\n" +
@@ -104,7 +105,7 @@ public class TestController {
                 "\t\t\t{\n" +
                 "\t\t\t\"courseId\":1,\n" +
                 "\t\t\t\"courseName\":\"ASP.NET-MVC网站开发【实战与技能详解】\",\n" +
-                "\t\t\t\"courserImage\":\"https://10.url.cn/qqcourse_logo_ng/ajNVdqHZLLC08B9HDxI6BrAyznCvqVuyYabPqAElDJrJlorKZy8iamBvsbHrJElh8yRvQt6nicaXc/356?tp=webp\",\n" +
+                "\t\t\t\"courseImage\":\"https://10.url.cn/qqcourse_logo_ng/ajNVdqHZLLC08B9HDxI6BrAyznCvqVuyYabPqAElDJrJlorKZy8iamBvsbHrJElh8yRvQt6nicaXc/356?tp=webp\",\n" +
                 "\t\t\t\"cost\":5,\n" +
                 "\t\t\t\"courseIntroduction\":\"没有\",\n" +
                 "\t\t\t\"labelFirst\":\"后端开发\",\n" +
@@ -127,7 +128,7 @@ public class TestController {
                 "\t\t\t{\n" +
                 "\t\t\t\"courseId\":1,\n" +
                 "\t\t\t\"courseName\":\"ASP.NET-MVC网站开发【实战与技能详解】\",\n" +
-                "\t\t\t\"courserImage\":\"https://10.url.cn/qqcourse_logo_ng/ajNVdqHZLLC08B9HDxI6BrAyznCvqVuyYabPqAElDJrJlorKZy8iamBvsbHrJElh8yRvQt6nicaXc/356?tp=webp\",\n" +
+                "\t\t\t\"courseImage\":\"https://10.url.cn/qqcourse_logo_ng/ajNVdqHZLLC08B9HDxI6BrAyznCvqVuyYabPqAElDJrJlorKZy8iamBvsbHrJElh8yRvQt6nicaXc/356?tp=webp\",\n" +
                 "\t\t\t\"cost\":5,\n" +
                 "\t\t\t\"courseIntroduction\":\"没有\",\n" +
                 "\t\t\t\"labelFirst\":\"后端开发\",\n" +
@@ -150,7 +151,7 @@ public class TestController {
                 "\t\t\t{\n" +
                 "\t\t\t\"courseId\":1,\n" +
                 "\t\t\t\"courseName\":\"ASP.NET-MVC网站开发【实战与技能详解】\",\n" +
-                "\t\t\t\"courserImage\":\"https://10.url.cn/qqcourse_logo_ng/ajNVdqHZLLC08B9HDxI6BrAyznCvqVuyYabPqAElDJrJlorKZy8iamBvsbHrJElh8yRvQt6nicaXc/356?tp=webp\",\n" +
+                "\t\t\t\"courseImage\":\"https://10.url.cn/qqcourse_logo_ng/ajNVdqHZLLC08B9HDxI6BrAyznCvqVuyYabPqAElDJrJlorKZy8iamBvsbHrJElh8yRvQt6nicaXc/356?tp=webp\",\n" +
                 "\t\t\t\"cost\":5,\n" +
                 "\t\t\t\"courseIntroduction\":\"没有\",\n" +
                 "\t\t\t\"labelFirst\":\"后端开发\",\n" +
@@ -184,7 +185,7 @@ public class TestController {
                 "\t\"data\":{\n" +
                 "\t\t\"courseId\":1,\n" +
                 "\t\t\"courseName\":\"\",\n" +
-                "\t\t\"courserImage\":\"\",\n" +
+                "\t\t\"courseImage\":\"\",\n" +
                 "\t\t\"cost\":1,\n" +
                 "\t\t\"courseIntroduction\":\"courseIntroduction\",\n" +
                 "\t\t\"labelFirst\":\"labelFirst\",\n" +
@@ -237,8 +238,8 @@ public class TestController {
                 "\t\t\"total\":4,\n" +
                 "\t\t\"courses\":[{\n" +
                 "\t\t\t\"courseId\":1,\n" +
-                "\t\t\t\"courseName\":\"ASP.NET-MVC网站开发【实战与技能详解】\",\n" +
-                "\t\t\t\"courserImage\":\"https://10.url.cn/qqcourse_logo_ng/ajNVdqHZLLC08B9HDxI6BrAyznCvqVuyYabPqAElDJrJlorKZy8iamBvsbHrJElh8yRvQt6nicaXc/356?tp=webp\",\n" +
+                "\t\t\t\"courseName\":\"课程1\",\n" +
+                "\t\t\t\"courseImage\":\"https://10.url.cn/qqcourse_logo_ng/ajNVdqHZLLC08B9HDxI6BrAyznCvqVuyYabPqAElDJrJlorKZy8iamBvsbHrJElh8yRvQt6nicaXc/356?tp=webp\",\n" +
                 "\t\t\t\"cost\":998,\n" +
                 "\t\t\t\"courseIntroduction\":\"courseIntroduction\",\n" +
                 "\t\t\t\"labelFirst\":\"后端开发\",\n" +
@@ -251,8 +252,8 @@ public class TestController {
                 "\t\t},\n" +
                 "\t\t{\n" +
                 "\t\t\t\"courseId\":1,\n" +
-                "\t\t\t\"courseName\":\"ASP.NET-MVC网站开发【实战与技能详解】\",\n" +
-                "\t\t\t\"courserImage\":\"https://10.url.cn/qqcourse_logo_ng/ajNVdqHZLLC08B9HDxI6BrAyznCvqVuyYabPqAElDJrJlorKZy8iamBvsbHrJElh8yRvQt6nicaXc/356?tp=webp\",\n" +
+                "\t\t\t\"courseName\":\"课程1\",\n" +
+                "\t\t\t\"courseImage\":\"https://10.url.cn/qqcourse_logo_ng/ajNVdqHZLLC08B9HDxI6BrAyznCvqVuyYabPqAElDJrJlorKZy8iamBvsbHrJElh8yRvQt6nicaXc/356?tp=webp\",\n" +
                 "\t\t\t\"cost\":998,\n" +
                 "\t\t\t\"courseIntroduction\":\"courseIntroduction\",\n" +
                 "\t\t\t\"labelFirst\":\"后端开发\",\n" +
@@ -268,48 +269,21 @@ public class TestController {
                 "}";
     }
 
-    @RequestMapping(value = "/api/teacher/course/selectCourseByCourseId", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
+    @RequestMapping(value = "/api/teacher/course/selectCourseByCourseId", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
     @ResponseBody
     public String selectCourseByCourseId() {
         return "{\n" +
-                "\t\"status\":200,\n" +
-                "\t\"message\":\"ok\",\n" +
-                "\t\"data\":{\n" +
-                "\t\t\"courseId\":1,\n" +
-                "\t\t\"courseName\":\"ASP.NET-MVC网站开发【实战与技能详解】\",\n" +
-                "\t\t\"courserImage\":\"https://10.url.cn/qqcourse_logo_ng/ajNVdqHZLLC08B9HDxI6BrAyznCvqVuyYabPqAElDJrJlorKZy8iamBvsbHrJElh8yRvQt6nicaXc/356?tp=webp\",\n" +
-                "\t\t\"cost\":998,\n" +
-                "\t\t\"courseIntroduction\":\"您想学最流行ASP.NET-MVC框架开发技术吗？您选对了课程！本课程由常老师和技术团队原创开发和精心录制，是从基础、进阶，再到项目，学习ASP.NE-MVC开发的系统课程，视频+讲义+代码+配套练习+在线答疑！\",\n" +
-                "\t\t\"labelFirst\":\"后端开发\",\n" +
-                "\t\t\"labelSecond\":\"网站搭建\",\n" +
-                "\t\t\"labelThird\":\".net\",\n" +
-                "\t\t\"courseTime\":\"2019-01-01\",\n" +
-                "\t\t\"learnTotal\":99,\n" +
-                "\t\t\"commentTotal\":123,\n" +
-                "\t\t\"courseState\":0,\t\n" +
-                "\t\t\"chapters\":[{\n" +
-                "\t\t\t\"chapterId\":1,\n" +
-                "\t\t\t\"chapterName\":\"APS.NET-MVC课程介绍\",\n" +
-                "\t\t\t\"chapterNumber\":1,\n" +
-                "\t\t\t\"chapterIntroduction\":\"chapterIntroduction\",\n" +
-                "\t\t\t\"chapterUrl\":\"chapterUrl\",\n" +
-                "\t\t\t\"chapterTime\":\"chapterTime\",\n" +
-                "\t\t\t\"chapterLength\":\"3:12\",\n" +
-                "\t\t\t\"chapterState\":0\n" +
-                "\t\t},\n" +
-                "\t\t{\n" +
-                "\t\t\t\"chapterId\":2,\n" +
-                "\t\t\t\"chapterName\":\"APS.NET-MVC概述\",\n" +
-                "\t\t\t\"chapterNumber\":2,\n" +
-                "\t\t\t\"chapterIntroduction\":\"chapterIntroduction\",\n" +
-                "\t\t\t\"chapterUrl\":\"chapterUrl\",\n" +
-                "\t\t\t\"chapterTime\":\"chapterTime\",\n" +
-                "\t\t\t\"chapterLength\":\"13:32\",\n" +
-                "\t\t\t\"chapterState\":1\n" +
-                "\t\t}\n" +
-                "\t\t]\n" +
-                "\t}\n" +
+                "\t\"message\":\"您已被封禁讲师权限,剩余时间：2小时\",\n" +
+                "\t\"status\":401\n" +
                 "}";
+    }
+
+
+    @RequestMapping(value = "/user/user/uploadUserImage",method = RequestMethod.POST)
+    @ResponseBody
+    public String updateUserImage(@RequestParam String token, @RequestParam(value = "userImageFile", required = false) MultipartFile imageFile, HttpServletRequest request) throws IOException {
+        System.out.println(token);
+        return "123";
     }
 
 //    @RequestMapping(value = "/api/teacher/course/selectCourseByCourseId", method = RequestMethod.POST, produces = "application/json;charset=utf-8")

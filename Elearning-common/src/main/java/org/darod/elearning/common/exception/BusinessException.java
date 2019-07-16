@@ -5,15 +5,15 @@ package org.darod.elearning.common.exception;
  * @version 1.0
  * @date 2019/6/20 0020 9:06
  */
-public class BusinessException extends Exception implements CommonError {
+public class BusinessException extends RuntimeException implements CommonError {
     private CommonError commonError;
 
-    public BusinessException(CommonError commonError){
+    public BusinessException(CommonError commonError) {
         super();
         this.commonError = commonError;
     }
 
-    public BusinessException(CommonError commonError,String errMsg){
+    public BusinessException(CommonError commonError, String errMsg) {
         super();
         this.commonError = commonError;
         this.commonError.setErrMsg(errMsg);

@@ -2,7 +2,39 @@ $(document).ready(function () {
     const user_flex = $("#user_flex");//隐藏的悬浮窗
     const head_div = $("#head_div");//用户头像图片div
     const user_head = $("#user_head");//用户头像图片
+    window.debug = true;
 
+    if (localStorage.getItem("token") == null) {
+        window.location.href = "login_page.html";
+    } else {
+        window.token = localStorage.getItem("token");
+    }
+
+    // //获取用户token  测试用
+    // send_ajax({
+    //     type: "POST",
+    //     url: "api/all/user/login",
+    //     data: {
+    //         username: "user",
+    //         password: "123456"
+    //     },
+    //     async: false,
+    //     success: function (data) {
+    //         if (data.status === 200) {
+    //             window.token = data.data.token;
+    //         } else {
+    //             fail_toast(data.message);
+    //         }
+    //     },
+    //     error: function () {
+    //         fail_toast("获取用户信息失败!");
+    //     },
+    // });
+
+    //更新用户悬浮窗
+    updateUserFlex();
+    //设置定期获取消息数量的监听器 暂时只获取一次
+    updateMessageCount();
 
     //自定义按钮悬浮
     $(".my_button").attr("old_color", function () {
@@ -64,8 +96,6 @@ $(document).ready(function () {
             user_flex.fadeOut("fast");
         }
     });
-    //更新用户悬浮窗
-    updateUserFlex();
 
 
     //判断鼠标是否移出判定区(判定区为用户头像区域加上悬浮窗区域)
@@ -78,6 +108,26 @@ $(document).ready(function () {
         const y2 = y1 + element.height(); //根据4个点判断鼠标是否移出装备box框
         return !(x <= x1 || x >= x2 || y <= y1 || y >= y2);
     }
+
+    //获取消息数量并更新监听器
+    function updateMessageCount() {
+        send_ajax_quick({
+            url: "api/user/message/selectTotalUnreadMessage",
+            option: "获取消息数量",
+            success: function (data) {
+                if (data.total <= 0) {
+                    $("#alarm_ico_count").text(data.total);
+                    $("#alarm_ico_count").hide();
+                } else if (data.total > 0 && data.total < 100) {
+                    $("#alarm_ico_count").text(data.total);
+                    $("#alarm_ico_count").show();
+                } else {
+                    $("#alarm_ico_count").text(99);
+                    $("#alarm_ico_count").hide();
+                }
+            }
+        })
+    }
 });
 
 
@@ -85,19 +135,40 @@ $(document).ready(function () {
 window.updateUserFlex = function () {
     send_ajax({
         type: "POST",
-        url: "/api/all/user/getUserCurrent",
+        url: "api/user/user/getUserCurrent",
         success: function (data) {
             if (data.status === 200) {
                 $(".user_name_all").text(data.data.username);
                 $(".user_phone_all").text(data.data.phone);
                 //这需要后端给出具体的url格式后修改
-                $(".user_head_img").attr("src", "http://" + window.location.host + "/" + data.data.userImage);
+                if (window.debug == false) {  //由于可能部署在不同域名下 需要变为绝对路径
+                    $(".user_head_img").attr("src", data.data.userImage);
+                } else {
+                    $(".user_head_img").attr("src", "http://120.55.165.31:8080/Elearning/" + data.data.userImage);
+                }
+                window.userId = data.data.userId;
+                const powerJson = $.parseJSON(data.data.power);
+                if (powerJson != null && powerJson.allTeacher == "allow") {
+                    window.isTeacher = true;
+                    $("#open_live_btn").off("click").on("click", function () {
+                        window.open("http://182.92.1.116:3000/livecreator?t=" + window.token);
+                    });
+                } else {
+                    window.isTeacher = false;
+                    $("#open_live_btn").off("click").on("click", function () {
+                        fail_toast("您还不是讲师，无法开启直播");
+                    });
+                }
             } else {
                 fail_toast(data.message);
+                //如果登录失效 返回登录页面
+                window.location.href = "login_page.html";
             }
         },
         error: function () {
             fail_toast("获取用户信息失败!");
+            //如果登录失效 返回登录页面
+            window.location.href = "login_page.html";
         },
     });
 };
@@ -136,3 +207,50 @@ window.warning_toast = function (message, time) {
 window.info_toast = function (message, time) {
     toast(message, 'alert-info', time);
 };
+
+window.label_map = new Map();
+label_map.set("前端开发", ["HTML/CSS", "JavaScript", "Vue.js", "React.JS", "Angular", "Node.js", "jQuery", "Bootstrap", "其它"]);
+label_map.set("后端开发", ["Java", "SpringBoot", "Spring Cloud", "Python", "Go", "C", "C++", "C#", "其它"]);
+label_map.set("前沿技术", ["微服务", "区块链", "机器学习", "深度学习", "计算机视觉", "自然语言处理", "数据分析&挖掘", "其他"]);
+label_map.set("数据库", ["MySQL", "Redis", "MangoDB", "Oracle", "SQL Sever", "NoSql", "其他"]);
+label_map.set("云计算&大数据", ["大数据", "Hadoop", "Spark", "Hbase", "Storm", "云计算", "Docker", "其他"]);
+label_map.set("运维&测试", ["运维", "中间件", "运维工具", "Linux", "功能测试", "性能测试", "安全测试", "其他"]);
+
+function addLabelListener(div) {
+    // div.children("select:first").each(updateLabel);
+    div.children("select:first").on("change", function () {
+        updateLabel(div);
+    });
+}
+
+function updateLabel(div) {
+    const first_label = div.children("select:eq(0)");
+    if (first_label.val() != null) {
+        const second_label = div.children("select:eq(1)");
+        second_label.empty();
+        for (let label of window.label_map.get(first_label.val())) {
+            second_label.append("<option value='" + label + "'>" + label + "</option>");
+        }
+    }
+}
+
+function isStringBlank(str) {
+    return str == null || str == "" || str.trim() == "";
+}
+
+//搜索
+function setSearchKey() {
+    let keyWord = $("input[name='search-box']").val();
+    localStorage.setItem("search-key", keyWord);
+}
+
+//退出登录
+function logout() {
+    send_ajax_quick({
+        url: "api/user/user/logout",
+        option: "退出登录",
+        success: function (data) {
+            window.location.href = "login_page.html";
+        }
+    })
+}

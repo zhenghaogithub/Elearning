@@ -17,14 +17,14 @@ import java.io.Serializable;
  */
 @Data
 public class UserModel implements Serializable {
-    private Integer id;
+    private Integer userId;
     @NotBlank(message = "用户名不能为空")
     private String name;
     @NotNull(message = "性别不能为空")
-    private Byte gender;
+    private Integer gender;
     @NotNull(message = "年龄不能为空")
-    @Min(value = 0,message = "年龄必须大于0岁")
-    @Max(value = 150,message = "年龄不能大于150岁")
+    @Min(value = 0, message = "年龄必须大于0岁")
+    @Max(value = 150, message = "年龄不能大于150岁")
     private Integer age;
     @NotBlank(message = "手机号不能为空")
     private String telphone;
@@ -33,11 +33,11 @@ public class UserModel implements Serializable {
     @NotBlank(message = "密码不能为空")
     @JSONField(serialize = false)
     private String encryptPassword;
-
     private String email;
     @NotNull(message = "头像URL不能为空")
     @URL(message = "URL格式不正确")
     private String headUrl;
     @NotNull(message = "用户状态不能为空")
-    private Byte userState;
+    private Integer userState;
+    private String userDescribtion;
 }

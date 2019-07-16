@@ -1,25 +1,20 @@
 package org.darod.elearning.gateway.controller;
 
-import com.alibaba.fastjson.JSON;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.apache.shiro.SecurityUtils;
 import org.darod.elearning.common.dto.CommonCountModel;
 import org.darod.elearning.common.dto.CourseModel;
 import org.darod.elearning.common.exception.BusinessException;
-import org.darod.elearning.common.exception.EmException;
 import org.darod.elearning.common.response.CommonResponse;
 import org.darod.elearning.common.response.ResponseUtils;
 import org.darod.elearning.common.service.user.UserLearnService;
 import org.darod.elearning.common.service.user.UserService;
-import org.darod.elearning.gateway.dataobject.UserDO;
 import org.darod.elearning.gateway.serviceimpl.CourseServiceImpl;
+import org.darod.elearning.common.dto.CoursePageModel;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import javax.security.auth.Subject;
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -29,6 +24,7 @@ import java.util.List;
  */
 @RestController
 @Api(tags = "课程资源接口")
+@RequestMapping("/course")
 public class CourseController {
     @Autowired
     UserService userService;
@@ -37,10 +33,38 @@ public class CourseController {
     @Autowired
     CourseServiceImpl courseService;
 
-    @GetMapping("/course")
+    @GetMapping("/courses")
     @ApiOperation(value = "获取所有课程", httpMethod = "GET")
-    public CommonResponse getAllCourse(@RequestParam("page") Integer page, @RequestParam("row") Integer row) throws BusinessException {
-        CommonCountModel<List<CourseModel>> allCourseInfo = courseService.getAllCourseInfo(page, row);
+    public CommonResponse getAllCourse(CoursePageModel coursePageModel){
+        CommonCountModel<List<CourseModel>> allCourseInfo = courseService.getCourseInfoLimited(coursePageModel);
         return ResponseUtils.getOKResponse(allCourseInfo.toJSONObject("courses"));
+    }
+
+    @GetMapping("/courses/free")
+    @ApiOperation(value = "获取所有免费课程", httpMethod = "GET")
+    @Deprecated
+    public CommonResponse getAllFreeCourse(CoursePageModel coursePageModel){
+        CommonCountModel<List<CourseModel>> allCourseInfo = courseService.getAllCourseInfo(coursePageModel.getPage(), coursePageModel.getRow());
+        return ResponseUtils.getOKResponse(allCourseInfo.toJSONObject("courses"));
+    }
+//    @GetMapping("/courses/free")
+//    @ApiOperation(value = "获取所有免费课程", httpMethod = "GET")
+//    public CommonResponse getAllFreeCourse(CoursePageModel pageModel) throws BusinessException {
+//        CommonCountModel<List<CourseModel>> allCourseInfo = courseService.getAllCourseInfo(pageModel.getPage(), pageModel.getRow());
+//        return ResponseUtils.getOKResponse(allCourseInfo.toJSONObject("courses"));
+//    }
+
+    @ModelAttribute
+    public CoursePageModel pageModel(@Valid CoursePageModel coursePageModel)
+    {
+//        if (bindingResult.hasErrors()) {
+//            throw new BusinessException(EmException.PARAMETER_VALIDATION_ERROR, bindingResult.getFieldError().getDefaultMessage());
+//        }
+        //如果没有指定分页信息，默认不分页
+        if (coursePageModel.getPage() == null || coursePageModel.getRow() == null) {
+            coursePageModel.setPage(0);
+            coursePageModel.setRow(9999);
+        }
+        return coursePageModel;
     }
 }

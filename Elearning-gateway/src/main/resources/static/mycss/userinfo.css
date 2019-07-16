@@ -44,7 +44,7 @@
     text-decoration: none;
     color: black;
     font-size: 1.2rem;
-    margin-top: 2rem;
+    margin-bottom: 2rem;
 
 }
 
@@ -65,7 +65,7 @@
     text-decoration: none;
     color: white;
     font-size: 1.2rem;
-    margin-top: 2rem;
+    margin-bottom: 2rem;
     cursor: pointer;
 }
 
@@ -76,6 +76,7 @@
 
 #tabs_div {
     height: auto;
+    margin-left: 11rem;
 }
 
 .tabs_content {
@@ -130,8 +131,8 @@
 .my_label {
     font-size: 1rem;
     height: 2.4rem;
-    text-align:center;
-    line-height:2.4rem;
+    text-align: center;
+    line-height: 2.4rem;
     padding: 0;
 }
 
@@ -164,7 +165,7 @@
     margin-top: 2rem;
 }
 
-#user_info_edit_div span, #teacher_info_edit_div span,#teacher_info_apply_div span {
+#user_info_edit_div span, #teacher_info_edit_div span, #teacher_info_apply_div span, #user_info_edit_div button {
     width: 6rem;
     margin-top: 2rem;
 }
@@ -220,7 +221,12 @@
     color: red;
 }
 
-#course_info_edit_div > input, #chapter_info_add_div > input {
+#main_div section {
+    width: 95rem;
+    margin: 0 auto;
+}
+
+#course_info_edit_div > input, #course_info_edit_div > select, #chapter_info_add_div > input {
     width: 70%;
     margin: 0.5rem;
 }
@@ -229,10 +235,17 @@
     margin: 0.5rem;
 }
 
-/*#user_slider_div .active {*/
-/*    background-color: dodgerblue;*/
-/*    color: white;*/
-/*}*/
+.course_info_desc, .published_info_desc, .order_info_desc {
+    width: 40rem;
+}
+
+#user_slider_div {
+    position: absolute;
+}
+
+#search_bar {
+    margin-left: 35rem;
+}
 
 
 @media screen and (max-device-width: 960px) {
@@ -241,8 +254,16 @@
         height: 3.5rem;
     }
 
+    #search_bar {
+        margin-left: 0;
+    }
+
     #user_slider_div ul {
-        margin: 0 0 0 0 !important;
+        margin-left: 5px !important;
+    }
+
+    #tabs_div {
+        margin-left: 4rem;
     }
 
     #main_div {
@@ -250,7 +271,168 @@
         margin: 0 auto;
     }
 
+    #main_div section {
+        margin: 0 0;
+        width: 100% !important;
+    }
+
+    .course_info_desc, .order_info_desc, .published_info_desc {
+        width: auto;
+        padding: 0 !important;
+    }
+
     #back_img_div {
         min-width: 0 !important;
     }
+
+    .user_slider_btn {
+        width: 4rem;
+        height: 3rem;
+        font-size: 1rem;
+    }
+
+    #teacher_apply_btn {
+        width: 4rem;
+        height: 3rem;
+        font-size: 1rem;
+    }
+
+    .modal-dialog {
+        min-width: 0 !important;
+    }
+
+    .modal-body {
+        padding: 0;
+    }
+
+    .my_label_sm, .my_label {
+        margin: 1% !important;
+        font-size: 14px;
+        height: 3rem;
+        line-height: 3rem;
+        padding: 0;
+        width: 23% !important;
+        /*padding: 14px 0 14px 0;*/
+    }
+
+    #user_info_edit_div input, #user_info_edit_div select, #teacher_info_edit_div input, #teacher_info_apply_div input, #course_info_edit_div input, #course_info_edit_div select {
+        width: 70% !important;
+        height: 3rem;
+        margin: 1% !important;
+    }
+
+    .pagination li a {
+        font-size: 1rem !important;
+    }
+
+    .reserved_div span {
+        font-size: 1rem !important;
+    }
+
+    .reserved_div > div {
+        margin-right: 1rem !important;
+    }
+
+    .course_img {
+        width: 100% !important;
+        height: 8rem !important;
+    }
+
+    .item {
+        height: fit-content;
+    }
+
+    .courses_info_item > div:first-of-type {
+        padding: 0 !important;
+    }
+
+    .courses_info_item > div:first-of-type > p:first-of-type {
+        margin-bottom: 0;
+    }
+
+    .courses_info_item > div:first-of-type > p:nth-child(2) {
+        display: none;
+    }
+
+    .start_time_label {
+        margin-bottom: 0;
+    }
+
+    .button-div {
+        width: 100% !important;
+    }
+
+    .my_box {
+        min-height: 0;
+    }
+
+    #user_info_detail {
+        width: 100% !important;
+    }
+
+    #head_img_preview {
+        width: 5rem;
+        height: 5rem;
+    }
+
+    #head_modify_div {
+        width: 100%;
+        display: flex;
+        align-items: center;
+    }
+
+    #user_info_box {
+        padding: 0 !important;
+    }
+
+    #user_info_detail {
+        padding: 0.5rem;
+    }
+
+    #user_info_detail input, #user_info_detail span {
+        margin-top: 1rem !important;
+        height: 3rem;
+    }
+    #user_info_detail input {
+        width: 70% !important;
+    }
+
+
+    #user_introduction_label {
+        margin: 0 !important;
+    }
+
+    .course_learn_info {
+        display: none !important;
+    }
+
+    #preview_head_img {
+        width: 10rem;
+        height: 10rem;
+    }
+
+    .published_info_desc > p {
+        text-align: center;
+    }
+    #edit_user_password_modal input,#bind_phone_modal input{
+        margin: 1% !important;
+        font-size: 14px;
+        height: 3rem;
+        padding: 0;
+    }
+    #bind_phone_modal p button{
+        height: 3rem;
+        width: 80% !important;
+    }
+    #user_big_head_img{
+        width: 7rem;
+        height: 7rem;
+    }
+    #user_short_info_div > div:first-of-type{
+        margin-left: 0 !important;
+    }
+    /*.sm-hide {*/
+    /*    display: none !important;*/
+    /*}*/
+
 }

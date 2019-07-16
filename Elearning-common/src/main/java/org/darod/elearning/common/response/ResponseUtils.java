@@ -15,6 +15,10 @@ public class ResponseUtils {
     public static final String MESSAGE_FAILURE = "失败";
     public static final String MESSAGE_UNKNOWN = "未知错误";
 
+    public static CommonResponse getOKResponse() {
+        return new CommonResponse(STATUS_OK, MESSAGE_OK, null);
+    }
+
     public static CommonResponse getOKResponse(Object data) {
         return new CommonResponse(STATUS_OK, MESSAGE_OK, data);
     }

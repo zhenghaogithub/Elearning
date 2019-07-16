@@ -11,6 +11,9 @@
     <script src="js/bootstrap.min.js"></script>
     <script>
         $(document).ready(function () {
+            sessionStorage.setItem("loginpage", "log");
+
+
             $("#login_button").click(function () {
                 $("#login_button").addClass("weui-btn_loading");
                 $("#login_button").text("正在登录");

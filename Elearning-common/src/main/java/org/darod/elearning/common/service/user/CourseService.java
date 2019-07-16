@@ -2,6 +2,7 @@ package org.darod.elearning.common.service.user;
 
 import org.darod.elearning.common.dto.CommonCountModel;
 import org.darod.elearning.common.dto.CourseModel;
+import org.darod.elearning.common.dto.CoursePageModel;
 
 import java.util.List;
 
@@ -12,4 +13,10 @@ import java.util.List;
  */
 public interface CourseService {
     CommonCountModel<List<CourseModel>> getAllCourseInfo(int page, int row);
+
+    CommonCountModel<List<CourseModel>> getAllFreeCourseInfo(int page, int row);
+
+    CommonCountModel<List<CourseModel>> getCourseInfoLimited(CoursePageModel coursePageModel);
+
+    CourseModel getCourseById(Integer courseId);
 }

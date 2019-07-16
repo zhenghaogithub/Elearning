@@ -1,8 +1,16 @@
 package org.darod.elearning.gateway.configuration;
 
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
+import org.apache.shiro.mgt.RememberMeManager;
+import org.apache.shiro.spring.LifecycleBeanPostProcessor;
+import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
+import org.apache.shiro.web.mgt.CookieRememberMeManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.apache.shiro.web.servlet.SimpleCookie;
+import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
+import org.darod.elearning.gateway.cache.RedisCacheManager;
+import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.context.annotation.Bean;
 import org.apache.shiro.mgt.SecurityManager;
 import org.springframework.context.annotation.Configuration;
@@ -33,6 +41,7 @@ public class ShiroConfiguration {
         filterChainDefinitionMap.put("/mycss/**", "anon");
         filterChainDefinitionMap.put("/myjs/**", "anon");
         filterChainDefinitionMap.put("/resources/**", "anon");
+        filterChainDefinitionMap.put("/user/user", "anon");
         filterChainDefinitionMap.put("/swagger-ui.html", "anon");
 //        filterChainDefinitionMap.put("/webjars/**", "anon");
         filterChainDefinitionMap.put("/swagger-resources/**", "anon");
@@ -53,10 +62,14 @@ public class ShiroConfiguration {
      * 注入 securityManager
      */
     @Bean
-    public SecurityManager securityManager(CustomRealm realm) {
+    public SecurityManager securityManager(CustomRealm realm, CustomSessionManager customSessionManager,
+                                           RedisCacheManager redisCacheManager, RememberMeManager rememberMeManager) {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         // 设置realm.
         securityManager.setRealm(realm);
+        securityManager.setSessionManager(customSessionManager);
+        securityManager.setCacheManager(redisCacheManager);
+        securityManager.setRememberMeManager(rememberMeManager);
         return securityManager;
     }
 
@@ -74,10 +87,61 @@ public class ShiroConfiguration {
     }
 
     @Bean
-    HashedCredentialsMatcher hashedCredentialsMatcher() {
+    public HashedCredentialsMatcher hashedCredentialsMatcher() {
         HashedCredentialsMatcher hashedCredentialsMatcher = new HashedCredentialsMatcher();
         hashedCredentialsMatcher.setHashAlgorithmName("md5");
         hashedCredentialsMatcher.setHashIterations(1);
         return hashedCredentialsMatcher;
+    }
+
+    @Bean
+    public LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
+        return new LifecycleBeanPostProcessor();
+    }
+
+    @Bean
+    public DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator() {
+        DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator = new DefaultAdvisorAutoProxyCreator();
+        defaultAdvisorAutoProxyCreator.setProxyTargetClass(true);
+        return defaultAdvisorAutoProxyCreator;
+    }
+
+    @Bean
+    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(SecurityManager securityManager) {
+        AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor = new AuthorizationAttributeSourceAdvisor();
+        authorizationAttributeSourceAdvisor.setSecurityManager(securityManager);
+        return authorizationAttributeSourceAdvisor;
+    }
+
+    //    @Bean
+//    public DefaultWebSessionManager defaultWebSessionManager(RedisSessionDao redisSessionDao){
+//        DefaultWebSessionManager defaultWebSessionManager = new DefaultWebSessionManager();
+//        defaultWebSessionManager.setSessionDAO(redisSessionDao);
+//        return defaultWebSessionManager;
+//    }
+    @Bean
+    public CustomSessionManager customSessionManager(RedisSessionDao redisSessionDao) {
+        CustomSessionManager customSessionManager = new CustomSessionManager();
+        customSessionManager.setSessionDAO(redisSessionDao);
+        return customSessionManager;
+    }
+
+    @Bean
+    public RedisCacheManager redisCacheManager() {
+        return new RedisCacheManager();
+    }
+
+    @Bean
+    public CookieRememberMeManager cookieRememberMeManager(SimpleCookie simpleCookie) {
+        CookieRememberMeManager cookieRememberMeManager = new CookieRememberMeManager();
+        cookieRememberMeManager.setCookie(simpleCookie);
+        return cookieRememberMeManager;
+    }
+
+    @Bean
+    public SimpleCookie simpleCookie() {
+        SimpleCookie simpleCookie = new SimpleCookie("rememberMe");
+        simpleCookie.setMaxAge(86400);  //设置cookie存活事件
+        return simpleCookie;
     }
 }

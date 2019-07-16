@@ -1,6 +1,10 @@
 package org.darod.elearning.common.validator;
 
 
+import org.darod.elearning.common.exception.BusinessException;
+import org.darod.elearning.common.exception.EmException;
+
+import javax.annotation.Resource;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
@@ -11,7 +15,10 @@ import java.util.Set;
  * @version 1.0
  * @date 2019/6/20 0020 9:14
  */
-public class ValidatorImpl  {
+@Resource
+public class ValidatorImpl {
+
+    @Resource
     private Validator validator;
 
     //实现校验方法
@@ -30,10 +37,17 @@ public class ValidatorImpl  {
         return validationResult;
     }
 
-    public static ValidatorImpl getInstance(){
+    public static ValidatorImpl getInstance() {
         ValidatorImpl validator = new ValidatorImpl();
         validator.validator = Validation.buildDefaultValidatorFactory().getValidator();
         return validator;
+    }
+
+    public void validateWithCheck(Object bean) throws BusinessException {
+        ValidationResult validationResult = validate(bean);
+        if (validationResult.isHasError()) {
+            throw new BusinessException(EmException.PARAMETER_VALIDATION_ERROR, validationResult.getErrMsg());
+        }
     }
 
 //    @Override

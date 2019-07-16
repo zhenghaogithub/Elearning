@@ -9,11 +9,17 @@ import org.darod.elearning.common.exception.BusinessException;
  * @date 2019/6/20 0020 9:19
  */
 public interface UserService {
-    UserModel getUserById(int id);
+    void register(String username, String password) throws BusinessException;
 
-    void register(UserModel userModel) throws BusinessException;
+    UserModel getUserById(Integer id);
 
-    UserModel validateLogin(String telphone, String encryptPassword) throws BusinessException;
+//    void register(UserModel userModel) throws BusinessException;
+
+//    UserModel validateLogin(String telphone, String encryptPassword) throws BusinessException;
+
+    void updateUserById(UserModel userModel) throws BusinessException;
+
+    void updateUserPasswordById(Integer userId, String oldPassword, String newPassword) throws BusinessException;
 
     String hello();
 }

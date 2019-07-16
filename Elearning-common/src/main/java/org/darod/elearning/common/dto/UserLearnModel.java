@@ -13,13 +13,22 @@ import java.util.Date;
  */
 @Data
 public class UserLearnModel {
-    private Integer id;
-
     private Integer userId;
-
-    private String courseId;
-    @JSONField(format = "yyyy-MM-dd")
+    private String courseName;
+    private Integer teacherId;
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
+    private Date publishTime;
+    private Double price;
+    private Integer learnNum;
+    private Integer courseState;
+    private String firstTag;
+    private String secondTag;
+    private String thirdTag;
+    private String courseDescription;
+    private String courseImgUrl;
+    private Integer courseId;
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     private Date learnTime;
-
-    private Byte lastChapter;
+    private Integer lastChapter;
+    private String chapterName;
 }

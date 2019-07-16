@@ -139,6 +139,10 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
         <!--新增后续dubbo项目中所需依赖，dubbo、zk。
            父模块pom中使用dependencyManagement来管理依赖版本号，子模块pom中不需要再写版本号，exclusion也不需要-->
     </dependencies>

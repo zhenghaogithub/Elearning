@@ -26,59 +26,59 @@
             <property name="enableSubPackages" value="true" />
         </javaClientGenerator>
 
-        <table tableName="user_info" domainObjectName="UserDO" enableCountByExample="false"
-            enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
-            selectByExampleQueryId="false" >
-            <columnOverride column="gender" javaType="java.lang.Byte"/>
-            <columnOverride column="user_state" javaType="java.lang.Byte"/>
-        </table>
-        <table tableName="user_password" domainObjectName="UserPasswordDO" enableCountByExample="false"
-            enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
-            selectByExampleQueryId="false" >
-            <columnOverride column="user_status" javaType="java.lang.Byte"/>
-        </table>
-        <table tableName="chapter_info" domainObjectName="ChapterDO" enableCountByExample="false"
-        enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
-        selectByExampleQueryId="false" >
-        <columnOverride column="chapter_no" javaType="java.lang.Byte"/>
-        <columnOverride column="chapter_state" javaType="java.lang.Byte"/>
-    </table>
-        <table tableName="comment" domainObjectName="CommentDO" enableCountByExample="false"
-            enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
-            selectByExampleQueryId="false" >
-            <columnOverride column="comment_state" javaType="java.lang.Byte"/>
-        </table>
-        <table tableName="course_info" domainObjectName="CourseDO" enableCountByExample="false"
-            enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
-            selectByExampleQueryId="false" >
-            <columnOverride column="course_state" javaType="java.lang.Byte"/>
-        </table>
-        <table tableName="live_room" domainObjectName="LiveRoomDO" enableCountByExample="false"
-            enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
-            selectByExampleQueryId="false" >
-            <columnOverride column="user_status" javaType="java.lang.Byte"/>
-        </table>
-        <table tableName="message" domainObjectName="MessageDO" enableCountByExample="false"
-            enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
-            selectByExampleQueryId="false" >
-            <columnOverride column="message_type" javaType="java.lang.Byte"/>
-            <columnOverride column="message_state" javaType="java.lang.Byte"/>
-        </table>
-        <table tableName="teacher" domainObjectName="TeacherDO" enableCountByExample="false"
-            enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
-            selectByExampleQueryId="false" >
-            <columnOverride column="teacher_state" javaType="java.lang.Byte"/>
-        </table>
-        <table tableName="user_learn" domainObjectName="UserLearnDO" enableCountByExample="false"
-            enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
-            selectByExampleQueryId="false" >
-            <columnOverride column="last_chapter" javaType="java.lang.Byte"/>
-        </table>
-        <table tableName="user_publisher" domainObjectName="UserPublisherDO" enableCountByExample="false"
-            enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
-            selectByExampleQueryId="false" >
-            <columnOverride column="publisher_state" javaType="java.lang.Byte"/>
-        </table>
+<!--        <table tableName="user_info" domainObjectName="UserDO" enableCountByExample="false"-->
+<!--            enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"-->
+<!--            selectByExampleQueryId="false" >-->
+<!--            <columnOverride column="gender" javaType="java.lang.Byte"/>-->
+<!--            <columnOverride column="user_state" javaType="java.lang.Byte"/>-->
+<!--        </table>-->
+<!--        <table tableName="user_password" domainObjectName="UserPasswordDO" enableCountByExample="false"-->
+<!--            enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"-->
+<!--            selectByExampleQueryId="false" >-->
+<!--            <columnOverride column="user_status" javaType="java.lang.Byte"/>-->
+<!--        </table>-->
+<!--        <table tableName="chapter_info" domainObjectName="ChapterDO" enableCountByExample="false"-->
+<!--        enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"-->
+<!--        selectByExampleQueryId="false" >-->
+<!--        <columnOverride column="chapter_no" javaType="java.lang.Byte"/>-->
+<!--        <columnOverride column="chapter_state" javaType="java.lang.Byte"/>-->
+<!--    </table>-->
+<!--        <table tableName="comment" domainObjectName="CommentDO" enableCountByExample="false"-->
+<!--            enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"-->
+<!--            selectByExampleQueryId="false" >-->
+<!--            <columnOverride column="comment_state" javaType="java.lang.Byte"/>-->
+<!--        </table>-->
+<!--        <table tableName="course_info" domainObjectName="CourseDO" enableCountByExample="false"-->
+<!--            enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"-->
+<!--            selectByExampleQueryId="false" >-->
+<!--            <columnOverride column="course_state" javaType="java.lang.Byte"/>-->
+<!--        </table>-->
+<!--        <table tableName="live_room" domainObjectName="LiveRoomDO" enableCountByExample="false"-->
+<!--            enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"-->
+<!--            selectByExampleQueryId="false" >-->
+<!--            <columnOverride column="user_status" javaType="java.lang.Byte"/>-->
+<!--        </table>-->
+<!--        <table tableName="message" domainObjectName="MessageDO" enableCountByExample="false"-->
+<!--            enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"-->
+<!--            selectByExampleQueryId="false" >-->
+<!--            <columnOverride column="message_type" javaType="java.lang.Byte"/>-->
+<!--            <columnOverride column="message_state" javaType="java.lang.Byte"/>-->
+<!--        </table>-->
+<!--        <table tableName="teacher" domainObjectName="TeacherDO" enableCountByExample="false"-->
+<!--            enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"-->
+<!--            selectByExampleQueryId="false" >-->
+<!--            <columnOverride column="teacher_state" javaType="java.lang.Byte"/>-->
+<!--        </table>-->
+<!--        <table tableName="user_learn" domainObjectName="UserLearnDO" enableCountByExample="false"-->
+<!--            enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"-->
+<!--            selectByExampleQueryId="false" >-->
+<!--            <columnOverride column="last_chapter" javaType="java.lang.Byte"/>-->
+<!--        </table>-->
+<!--        <table tableName="user_publisher" domainObjectName="UserPublisherDO" enableCountByExample="false"-->
+<!--            enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"-->
+<!--            selectByExampleQueryId="false" >-->
+<!--            <columnOverride column="publisher_state" javaType="java.lang.Byte"/>-->
+<!--        </table>-->
 
 
 

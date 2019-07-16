@@ -1,20 +1,20 @@
 package org.darod.elearning.gateway.serviceimpl;
 
+import org.apache.shiro.crypto.hash.Md5Hash;
 import org.darod.elearning.common.dto.UserModel;
 import org.darod.elearning.common.exception.BusinessException;
 import org.darod.elearning.common.exception.EmException;
 import org.darod.elearning.common.service.user.UserService;
-import org.darod.elearning.common.validator.ValidationResult;
 import org.darod.elearning.common.validator.ValidatorImpl;
 import org.darod.elearning.gateway.dao.UserDOMapper;
 import org.darod.elearning.gateway.dao.UserPasswordDOMapper;
 import org.darod.elearning.gateway.dataobject.UserDO;
 import org.darod.elearning.gateway.dataobject.UserPasswordDO;
-import org.darod.elearning.gateway.utils.CopyPropertiesUtils;
-import org.springframework.beans.BeanUtils;
+import org.darod.elearning.common.utils.CopyPropertiesUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author Darod
@@ -31,42 +31,50 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private ValidatorImpl validator;
 
-
     @Override
-    public UserModel getUserById(int id) {
-        return null;
-    }
+    @Transactional
+    public void register(String username, String password) throws BusinessException {
+        UserDO userDO = new UserDO();
+        userDO.setName(username);
+        UserPasswordDO userPasswordDO = new UserPasswordDO();
 
-    @Override
-    public void register(UserModel userModel) throws BusinessException {
-        if (userModel == null) {
-            throw new BusinessException(EmException.PARAMETER_VALIDATION_ERROR);
-        }
-//        if (StringUtils.isEmpty(userModel.getName()) || userModel.getAge() == null ||
-//                userModel.getGender() == null || StringUtils.isEmpty(userModel.getTelphone()) ||
-//                StringUtils.isEmpty(userModel.getEncryptPassword())) {
-//            throw new BusinessException(EmBusinessError.PARAMETER_VALIDATION_ERROR);
-//        }
-        ValidationResult validationResult = validator.validate(userModel);
-        if (validationResult.isHasError()) {
-            throw new BusinessException(EmException.PARAMETER_VALIDATION_ERROR, validationResult.getErrMsg());
-        }
-        UserDO userDO = CopyPropertiesUtils.copyProperties(userModel,UserDO.class);
+        userPasswordDO.setEncryptPassword(new Md5Hash(password, username).toString());
         try {
             userDOMapper.insertSelective(userDO);
         } catch (DuplicateKeyException e) {
-            throw new BusinessException(EmException.PARAMETER_VALIDATION_ERROR, "手机号重复");
+            throw new BusinessException(EmException.PARAMETER_VALIDATION_ERROR, "用户名重复");
         }
-        userModel.setId(userDO.getUserId());
-        UserPasswordDO userPasswordDO = new UserPasswordDO();
-        BeanUtils.copyProperties(userModel, userPasswordDO);
         userPasswordDO.setUserId(userDO.getUserId());
         userPasswordDOMapper.insertSelective(userPasswordDO); //selective 只会把不为null的字段插入数据库，为null的字段会是默认值
     }
 
     @Override
-    public UserModel validateLogin(String telphone, String encryptPassword) throws BusinessException {
-        return null;
+    public UserModel getUserById(Integer userId) {
+        return CopyPropertiesUtils.copyProperties(userDOMapper.selectByPrimaryKey(userId), UserModel.class);
+    }
+
+    @Override
+    public void updateUserById(UserModel userModel) throws BusinessException {
+        UserDO userDO = userDOMapper.selectByPrimaryKey(userModel.getUserId());
+        if (userDO == null) {
+            throw new BusinessException(EmException.USER_NOT_EXIST);
+        }
+        CopyPropertiesUtils.copyPropertiesIgnoreNull(userModel, userDO);
+        validator.validateWithCheck(userDO);
+        userDOMapper.updateByPrimaryKeySelective(userDO);
+    }
+
+    @Override
+    public void updateUserPasswordById(Integer userId, String oldPassword, String newPassword) throws BusinessException {
+        UserDO userDO = userDOMapper.selectByPrimaryKey(userId);
+        UserPasswordDO userPasswordDO = userPasswordDOMapper.selectByUserId(userId);
+        Md5Hash encryptPassword = new Md5Hash(oldPassword, userDO.getName());
+        if (!userPasswordDO.getEncryptPassword().equals(encryptPassword.toString())) {
+            throw new BusinessException(EmException.PARAMETER_VALIDATION_ERROR, "旧密码错误");
+        }
+        Md5Hash newEncryptPassword = new Md5Hash(newPassword, userDO.getName());
+        userPasswordDO.setEncryptPassword(newEncryptPassword.toString());
+        userPasswordDOMapper.updateByPrimaryKey(userPasswordDO);
     }
 
     @Override

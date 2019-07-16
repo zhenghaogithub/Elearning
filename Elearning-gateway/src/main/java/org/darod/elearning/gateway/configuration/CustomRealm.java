@@ -2,10 +2,8 @@ package org.darod.elearning.gateway.configuration;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
-import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
-import org.apache.shiro.crypto.hash.Md5Hash;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
@@ -62,7 +60,7 @@ public class CustomRealm extends AuthorizingRealm {
 //        else if (!password.equals(new String((char[]) token.getCredentials()))) {
 //            throw new AccountException("密码不正确");
 //        }
-        SimpleAuthenticationInfo simpleAuthenticationInfo = new SimpleAuthenticationInfo(userDO, encryptPassword, getName());
+        SimpleAuthenticationInfo simpleAuthenticationInfo = new SimpleAuthenticationInfo(userDO.getUserId(), encryptPassword, getName());
         simpleAuthenticationInfo.setCredentialsSalt(ByteSource.Util.bytes(userDO.getName()));
         return simpleAuthenticationInfo;
     }
@@ -75,10 +73,10 @@ public class CustomRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-        String username = (String) SecurityUtils.getSubject().getPrincipal();
+        Integer userId = (Integer) SecurityUtils.getSubject().getPrincipal();
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         //获得该用户角色
-        String role = userDOMapper.selectByUserName(username).getUserState().toString();
+        String role = userDOMapper.selectByPrimaryKey(userId).getUserState().toString();
         Set<String> set = new HashSet<>();
         //需要将 role 封装到 Set 作为 info.setRoles() 的参数
         set.add(role);
@@ -88,7 +86,9 @@ public class CustomRealm extends AuthorizingRealm {
     }
 
     public static void main(String[] args) {
-        Md5Hash md5Hash = new Md5Hash("123456", "张三");
-        System.out.println(md5Hash.toString());
+//        Md5Hash md5Hash = new Md5Hash("123456", "张三");
+//        System.out.println(md5Hash.toString());
+        String s = "mycorp-myproj-[\\w\\d-.]+.jar";
+        System.out.println("mycorp-myproj-core.jar".matches(s));
     }
 }

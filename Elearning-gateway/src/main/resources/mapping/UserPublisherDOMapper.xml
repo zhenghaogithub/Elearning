@@ -11,7 +11,7 @@
     <result column="user_id" jdbcType="INTEGER" property="userId" />
     <result column="id_card" jdbcType="VARCHAR" property="idCard" />
     <result column="cost_percent" jdbcType="INTEGER" property="costPercent" />
-    <result column="publisher_state" jdbcType="BIT" property="publisherState" />
+    <result column="publisher_state" jdbcType="INTEGER" property="publisherState" />
   </resultMap>
   <sql id="Base_Column_List">
     <!--
@@ -50,7 +50,7 @@
     insert into user_publisher (id, user_id, id_card, 
       cost_percent, publisher_state)
     values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{idCard,jdbcType=VARCHAR}, 
-      #{costPercent,jdbcType=INTEGER}, #{publisherState,jdbcType=BIT})
+      #{costPercent,jdbcType=INTEGER}, #{publisherState,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="org.darod.elearning.gateway.dataobject.UserPublisherDO">
     <!--
@@ -90,7 +90,7 @@
         #{costPercent,jdbcType=INTEGER},
       </if>
       <if test="publisherState != null">
-        #{publisherState,jdbcType=BIT},
+        #{publisherState,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -112,7 +112,7 @@
         cost_percent = #{costPercent,jdbcType=INTEGER},
       </if>
       <if test="publisherState != null">
-        publisher_state = #{publisherState,jdbcType=BIT},
+        publisher_state = #{publisherState,jdbcType=INTEGER},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -127,7 +127,7 @@
     set user_id = #{userId,jdbcType=INTEGER},
       id_card = #{idCard,jdbcType=VARCHAR},
       cost_percent = #{costPercent,jdbcType=INTEGER},
-      publisher_state = #{publisherState,jdbcType=BIT}
+      publisher_state = #{publisherState,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

@@ -163,6 +163,10 @@ body {
     border-color: #ebccd1;
 }
 
+#search_bar {
+    margin-left: 400px;
+}
+
 
 @media screen and (max-device-width: 960px) {
     #user_flex {
@@ -177,4 +181,23 @@ body {
     body {
         min-width: 0 !important;
     }
+
+    #search_bar {
+        margin-left: 0;
+        width: 100%;
+    }
+    #search_bar form{
+        width: 100%;
+    }
+    #search_bar form input{
+        width: 80%;
+    }
+    #search_bar form button{
+        width: 20%;
+    }
+
+    /*#head_div {*/
+    /*    margin-left: auto;*/
+    /*    margin-right: auto;*/
+    /*}*/
 }

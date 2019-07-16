@@ -14,18 +14,20 @@ import java.util.Date;
 public class CourseLearnedVO {
     private Integer userId;
     private String courseName;
-    private Integer publisherId;
+    private Integer teacherId;
     private Date publishTime;
     private Double price;
     private Integer learnNum;
-    private Byte courseState;
-    private String firstTag;
-    private String secondTag;
-    private String thirdTag;
-    private String courseDescription;
+    private Integer courseState;
+//    private String firstTag;
+//    private String secondTag;
+//    private String thirdTag;
+//    private String courseDescription;
     private String courseImgUrl;
-    private String courseId;
+//    private String courseId;
     @JSONField(format = "yyyy-MM-dd")
     private Date learnTime;
-    private Byte lastChapter;
+    private Integer lastChapter;
+    private String chapterName;
+
 }

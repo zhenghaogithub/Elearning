@@ -2,6 +2,7 @@ package org.darod.elearning.common.dto;
 
 import lombok.Data;
 
+import javax.validation.constraints.Null;
 import java.util.Date;
 
 /**
@@ -11,16 +12,24 @@ import java.util.Date;
  */
 @Data
 public class CourseModel {
-    private Integer id;
+    @Null(message = "您无权设置某些字段", groups = CourseModelForCreate.class)
+    private Integer courseId;
     private String courseName;
-    private Integer publisherId;
+    @Null(message = "您无权设置某些字段", groups = CourseModelForCreate.class)
+    private Integer teacherId;
     private Date publishTime;
     private Double price;
+    @Null(message = "您无权设置某些字段", groups = CourseModelForCreate.class)
     private Integer learnNum;
-    private Byte courseState;
+    @Null(message = "您无权设置某些字段", groups = CourseModelForCreate.class)
+    private Integer courseState;
     private String firstTag;
     private String secondTag;
     private String thirdTag;
     private String courseDescription;
+    @Null(message = "您无权设置某些字段", groups = CourseModelForCreate.class)
     private String courseImgUrl;
+
+    public interface CourseModelForCreate {
+    }
 }
