@@ -1,6 +1,7 @@
 package org.darod.elearning.gateway.controller;
 
 import io.swagger.annotations.Api;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.darod.elearning.common.dto.CommentModel;
 import org.darod.elearning.common.dto.CommonPageModel;
 import org.darod.elearning.common.response.CommonResponse;
@@ -35,7 +36,7 @@ public class CommentController {
         commonPageModel.checkPage();
         return ResponseUtils.getOKResponse(commentService.getAllChapterComment(courseId, chapterId, commonPageModel).toJSONObject("comments"));
     }
-
+    @RequiresPermissions("comment")
     @PostMapping("/course/{courseId}/comment")
     public CommonResponse addCourseComment(@PathVariable("courseId") Integer courseId,
                                            @RequestBody CommentModel commentModel) {
@@ -43,7 +44,7 @@ public class CommentController {
         commentModel.setCourseId(courseId);
         return ResponseUtils.getOKResponse(commentService.addCourseComment(commentModel));
     }
-
+    @RequiresPermissions("comment")
     @PostMapping("/course/{courseId}/chapter/{chapterId}/comment")
     public CommonResponse addChapterComment(@PathVariable("courseId") Integer courseId,
                                             @PathVariable("chapterId") Integer chapterId, @RequestBody CommentModel commentModel) {

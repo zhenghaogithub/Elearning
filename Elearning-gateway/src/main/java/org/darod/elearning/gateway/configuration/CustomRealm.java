@@ -7,6 +7,7 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
+import org.darod.elearning.common.service.user.PermissionService;
 import org.darod.elearning.gateway.dao.UserDOMapper;
 import org.darod.elearning.gateway.dao.UserPasswordDOMapper;
 import org.darod.elearning.gateway.dataobject.UserDO;
@@ -25,6 +26,8 @@ public class CustomRealm extends AuthorizingRealm {
     private UserDOMapper userDOMapper;
     private UserPasswordDOMapper userPasswordDOMapper;
 
+    @Autowired
+    PermissionService permissionService;
 
     @Autowired
     private void setUserMapper(UserDOMapper userDOMapper) {
@@ -76,12 +79,11 @@ public class CustomRealm extends AuthorizingRealm {
         Integer userId = (Integer) SecurityUtils.getSubject().getPrincipal();
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         //获得该用户角色
-        String role = userDOMapper.selectByPrimaryKey(userId).getUserState().toString();
-        Set<String> set = new HashSet<>();
-        //需要将 role 封装到 Set 作为 info.setRoles() 的参数
-        set.add(role);
-        //设置该用户拥有的角色
-        info.setRoles(set);
+//        String role = userDOMapper.selectByPrimaryKey(userId).getUserState().toString();
+//        Set<String> roleSet = new HashSet<>();
+//        Set<String> permissionSet = new HashSet<>();
+        info.setRoles(permissionService.getUserRoleInfo(userId));
+        info.setStringPermissions(permissionService.getUserPermissionInfo(userId));
         return info;
     }
 

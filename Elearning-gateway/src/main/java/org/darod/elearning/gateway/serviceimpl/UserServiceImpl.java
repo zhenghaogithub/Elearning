@@ -77,6 +77,18 @@ public class UserServiceImpl implements UserService {
         userPasswordDOMapper.updateByPrimaryKey(userPasswordDO);
     }
 
+//    @Override
+//    public void updateUserHeadImg(Integer userId, String url) {
+//        UserDO userDO = userDOMapper.selectByPrimaryKey(userId);
+//        if (userDO == null) {
+//            throw new BusinessException(EmException.USER_NOT_EXIST);
+//        }
+//        UserDO userDO_new = new UserDO();  //新建一个用来更新 防止其它字段的更新被覆盖
+//        userDO.setUserId(userId);
+//        userDO.setHeadUrl(url);
+//        userDOMapper.updateByPrimaryKeySelective(userDO_new);
+//    }
+
     @Override
     public String hello() {
         return "hello";

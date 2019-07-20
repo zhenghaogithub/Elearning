@@ -52,4 +52,11 @@ public class CoursePageModel {
         _300T499,  //300到500
         _500 //500以上
     }
+
+    public void checkPage() {
+        if (page == null || row == null) {
+            page = 0;
+            row = 9999;
+        }
+    }
 }

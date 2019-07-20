@@ -61,12 +61,18 @@ public class CommentServiceImpl implements CommentService {
         if (commentModel.getChapterId() != -1 && chapterDOMapper.selectByPrimaryKey(commentModel.getChapterId()) == null) {
             throw new BusinessException(EmException.CHAPTER_NOT_EXIST);
         }
-        CommentDO commentDO = CopyPropertiesUtils.copyProperties(commentModel, CommentDO.class);
-        commentDO.setCommentState(0);
-        commentDO.setCommentId(null);
-        commentDO.setCommentTime(new Date());
-        commentDOMapper.insertSelective(commentDO);
-        return CopyPropertiesUtils.copyProperties(commentDOMapper.selectByPrimaryKey(commentDO.getCommentId()), CommentModel.class);
+        return CopyPropertiesUtils.copyAndInsertThenReturn(commentModel,CommentDO.class,(commentDO) -> {
+            commentDO.setCommentState(0);
+            commentDO.setCommentId(null);
+            commentDO.setCommentTime(new Date());
+            commentDOMapper.insertSelective(commentDO);
+        },(x)->commentDOMapper.selectByPrimaryKey(x.getCommentId()));
+//        CommentDO commentDO = CopyPropertiesUtils.copyProperties(commentModel, CommentDO.class);
+//        commentDO.setCommentState(0);
+//        commentDO.setCommentId(null);
+//        commentDO.setCommentTime(new Date());
+//        commentDOMapper.insertSelective(commentDO);
+//        return CopyPropertiesUtils.copyProperties(commentDOMapper.selectByPrimaryKey(commentDO.getCommentId()), CommentModel.class);
     }
 
     @Override

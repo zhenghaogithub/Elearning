@@ -7,6 +7,7 @@ import org.springframework.beans.BeanWrapperImpl;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -34,7 +35,7 @@ public class CopyPropertiesUtils {
         }).collect(Collectors.toList());
     }
 
-    public static <T,R> List<T> mapListObjectWithMapper(List<R> source, Class<T> target, Function<R, T> mapper) {
+    public static <T, R> List<T> mapListObjectWithMapper(List<R> source, Class<T> target, Function<R, T> mapper) {
         return source.stream().map(item -> {
             return mapper.apply(item);
 //            T t = copyProperties(item, target);
@@ -52,12 +53,20 @@ public class CopyPropertiesUtils {
         final BeanWrapper src = new BeanWrapperImpl(source);
         java.beans.PropertyDescriptor[] pds = src.getPropertyDescriptors();
 
-        Set<String> emptyNames = new HashSet<String>();
+        Set<String> emptyNames = new HashSet<>();
         for (java.beans.PropertyDescriptor pd : pds) {
             Object srcValue = src.getPropertyValue(pd.getName());
             if (srcValue == null) emptyNames.add(pd.getName());
         }
         String[] result = new String[emptyNames.size()];
         return emptyNames.toArray(result);
+    }
+
+    //复制插入数据库然后取出
+    public static <D, M> M copyAndInsertThenReturn(M modelObject, Class<D> dataObjectCla, Consumer<D> insertMethod, Function<D, D> selectMethod) {
+        D theDo = CopyPropertiesUtils.copyProperties(modelObject, dataObjectCla);
+        insertMethod.accept(theDo);
+        D newDo = selectMethod.apply(theDo);
+        return CopyPropertiesUtils.copyProperties(newDo, (Class<M>) modelObject.getClass());
     }
 }

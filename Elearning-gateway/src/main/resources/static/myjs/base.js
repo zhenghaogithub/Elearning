@@ -2,13 +2,12 @@ $(document).ready(function () {
     const user_flex = $("#user_flex");//隐藏的悬浮窗
     const head_div = $("#head_div");//用户头像图片div
     const user_head = $("#user_head");//用户头像图片
-    window.debug = true;
 
-    if (localStorage.getItem("token") == null) {
-        window.location.href = "login_page.html";
-    } else {
-        window.token = localStorage.getItem("token");
-    }
+    // if (localStorage.getItem("token") == null) {
+    //     window.location.href = "login_page.html";
+    // } else {
+    //     window.token = localStorage.getItem("token");
+    // }
 
     // //获取用户token  测试用
     // send_ajax({
@@ -141,11 +140,7 @@ window.updateUserFlex = function () {
                 $(".user_name_all").text(data.data.username);
                 $(".user_phone_all").text(data.data.phone);
                 //这需要后端给出具体的url格式后修改
-                if (window.debug == false) {  //由于可能部署在不同域名下 需要变为绝对路径
-                    $(".user_head_img").attr("src", data.data.userImage);
-                } else {
-                    $(".user_head_img").attr("src", "http://120.55.165.31:8080/Elearning/" + data.data.userImage);
-                }
+                $(".user_head_img").attr("src", data.data.userImage);
                 window.userId = data.data.userId;
                 const powerJson = $.parseJSON(data.data.power);
                 if (powerJson != null && powerJson.allTeacher == "allow") {
@@ -162,13 +157,13 @@ window.updateUserFlex = function () {
             } else {
                 fail_toast(data.message);
                 //如果登录失效 返回登录页面
-                window.location.href = "login_page.html";
+                // window.location.href = "login_page.html";
             }
         },
         error: function () {
             fail_toast("获取用户信息失败!");
             //如果登录失效 返回登录页面
-            window.location.href = "login_page.html";
+            // window.location.href = "login_page.html";
         },
     });
 };
@@ -250,7 +245,7 @@ function logout() {
         url: "api/user/user/logout",
         option: "退出登录",
         success: function (data) {
-            window.location.href = "login_page.html";
+            // window.location.href = "login_page.html";
         }
     })
 }

@@ -68,13 +68,18 @@ public class OrderServiceImpl implements OrderService {
                 stream().anyMatch(orderDO -> (orderDO.getOrderState() == 1 || orderDO.getOrderState() == 0))) {
             throw new BusinessException(EmException.COURSE_HAVE_PURCHASED, "您已购买该课程或已创建相同订单");
         }
-        OrderDO orderDO = CopyPropertiesUtils.copyProperties(orderModel, OrderDO.class);
-        String id = generateOrderNo();
-        orderDO.setOrderId(id);
-        orderDO.setCreateTime(new Date());
-        orderDO.setOrderState(0);
-        orderDOMapper.insertSelective(orderDO);
-        return CopyPropertiesUtils.copyProperties(orderDOMapper.selectByPrimaryKey(id), OrderModel.class);
+        return CopyPropertiesUtils.copyAndInsertThenReturn(orderModel,OrderDO.class,orderDO -> {
+            orderDO.setOrderId(generateOrderNo());
+            orderDO.setCreateTime(new Date());
+            orderDO.setOrderState(0);
+            orderDOMapper.insertSelective(orderDO);
+        },x -> orderDOMapper.selectByPrimaryKey(x.getOrderId()));
+//        String id = generateOrderNo();
+//        orderDO.setOrderId(id);
+//        orderDO.setCreateTime(new Date());
+//        orderDO.setOrderState(0);
+//        orderDOMapper.insertSelective(orderDO);
+//        return CopyPropertiesUtils.copyProperties(orderDOMapper.selectByPrimaryKey(id), OrderModel.class);
     }
 
     @Override

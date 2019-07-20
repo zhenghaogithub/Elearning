@@ -21,7 +21,6 @@ public class UserDO implements Serializable {
     @Email(message = "邮箱格式不正确")
     private String email;
     @NotNull(message = "头像URL不能为空")
-    @URL(message = "URL格式不正确")
     private String headUrl;
     private Integer userState;
     private String userDescribtion;

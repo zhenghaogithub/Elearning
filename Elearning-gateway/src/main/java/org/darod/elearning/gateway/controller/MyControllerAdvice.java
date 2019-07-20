@@ -3,11 +3,13 @@ package org.darod.elearning.gateway.controller;
 import org.apache.shiro.authz.UnauthorizedException;
 import org.darod.elearning.common.exception.BusinessException;
 import org.darod.elearning.common.exception.EmException;
+import org.darod.elearning.common.exception.UploadException;
 import org.darod.elearning.common.response.CommonResponse;
 import org.darod.elearning.common.response.ResponseUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindException;
 import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -31,6 +33,7 @@ public class MyControllerAdvice {
     @ExceptionHandler(BindException.class)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
+
     public CommonResponse handlerValidationExcpetion(HttpServletRequest request, Exception exception) {
         Map<String, Object> map = new HashMap<>();
         BindException ex = (BindException) exception;
@@ -38,6 +41,31 @@ public class MyControllerAdvice {
         List<ObjectError> errors = ex.getBindingResult().getAllErrors();
         String errorMsg = errors.stream().map(ObjectError::getDefaultMessage).collect(Collectors.joining(","));
         map.put("errMsg", errorMsg);
+        return ResponseUtils.getErrorResponse(map);
+    }
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public CommonResponse handlerValidationExcpetion2(HttpServletRequest request, Exception exception) {
+        Map<String, Object> map = new HashMap<>();
+        MethodArgumentNotValidException ex = (MethodArgumentNotValidException) exception;
+        map.put("errCode", EmException.BINDING_VALIDATION_ERROR.getErrCode());
+        List<ObjectError> errors = ex.getBindingResult().getAllErrors();
+        String errorMsg = errors.stream().map(ObjectError::getDefaultMessage).collect(Collectors.joining(","));
+        map.put("errMsg", errorMsg);
+        return ResponseUtils.getErrorResponse(map);
+    }
+
+    @ExceptionHandler(UploadException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    @ResponseBody
+    public CommonResponse handlerUploadException(HttpServletRequest request, Exception exception) {
+        Map<String, Object> map = new HashMap<>();
+        if (exception instanceof UploadException) {
+            BusinessException businessException = (BusinessException) exception;
+            map.put("errCode", businessException.getErrCode());
+            map.put("errMsg", businessException.getErrMsg());
+        }
         return ResponseUtils.getErrorResponse(map);
     }
 

@@ -37,6 +37,10 @@ public enum EmException implements CommonError {
     CHAPTER_NOT_EXIST(40100, "章节不存在"),
 
     COMMENT_NOT_EXIST(40101, "评论不存在"),
+
+    TEACHER_HAVE_APPLY(40200, "您已经申请过了"),
+
+    TEACHER_NOT_EXIST(40201, "教师不存在"),
     ;
     private int errCode;
     private String msg;

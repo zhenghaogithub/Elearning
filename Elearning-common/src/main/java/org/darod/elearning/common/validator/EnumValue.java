@@ -32,38 +32,38 @@ public @interface EnumValue {
 
     class Validator implements ConstraintValidator<EnumValue, String> {
 
-        private Class<? extends Enum<?>> enumClass;
+            private Class<? extends Enum<?>> enumClass;
 //        private String enumMethod;
 
-        @Override
-        public void initialize(EnumValue enumValue) {
+            @Override
+            public void initialize(EnumValue enumValue) {
 //            enumMethod = enumValue.enumMethod();
-            enumClass = enumValue.enumClass();
-        }
-
-        @Override
-        public boolean isValid(String value, ConstraintValidatorContext constraintValidatorContext) {
-            if (value == null) {
-                return Boolean.TRUE;
-            }
-            if (enumClass == null) {
-                return Boolean.TRUE;
+                enumClass = enumValue.enumClass();
             }
 
-            Class<?> valueClass = value.getClass();
-            try {
-                Object[] objs = enumClass.getEnumConstants();
-                Method method = enumClass.getMethod("name");
-                for (Object obj : objs) {
-                    Object code = method.invoke(obj, null);
-                    if (value.equalsIgnoreCase(code.toString())) {
-                        return true;
-                    }
+            @Override
+            public boolean isValid(String value, ConstraintValidatorContext constraintValidatorContext) {
+                if (value == null) {
+                    return Boolean.TRUE;
                 }
-                return false;
-            } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-                e.printStackTrace();
-            }
+                if (enumClass == null) {
+                    return Boolean.TRUE;
+                }
+
+                Class<?> valueClass = value.getClass();
+                try {
+                    Object[] objs = enumClass.getEnumConstants();
+                    Method method = enumClass.getMethod("name");
+                    for (Object obj : objs) {
+                        Object code = method.invoke(obj, null);
+                        if (value.equalsIgnoreCase(code.toString())) {
+                            return true;
+                        }
+                    }
+                    return false;
+                } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+                    e.printStackTrace();
+                }
 
 
 //            try {
@@ -83,8 +83,8 @@ public @interface EnumValue {
 //            } catch (NoSuchMethodException | SecurityException e) {
 //                throw new RuntimeException(Strings.formatIfArgs("This %s(%s) method does not exist in the %s", enumMethod, valueClass, enumClass), e);
 //            }
-            return false;
-        }
+                return false;
+            }
 
     }
 }

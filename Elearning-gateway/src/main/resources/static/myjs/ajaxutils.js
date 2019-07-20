@@ -9,7 +9,7 @@
  *     contentType:消息体内容类型
  * }
  */
-window.debug = true;
+window.debug = false;
 
 function send_ajax(options) {
     if (options == null) return;
@@ -29,10 +29,10 @@ function send_ajax(options) {
         let jsonData = JSON.stringify(options.data);
         options.data = jsonData.replace("\"token\":", "\"token\": ");
     }
-    //远程调试
-    if (debug == true) {
-        options.url = "http://120.55.165.31:8080/Elearning/" + options.url;
-    }
+    // //远程调试
+    // if (debug == true) {
+    //     options.url = "http://120.55.165.31:8080/Elearning/" + options.url;
+    // }
     $.ajax({
         type: options.type == null ? "POST" : options.type,
         datatype: "json",

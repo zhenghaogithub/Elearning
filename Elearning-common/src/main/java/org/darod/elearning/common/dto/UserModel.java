@@ -35,7 +35,6 @@ public class UserModel implements Serializable {
     private String encryptPassword;
     private String email;
     @NotNull(message = "头像URL不能为空")
-    @URL(message = "URL格式不正确")
     private String headUrl;
     @NotNull(message = "用户状态不能为空")
     private Integer userState;

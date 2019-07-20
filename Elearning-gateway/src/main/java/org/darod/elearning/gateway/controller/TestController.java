@@ -279,10 +279,16 @@ public class TestController {
     }
 
 
-    @RequestMapping(value = "/user/user/uploadUserImage",method = RequestMethod.POST)
-    @ResponseBody
-    public String updateUserImage(@RequestParam String token, @RequestParam(value = "userImageFile", required = false) MultipartFile imageFile, HttpServletRequest request) throws IOException {
-        System.out.println(token);
+//    @RequestMapping(value = "/user/user/uploadUserImage",method = RequestMethod.POST)
+//    @ResponseBody
+//    public String updateUserImage(@RequestParam String token, @RequestParam(value = "userImageFile", required = false) MultipartFile imageFile, HttpServletRequest request) throws IOException {
+//        System.out.println(token);
+//        return "123";
+//    }
+
+    @RequestMapping(value = "/upload",method = RequestMethod.POST)
+    public String upload(HttpServletRequest request) throws IOException {
+//        System.out.println(token);
         return "123";
     }
 
