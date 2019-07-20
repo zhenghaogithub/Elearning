@@ -12,27 +12,18 @@
 window.debug = false;
 
 function send_ajax(options) {
-    if (options == null) return;
-    if (options.type == "DELETE") {  //由于SpringMVC不支持DELETE PUT方法直接传参 因此使用POST在隐藏域加入实际方法类型
-        options.type = "POST";
-        options.data._method = "DELETE";
-    } else if (options.type == "PUT") {
-        options.type = "POST";
-        options.data._method = "PUT";
-    }
-    if (window.token != null) {
-        if (options.data == null)
-            options.data = {};
-        options.data["token"] = window.token;
+    if (options.type == "GET") {  //get方法把参数放在url里
+        options.url.replace(/{(.*?)}/g, function (result) {
+            let dateName = result.substr(1, -1); //获取{中的属性名}
+            if(options.data[dateName] != null)
+                return options.data[dateName];
+            return "";
+        });
+        options.data = null; //GET方法没有data域
     }
     if (options.data != null) {
-        let jsonData = JSON.stringify(options.data);
-        options.data = jsonData.replace("\"token\":", "\"token\": ");
+        options.data = JSON.stringify(options.data);
     }
-    // //远程调试
-    // if (debug == true) {
-    //     options.url = "http://120.55.165.31:8080/Elearning/" + options.url;
-    // }
     $.ajax({
         type: options.type == null ? "POST" : options.type,
         datatype: "json",
@@ -49,6 +40,7 @@ function send_ajax(options) {
 
 function send_ajax_quick(options) {
     send_ajax({
+        type: options.type,
         url: options.url,
         data: options.data,
         async: options.async == null ? true : options.async,
@@ -69,13 +61,14 @@ function send_ajax_quick(options) {
     })
 }
 
-function send_ajax_quick_quick(url, optionName, dataModel, modal, success, additional) {
+function send_ajax_quick_quick(url, optionName, dataModel, modal, success, additional, type) {
     let data = $.bindModelReverse(dataModel);
     if (additional != null) {
         for (let i in additional)
             data[i] = additional[i];
     }
     send_ajax_quick({
+        type: type,
         url: url,
         data: data,
         option: optionName,

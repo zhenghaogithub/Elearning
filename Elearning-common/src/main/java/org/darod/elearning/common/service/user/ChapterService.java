@@ -21,5 +21,4 @@ public interface ChapterService {
     ChapterModel updateChapter(Integer courseId,Integer chapterId,ChapterModel chapterModel);
 
     void deleteChapter(Integer courseId, Integer chapterId);
-
 }

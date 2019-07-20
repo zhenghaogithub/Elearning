@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
  * @date 2019/7/13 0013 11:28
  */
 @RestController
-@RequestMapping("/user/order")
+@RequestMapping("/user/curuser/order")
 @Api(tags = "用户订单接口")
 public class OrderController {
     @Autowired

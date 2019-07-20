@@ -23,7 +23,7 @@ import java.util.List;
  * @date 2019/7/11 0011 19:41
  */
 @RestController
-@RequestMapping("/user/learned")
+@RequestMapping("/user/curuser")
 public class UserLearnController {
     @Autowired
     UserLearnService userLearnService;

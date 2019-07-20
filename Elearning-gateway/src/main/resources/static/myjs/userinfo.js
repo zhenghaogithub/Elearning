@@ -73,7 +73,8 @@ $(document).ready(function () {
     //申请按钮事件
     $("#send_teacher_apply_btn").on("click", function () {
         send_ajax_quick({
-            url: "api/user/teacher/addTeacher",
+            type: "POST",
+            url: "/teachers/curTeacher",
             option: "申请请求发送",
             data: $.bindModelReverse($("#teacher_info_apply_div")),
             success: function () {
@@ -88,7 +89,7 @@ $(document).ready(function () {
     });
     //发布课程事件
     $("#confirm_publish_course_btn").on("click", function () {
-        send_ajax_quick_quick("api/teacher/course/addCourse", "发布课程",
+        send_ajax_quick_quick("teachers/curTeacher/course", "发布课程",
             $("#course_info_edit_div"), $("#edit_course_info_modal"), function () {
                 refresh_courses_published(1);
             }, {
@@ -97,10 +98,10 @@ $(document).ready(function () {
     });
     //修改教师信息
     $("#save_teacher_info").on("click", function () {
-        send_ajax_quick_quick("api/teacher/teacher/updateTeacher", "修改讲师信息",
+        send_ajax_quick_quick("/teachers/curTeacher", "修改讲师信息",
             $("#teacher_info_edit_div"), $("#edit_teacher_info_modal"), function () {
                 updateTeacherInfo();
-            })
+            }, null, "PUT");
     });
 
     //个人信息编辑按钮
@@ -116,7 +117,8 @@ $(document).ready(function () {
     //个人信息保存按钮
     $("#save_user_info_btn").on("click", function () {
         send_ajax_quick({
-            url: "api/user/user/updateUser",
+            type: "PUT",
+            url: "/user/curuser",
             option: "修改信息",
             data: $.bindModelReverse($("#user_info_edit_div")),
             success: function () {
@@ -164,7 +166,8 @@ $(document).ready(function () {
     //修改密码事件
     $("#apply_password_btn").on("click", function () {
         send_ajax_quick({
-            url: "api/user/user/updateUserPassword",
+            type: "PUT",
+            url: "/user/curuser/password",
             option: "修改密码",
             data: {
                 oldPassword: $("#old_password").val(),
@@ -233,7 +236,8 @@ $(document).ready(function () {
     //刷新教师信息
     function updateTeacherInfo() {
         send_ajax_quick({
-            url: "api/teacher/teacher/selectTeacherByUserId",
+            type: "GET",
+            url: "/teachers/curTeacher",
             option: "获取教师信息",
             success: function (data) {
                 $.bindModel($("#teacher_info_edit_div"), data);
@@ -244,7 +248,7 @@ $(document).ready(function () {
     //上传头像文件
     function uploadHead() {
         let file = $('#id_avatar')[0].files[0];
-        uploadFile('api/user/user/uploadUserImage', file, 'userImageFile', 5242880, {},
+        uploadFile('/user/curuser/image', file, 'userImageFile', 5242880, {},
             function (data) {
                 if (data.status == 200) {
                     success_toast("上传成功!");
@@ -332,6 +336,7 @@ window.num_per_page = 5;
 //刷新盒子的通用函数
 function refresh_my_box(url, page_num, pageId, path, mapper, error) {
     send_ajax({
+        type: "GET",
         url: url,
         data: {
             page: page_num,
@@ -362,7 +367,7 @@ function refresh_my_box(url, page_num, pageId, path, mapper, error) {
 };
 
 function refresh_courses_info(page_num) {
-    refresh_my_box("api/user/learn/selectLearnByUserId", page_num,
+    refresh_my_box("user/curuser/learned_course", page_num,
         "courses_info", ["courses"]);
 }
 
@@ -372,7 +377,7 @@ function refresh_courses_history(page_num) {
 }
 
 function refresh_courses_published(page_num) {
-    refresh_my_box("api/teacher/course/selectCourseByUserId", page_num,
+    refresh_my_box("teachers/curTeacher/course", page_num,
         "courses_published", ["courses"], function (data) {
             //价格除以100
             data["cost"] = (data["cost"] / 100).toFixed(1) + "元";
@@ -402,7 +407,7 @@ function refresh_courses_published(page_num) {
 }
 
 function refresh_order_info(page_num) {
-    refresh_my_box("api/user/learn/selectLearnByUserId", page_num,
+    refresh_my_box("user/curuser/order/orders", page_num,
         "order_info", ["courses"], function (data) {
             data["cost"] = data["cost"].toFixed(1) + "元";
             // data["orderState"] = data["orderState"] === 0 ? "已支付" : "待支付";
@@ -432,28 +437,29 @@ function refresh_user_info() {
 function updateAllUserInfo() {
     //更新个人信息背景栏
     send_ajax_quick({
-        url: "api/user/user/getUserCurrent",
+        type: "GET",
+        url: "user/curuser",
         option: "获取用户信息",
         success: function (data) {
-            $(".user_name_all").text(data.username);
-            $(".user_phone_all").text(data.phone);
-            $(".user_head_img").attr("src", data.userImage);
-            $(".user_description_all").text(data.userIntroduction);
+            $(".user_name_all").text(data.name);
+            $(".user_phone_all").text(data.telphone);
+            $(".user_head_img").attr("src", data.headUrl);
+            $(".user_description_all").text(data.userDescribtion);
             $.bindModel($("#user_info_detail"), data);
             $.bindModel($("#user_info_edit_div"), data);
-            //显示、隐藏申请讲师按钮   power的含义需要与后端确认
-            const powerJson = $.parseJSON(data.power);
-            if (powerJson != null && powerJson.allTeacher == "allow") {
-                $("#courses_published_btn_li").show();
-                $("#teacher_apply_btn_li").hide();
-                $("#user_state_label").val("讲师");
-                window.isTeacher = true;
-            } else {
-                $("#courses_published_btn_li").hide();
-                $("#teacher_apply_btn_li").show();
-                $("#user_state_label").val("普通用户");
-                window.isTeacher = false;
-            }
+            // //显示、隐藏申请讲师按钮   power的含义需要与后端确认
+            // const powerJson = $.parseJSON(data.power);
+            // if (powerJson != null && powerJson.allTeacher == "allow") {
+            //     $("#courses_published_btn_li").show();
+            //     $("#teacher_apply_btn_li").hide();
+            //     $("#user_state_label").val("讲师");
+            //     window.isTeacher = true;
+            // } else {
+            //     $("#courses_published_btn_li").hide();
+            //     $("#teacher_apply_btn_li").show();
+            //     $("#user_state_label").val("普通用户");
+            //     window.isTeacher = false;
+            // }
         }
     });
 };
@@ -501,8 +507,8 @@ function delete_published_course_btn_click(that) {
 
 function confirm_delete_published_course_btn_click(that) {
     send_ajax({
-        type: "POST",
-        url: "api/teacher/course/deleteCourse",
+        type: "DELETE",
+        url: "teachers/curTeacher/course/{courseId}",
         data: {
             courseId: $(that).attr("courseId")
         },
@@ -527,7 +533,7 @@ function continue_learn_btn_click(that) {
     if (chapterId != null) {
         localStorage.setItem("chapterId", $(that).attr("lastChapterId"));
         window.location.href = "watchVideo.html";
-    }else {
+    } else {
         window.location.href = "CourseInfo.html?" + "courseId=" + $(that).parent().attr("courseId");
     }
 

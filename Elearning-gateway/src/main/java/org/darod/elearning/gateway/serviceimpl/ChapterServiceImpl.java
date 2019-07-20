@@ -37,7 +37,7 @@ public class ChapterServiceImpl implements ChapterService {
     @Override
     public ChapterModel getChapterInfoById(Integer courseId, Integer chapterId) {
         ChapterDO chapterDO = chapterDOMapper.selectByPrimaryKey(chapterId);
-        if (!chapterDO.getCourseId().equals(courseId)) {
+        if (chapterDO == null || !chapterDO.getCourseId().equals(courseId)) {
             throw new BusinessException(EmException.CHAPTER_NOT_EXIST);
         }
         return CopyPropertiesUtils.copyProperties(chapterDO, ChapterModel.class);

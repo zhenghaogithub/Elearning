@@ -21,6 +21,8 @@ public interface UserService {
 
     void updateUserPasswordById(Integer userId, String oldPassword, String newPassword) throws BusinessException;
 
+    String getChapterVideoUrl(Integer userId,Integer courseId,Integer chapterId);
+
 //    void updateUserHeadImg(Integer userId, String url);
 
     String hello();

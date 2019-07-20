@@ -111,7 +111,8 @@ $(document).ready(function () {
     //获取消息数量并更新监听器
     function updateMessageCount() {
         send_ajax_quick({
-            url: "api/user/message/selectTotalUnreadMessage",
+            type:"GET",
+            url: "/user/message/unread_count",
             option: "获取消息数量",
             success: function (data) {
                 if (data.total <= 0) {
@@ -133,27 +134,27 @@ $(document).ready(function () {
 //动态渲染头像悬浮信息
 window.updateUserFlex = function () {
     send_ajax({
-        type: "POST",
-        url: "api/user/user/getUserCurrent",
+        type: "GET",
+        url: "user/curuser",
         success: function (data) {
             if (data.status === 200) {
-                $(".user_name_all").text(data.data.username);
-                $(".user_phone_all").text(data.data.phone);
+                $(".user_name_all").text(data.data.name);
+                $(".user_phone_all").text(data.data.telphone);
                 //这需要后端给出具体的url格式后修改
-                $(".user_head_img").attr("src", data.data.userImage);
+                $(".user_head_img").attr("src", data.data.headUrl);
                 window.userId = data.data.userId;
-                const powerJson = $.parseJSON(data.data.power);
-                if (powerJson != null && powerJson.allTeacher == "allow") {
-                    window.isTeacher = true;
-                    $("#open_live_btn").off("click").on("click", function () {
-                        window.open("http://182.92.1.116:3000/livecreator?t=" + window.token);
-                    });
-                } else {
-                    window.isTeacher = false;
-                    $("#open_live_btn").off("click").on("click", function () {
-                        fail_toast("您还不是讲师，无法开启直播");
-                    });
-                }
+                // const powerJson = $.parseJSON(data.data.power);
+                // if (powerJson != null && powerJson.allTeacher == "allow") {
+                //     window.isTeacher = true;
+                //     $("#open_live_btn").off("click").on("click", function () {
+                //         window.open("http://182.92.1.116:3000/livecreator?t=" + window.token);
+                //     });
+                // } else {
+                //     window.isTeacher = false;
+                //     $("#open_live_btn").off("click").on("click", function () {
+                //         fail_toast("您还不是讲师，无法开启直播");
+                //     });
+                // }
             } else {
                 fail_toast(data.message);
                 //如果登录失效 返回登录页面
@@ -242,7 +243,8 @@ function setSearchKey() {
 //退出登录
 function logout() {
     send_ajax_quick({
-        url: "api/user/user/logout",
+        type: "GET",
+        url: "user/user/logout",
         option: "退出登录",
         success: function (data) {
             // window.location.href = "login_page.html";

@@ -1,13 +1,19 @@
 package org.darod.elearning.gateway.serviceimpl;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.crypto.hash.Md5Hash;
+import org.darod.elearning.common.dto.ChapterModel;
 import org.darod.elearning.common.dto.UserModel;
 import org.darod.elearning.common.exception.BusinessException;
 import org.darod.elearning.common.exception.EmException;
+import org.darod.elearning.common.service.user.ChapterService;
 import org.darod.elearning.common.service.user.UserService;
 import org.darod.elearning.common.validator.ValidatorImpl;
+import org.darod.elearning.gateway.dao.ChapterDOMapper;
 import org.darod.elearning.gateway.dao.UserDOMapper;
+import org.darod.elearning.gateway.dao.UserLearnDOMapper;
 import org.darod.elearning.gateway.dao.UserPasswordDOMapper;
+import org.darod.elearning.gateway.dataobject.ChapterDO;
 import org.darod.elearning.gateway.dataobject.UserDO;
 import org.darod.elearning.gateway.dataobject.UserPasswordDO;
 import org.darod.elearning.common.utils.CopyPropertiesUtils;
@@ -30,6 +36,10 @@ public class UserServiceImpl implements UserService {
     private UserPasswordDOMapper userPasswordDOMapper;
     @Autowired
     private ValidatorImpl validator;
+    @Autowired
+    private UserLearnDOMapper userLearnDOMapper;
+    @Autowired
+    ChapterService chapterService;
 
     @Override
     @Transactional
@@ -88,6 +98,20 @@ public class UserServiceImpl implements UserService {
 //        userDO.setHeadUrl(url);
 //        userDOMapper.updateByPrimaryKeySelective(userDO_new);
 //    }
+
+
+    @Override
+    public String getChapterVideoUrl(Integer userId, Integer courseId, Integer chapterId) {
+        //看看用户学习了这门课程了吗
+        if (userLearnDOMapper.selectByUserIdAndCourseId(userId, courseId) == null) {
+            throw new BusinessException(EmException.COURSE_NOT_LEARNED);
+        }
+        ChapterModel chapterInfoById = chapterService.getChapterInfoById(courseId, chapterId);
+        if(StringUtils.isEmpty(chapterInfoById.getVideoUrl())){
+            throw  new BusinessException(EmException.CHAPTER_VIDEO_NOT_EXIST);
+        }
+        return chapterInfoById.getVideoUrl();
+    }
 
     @Override
     public String hello() {

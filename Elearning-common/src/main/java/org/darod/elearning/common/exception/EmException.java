@@ -38,6 +38,8 @@ public enum EmException implements CommonError {
 
     COMMENT_NOT_EXIST(40101, "评论不存在"),
 
+    CHAPTER_VIDEO_NOT_EXIST(40102, "章节暂无视频"),
+
     TEACHER_HAVE_APPLY(40200, "您已经申请过了"),
 
     TEACHER_NOT_EXIST(40201, "教师不存在"),
