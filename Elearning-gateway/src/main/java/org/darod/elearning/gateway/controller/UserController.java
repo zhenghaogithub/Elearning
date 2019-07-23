@@ -49,15 +49,13 @@ import java.util.Random;
 public class UserController {
     //    @Reference(interfaceClass = UserService.class)
     @Autowired
-    UserService userService;
+    private UserService userService;
     @Autowired
-    UserLearnService userLearnService;
+    private UserLearnService userLearnService;
     @Autowired
-    CourseServiceImpl courseService;
+    private CourseServiceImpl courseService;
     @Autowired
-    HttpServletRequest httpServletRequest;
-    @Autowired
-    RedisUtils redisUtils;
+    private RedisUtils redisUtils;
 
     private static final String OTP_PREFIX = "phone_otp:";
 

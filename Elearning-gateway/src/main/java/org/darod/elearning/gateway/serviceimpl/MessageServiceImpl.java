@@ -23,7 +23,7 @@ import java.util.List;
 @Service
 public class MessageServiceImpl implements MessageService {
     @Autowired
-    MessageDOMapper messageDOMapper;
+    private MessageDOMapper messageDOMapper;
 
     @Override
     public CommonCountModel<List<MessageModel>> getAllMessage(Integer userId, CommonPageModel commonPageModel) {

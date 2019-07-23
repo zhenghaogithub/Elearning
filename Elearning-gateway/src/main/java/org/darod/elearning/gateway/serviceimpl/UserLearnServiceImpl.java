@@ -33,11 +33,11 @@ import java.util.stream.Collectors;
 @Service
 public class UserLearnServiceImpl implements UserLearnService {
     @Autowired
-    UserLearnDOMapper userLearnDOMapper;
+    private UserLearnDOMapper userLearnDOMapper;
     @Autowired
-    CourseDOMapper courseDOMapper;
+    private CourseDOMapper courseDOMapper;
     @Autowired
-    OrderDOMapper orderDOMapper;
+    private OrderDOMapper orderDOMapper;
 
     @Override
     public CommonCountModel<List<UserLearnModel>> getCourseLearnedInfo(Integer userId, int page, int row) {

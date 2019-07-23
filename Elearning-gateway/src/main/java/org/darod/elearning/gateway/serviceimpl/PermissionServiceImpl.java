@@ -22,13 +22,13 @@ import java.util.Set;
 @Service
 public class PermissionServiceImpl implements PermissionService {
     @Autowired
-    ForbidDOMapper forbidDOMapper;
+    private ForbidDOMapper forbidDOMapper;
     @Autowired
-    RolePrivilegeDOMapper rolePrivilegeDOMapper;
+    private RolePrivilegeDOMapper rolePrivilegeDOMapper;
     @Autowired
-    UserRoleDOMapper userRoleDOMapper;
+    private UserRoleDOMapper userRoleDOMapper;
     @Autowired
-    TeacherDOMapper teacherDOMapper;
+    private TeacherDOMapper teacherDOMapper;
 
     @Override
     public Set<String> getUserRoleInfo(Integer userId) {

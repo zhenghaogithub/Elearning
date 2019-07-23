@@ -27,9 +27,9 @@ import java.util.List;
 @Service
 public class CourseServiceImpl implements CourseService {
     @Autowired
-    CourseDOMapper courseDOMapper;
+    private CourseDOMapper courseDOMapper;
     @Autowired
-    TeacherDOMapper teacherDOMapper;
+    private TeacherDOMapper teacherDOMapper;
 
     @Override
     @Deprecated //统一使用getCourseInfoLimited

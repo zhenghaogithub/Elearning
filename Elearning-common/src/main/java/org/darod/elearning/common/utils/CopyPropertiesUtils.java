@@ -44,8 +44,9 @@ public class CopyPropertiesUtils {
     }
 
     //复制Bean属性 忽略null值
-    public static void copyPropertiesIgnoreNull(Object src, Object target) {
+    public static <S,T> T copyPropertiesIgnoreNull(S src, T target) {
         BeanUtils.copyProperties(src, target, getNullPropertyNames(src));
+        return target;
     }
 
     //获取Bean为null的属性名

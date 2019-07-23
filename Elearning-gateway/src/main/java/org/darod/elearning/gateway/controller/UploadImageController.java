@@ -4,10 +4,10 @@ import io.swagger.annotations.Api;
 import org.apache.commons.lang3.StringUtils;
 import org.darod.elearning.common.dto.ChapterModel;
 import org.darod.elearning.common.dto.CourseModel;
+import org.darod.elearning.common.dto.LiveRoomModel;
 import org.darod.elearning.common.dto.UserModel;
 import org.darod.elearning.common.exception.BusinessException;
 import org.darod.elearning.common.exception.EmException;
-import org.darod.elearning.common.exception.UploadException;
 import org.darod.elearning.common.response.CommonResponse;
 import org.darod.elearning.common.response.ResponseUtils;
 import org.darod.elearning.common.service.user.TeacherService;
@@ -16,8 +16,6 @@ import org.darod.elearning.gateway.utils.ShiroUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Darod
@@ -28,13 +26,13 @@ import javax.servlet.http.HttpServletRequest;
 @Api(tags = "上传图片资源")
 public class UploadImageController {
     @Autowired
-    UserService userService;
+    private UserService userService;
     @Autowired
-    TeacherService teacherService;
+    private TeacherService teacherService;
 
     @PostMapping("/user/curuser/image")
     @ResponseBody
-    public CommonResponse uploadUserHeadImg(@RequestParam(value = "userImageFile_path",required = false) String url) {
+    public CommonResponse uploadUserHeadImg(@RequestParam(value = "userImageFile_path", required = false) String url) {
         UserModel userModel = new UserModel();
         userModel.setUserId(ShiroUtils.getCurUserId());
         userModel.setHeadUrl(getRealUrl("images", url));
@@ -45,29 +43,36 @@ public class UploadImageController {
     @PostMapping("/teachers/curTeacher/course/{courseId}/image")
     @ResponseBody
     public CommonResponse uploadCourseImg(@PathVariable("courseId") Integer courseId,
-                                          @RequestParam(value = "courseImageFile_path",required = false) String url) {
-            CourseModel courseModel = new CourseModel();
-            courseModel.setCourseId(courseId);
-            courseModel.setCourseImgUrl(getRealUrl("images", url));
-            teacherService.updateCourseImageTeacher(ShiroUtils.getCurUserId(), courseModel);
-            return ResponseUtils.getOKResponse();
+                                          @RequestParam(value = "courseImageFile_path", required = false) String url) {
+        CourseModel courseModel = new CourseModel();
+        courseModel.setCourseId(courseId);
+        courseModel.setCourseImgUrl(getRealUrl("images", url));
+        return ResponseUtils.getOKResponse(teacherService.updateCourseImageTeacher(ShiroUtils.getCurUserId(), courseModel));
+    }
+
+    @PostMapping("/teachers/curTeacher/live/image")
+    @ResponseBody
+    public CommonResponse uploadLiveImage(@RequestParam(value = "liveImageFile_path", required = false) String url) {
+        LiveRoomModel liveRoomModel = new LiveRoomModel();
+        liveRoomModel.setUserId(ShiroUtils.getCurUserId());
+        liveRoomModel.setRoomImage(getRealUrl("images", url));
+        return ResponseUtils.getOKResponse(teacherService.updateLiveRoom(liveRoomModel));
     }
 
     @PostMapping("/teachers/curTeacher/course/{courseId}/chapter/{chapterId}/video")
     @ResponseBody
-    public CommonResponse uploadChapterVideo(@PathVariable("courseId") Integer courseId,@PathVariable("chapterId") Integer chapterId,
-                                          @RequestParam(value = "chapterVideoFile_path",required = false) String url) {
+    public CommonResponse uploadChapterVideo(@PathVariable("courseId") Integer courseId, @PathVariable("chapterId") Integer chapterId,
+                                             @RequestParam(value = "chapterVideoFile_path", required = false) String url) {
         ChapterModel chapterModel = new ChapterModel();
         chapterModel.setVideoUrl(getRealUrl("videos", url));
-        teacherService.updateChapterTeacher(ShiroUtils.getCurUserId(), courseId,chapterId,chapterModel);
-        return ResponseUtils.getOKResponse();
+        return ResponseUtils.getOKResponse(teacherService.updateChapterTeacher(ShiroUtils.getCurUserId(), courseId, chapterId, chapterModel));
     }
 
 
     private String getRealUrl(String prefix, String url) {
-        if (StringUtils.isEmpty(url)) throw new BusinessException(EmException.PARAMETER_VALIDATION_ERROR,"URL名称或值不正确");
+        if (StringUtils.isEmpty(url)) throw new BusinessException(EmException.PARAMETER_VALIDATION_ERROR, "URL名称或值不正确");
         int i = url.lastIndexOf(prefix);
-        if (i < 0) throw new BusinessException(EmException.PARAMETER_VALIDATION_ERROR,"URL名称或值不正确");
+        if (i < 0) throw new BusinessException(EmException.PARAMETER_VALIDATION_ERROR, "URL名称或值不正确");
         return url.substring(i);
     }
 

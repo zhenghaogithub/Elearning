@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
 @Api(tags = "评论接口")
 public class CommentController {
     @Autowired
-    CommentServiceImpl commentService;
+    private CommentServiceImpl commentService;
 
     @GetMapping("/course/{courseId}/comment")
     public CommonResponse getAllCourseComment(@PathVariable("courseId") Integer courseId, @Validated CommonPageModel commonPageModel) {

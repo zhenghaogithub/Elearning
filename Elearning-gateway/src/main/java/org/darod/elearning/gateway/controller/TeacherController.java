@@ -3,18 +3,18 @@ package org.darod.elearning.gateway.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.darod.elearning.common.dto.ChapterModel;
-import org.darod.elearning.common.dto.CourseModel;
-import org.darod.elearning.common.dto.CoursePageModel;
-import org.darod.elearning.common.dto.TeacherModel;
+import org.darod.elearning.common.dto.*;
 import org.darod.elearning.common.response.CommonResponse;
 import org.darod.elearning.common.response.ResponseUtils;
 import org.darod.elearning.common.service.user.ChapterService;
+import org.darod.elearning.common.service.user.LiveService;
 import org.darod.elearning.common.service.user.TeacherService;
 import org.darod.elearning.gateway.utils.ShiroUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 /**
  * @author Darod
@@ -26,9 +26,11 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/teachers")
 public class TeacherController {
     @Autowired
-    ChapterService chapterService;
+    private ChapterService chapterService;
     @Autowired
-    TeacherService teacherService;
+    private TeacherService teacherService;
+    @Autowired
+    private LiveService liveService;
 
     @PostMapping("/curTeacher")
     @ApiOperation(value = "申请成为教师", httpMethod = "POST")
@@ -131,6 +133,31 @@ public class TeacherController {
     public CommonResponse deleteChapter(@PathVariable("courseId") Integer courseId, @PathVariable("chapterId") Integer chapterId) {
         teacherService.deleteChapterTeacher(ShiroUtils.getCurUserId(), courseId, chapterId);
         return ResponseUtils.getOKResponse();
+    }
+
+    @PostMapping("/curTeacher/live")
+    @RequiresPermissions("add_live")
+    @ApiOperation(value = "申请发起直播", httpMethod = "POST")
+    public CommonResponse addLive() {
+        return ResponseUtils.getOKResponse(teacherService.addLive(ShiroUtils.getCurUserId()));
+    }
+
+    @DeleteMapping("/curTeacher/live")
+    @ApiOperation(value = "结束直播", httpMethod = "DELETE")
+    public CommonResponse stopLive() {
+        teacherService.stopLive(ShiroUtils.getCurUserId());
+        return ResponseUtils.getOKResponse();
+    }
+
+    @PutMapping("/curTeacher/liveRoom")
+    @RequiresPermissions("add_live")
+    @ApiOperation(value = "修改直播间信息", httpMethod = "PUT")
+    public CommonResponse updateLiveRoom(@RequestBody Map<String, String> map) {
+        LiveRoomModel liveRoomModel = new LiveRoomModel();
+        liveRoomModel.setUserId(ShiroUtils.getCurUserId());
+        liveRoomModel.setRoomDescription(map.get("roomDescription"));
+        liveRoomModel.setRoomName(map.get("roomName"));
+        return ResponseUtils.getOKResponse(teacherService.updateLiveRoom(liveRoomModel));
     }
 
 

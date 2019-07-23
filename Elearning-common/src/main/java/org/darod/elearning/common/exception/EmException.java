@@ -43,6 +43,13 @@ public enum EmException implements CommonError {
     TEACHER_HAVE_APPLY(40200, "您已经申请过了"),
 
     TEACHER_NOT_EXIST(40201, "教师不存在"),
+
+    LIVE_HAVE_APPLY(50000, "您已开启过直播"),
+
+    LIVE_ROOM_NOT_EXIST(50001, "直播间不存在"),
+
+    LIVE_HAVE_STOP(50002, "直播已经停止"),
+
     ;
     private int errCode;
     private String msg;

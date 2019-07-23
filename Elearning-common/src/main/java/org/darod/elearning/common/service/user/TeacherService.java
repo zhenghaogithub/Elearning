@@ -41,4 +41,12 @@ public interface TeacherService {
 
     void deleteChapterTeacher(Integer userId, Integer courseId, Integer chapterId);
 
+    //---------------------------直播相关--------------------------------
+    LiveRecordModel addLive(Integer userId);
+
+    //结束直播
+    void stopLive(Integer userId);
+
+    //修改直播间信息
+    LiveRoomModel updateLiveRoom(LiveRoomModel liveRoomModel);
 }

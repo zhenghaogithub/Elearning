@@ -22,9 +22,9 @@ import java.util.List;
 @Service
 public class ChapterServiceImpl implements ChapterService {
     @Autowired
-    ChapterDOMapper chapterDOMapper;
+    private ChapterDOMapper chapterDOMapper;
     @Autowired
-    CourseDOMapper courseDOMapper;
+    private CourseDOMapper courseDOMapper;
 
     @Override
     public List<ChapterModel> getAllChapterByCourseId(Integer courseId) {

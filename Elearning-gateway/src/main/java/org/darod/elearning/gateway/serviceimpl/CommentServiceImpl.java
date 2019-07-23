@@ -27,13 +27,13 @@ import java.util.List;
 @Service
 public class CommentServiceImpl implements CommentService {
     @Autowired
-    CommentDOMapper commentDOMapper;
+    private CommentDOMapper commentDOMapper;
     @Autowired
-    CourseDOMapper courseDOMapper;
+    private CourseDOMapper courseDOMapper;
     @Autowired
-    ChapterDOMapper chapterDOMapper;
+    private ChapterDOMapper chapterDOMapper;
     @Autowired
-    UserLearnDOMapper userLearnDOMapper;
+    private UserLearnDOMapper userLearnDOMapper;
 
     @Override
     public CommonCountModel<List<CommentModel>> getAllCourseComment(Integer courseId, CommonPageModel commonPageModel) {

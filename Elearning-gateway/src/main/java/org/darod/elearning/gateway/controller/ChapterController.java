@@ -28,9 +28,9 @@ import java.util.List;
 @Api(tags = "课程章节资源接口")
 public class ChapterController {
     @Autowired
-    ChapterService chapterService;
+    private ChapterService chapterService;
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @RequestMapping("/course/{courseId}/chapters")
     @ResponseBody

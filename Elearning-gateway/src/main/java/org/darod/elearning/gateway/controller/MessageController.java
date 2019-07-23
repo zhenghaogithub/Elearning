@@ -22,7 +22,7 @@ import java.util.Map;
 @Api(tags = "消息接口")
 public class MessageController {
     @Autowired
-    MessageServiceImpl messageService;
+    private MessageServiceImpl messageService;
 
     @GetMapping("/user/message")
     public CommonResponse getAllMessage(@Validated CommonPageModel commonPageModel) {

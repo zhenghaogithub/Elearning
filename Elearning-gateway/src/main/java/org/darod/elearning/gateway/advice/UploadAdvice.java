@@ -6,6 +6,7 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.darod.elearning.common.exception.BusinessException;
 import org.darod.elearning.common.exception.EmException;
 import org.darod.elearning.common.exception.UploadException;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 /**
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Component;
  * @date 2019/7/19 0019 23:09
  */
 @Aspect
+@Order(1)
 @Component
 public class UploadAdvice {
     @Pointcut("execution(public  * org.darod.elearning.gateway.controller.UploadImageController.*(..))")

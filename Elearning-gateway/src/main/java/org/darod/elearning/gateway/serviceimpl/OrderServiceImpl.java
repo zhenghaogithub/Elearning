@@ -33,13 +33,13 @@ import java.util.List;
 @Service
 public class OrderServiceImpl implements OrderService {
     @Autowired
-    OrderDOMapper orderDOMapper;
+    private OrderDOMapper orderDOMapper;
     @Autowired
-    SequenceDOMapper sequenceDOMapper;
+    private SequenceDOMapper sequenceDOMapper;
     @Autowired
-    CourseDOMapper courseDOMapper;
+    private CourseDOMapper courseDOMapper;
     @Autowired
-    UserLearnServiceImpl userLearnService;
+    private UserLearnServiceImpl userLearnService;
 
     @Override
     public CommonCountModel<List<OrderModel>> getAllOrderInfo(CommonPageModel commonPageModel) throws BusinessException {

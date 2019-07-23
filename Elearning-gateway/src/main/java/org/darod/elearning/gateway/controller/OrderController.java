@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.*;
 @Api(tags = "用户订单接口")
 public class OrderController {
     @Autowired
-    OrderServiceImpl orderService;
+    private OrderServiceImpl orderService;
 
 
     @GetMapping("/orders")

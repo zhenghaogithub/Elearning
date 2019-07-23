@@ -43,6 +43,10 @@ public class ShiroConfiguration {
         filterChainDefinitionMap.put("/resources/**", "anon");
         filterChainDefinitionMap.put("/user/user", "anon");
         filterChainDefinitionMap.put("/swagger-ui.html", "anon");
+        //直播认证
+        filterChainDefinitionMap.put("/live/**", "anon");
+
+
 //        filterChainDefinitionMap.put("/webjars/**", "anon");
         filterChainDefinitionMap.put("/swagger-resources/**", "anon");
         filterChainDefinitionMap.put("/v2/api-docs", "anon");

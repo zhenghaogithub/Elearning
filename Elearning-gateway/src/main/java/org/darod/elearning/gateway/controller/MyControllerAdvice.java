@@ -33,7 +33,6 @@ public class MyControllerAdvice {
     @ExceptionHandler(BindException.class)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-
     public CommonResponse handlerValidationExcpetion(HttpServletRequest request, Exception exception) {
         Map<String, Object> map = new HashMap<>();
         BindException ex = (BindException) exception;

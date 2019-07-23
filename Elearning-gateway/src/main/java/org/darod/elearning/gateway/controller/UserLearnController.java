@@ -26,7 +26,7 @@ import java.util.List;
 @RequestMapping("/user/curuser")
 public class UserLearnController {
     @Autowired
-    UserLearnService userLearnService;
+    private UserLearnService userLearnService;
 
 
     @GetMapping("/learned_course")

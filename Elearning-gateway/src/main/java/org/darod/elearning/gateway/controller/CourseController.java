@@ -27,11 +27,11 @@ import java.util.List;
 @RequestMapping("/course")
 public class CourseController {
     @Autowired
-    UserService userService;
+    private UserService userService;
     @Autowired
-    UserLearnService userLearnService;
+    private UserLearnService userLearnService;
     @Autowired
-    CourseServiceImpl courseService;
+    private CourseServiceImpl courseService;
 
     @GetMapping("/courses")
     @ApiOperation(value = "获取所有课程", httpMethod = "GET")

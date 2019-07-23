@@ -95,6 +95,14 @@
 <!--        <table tableName="user_role" domainObjectName="UserRoleDO" enableCountByExample="false"-->
 <!--            enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"-->
 <!--            selectByExampleQueryId="false">-->
+<!--        </table>   -->
+<!--        <table tableName="live_room" domainObjectName="LiveRoomDO" enableCountByExample="false"-->
+<!--            enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"-->
+<!--            selectByExampleQueryId="false">-->
+<!--        </table>-->
+<!--        <table tableName="live_record" domainObjectName="LiveRecordDO" enableCountByExample="false"-->
+<!--            enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"-->
+<!--            selectByExampleQueryId="false">-->
 <!--        </table>-->
     </context>
 </generatorConfiguration>

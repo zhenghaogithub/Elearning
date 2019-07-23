@@ -6,6 +6,7 @@ import org.darod.elearning.common.exception.BusinessException;
 import org.darod.elearning.common.exception.EmException;
 import org.darod.elearning.common.service.user.ChapterService;
 import org.darod.elearning.common.service.user.CourseService;
+import org.darod.elearning.common.service.user.LiveService;
 import org.darod.elearning.common.service.user.TeacherService;
 import org.darod.elearning.common.utils.CopyPropertiesUtils;
 import org.darod.elearning.gateway.annotation.WithoutPermission;
@@ -28,13 +29,16 @@ import java.util.List;
 @Service
 public class TeacherServiceImpl implements TeacherService {
     @Autowired
-    UserDOMapper userDOMapper;
+    private UserDOMapper userDOMapper;
     @Autowired
-    TeacherDOMapper teacherDOMapper;
+    private TeacherDOMapper teacherDOMapper;
     @Autowired
-    CourseService courseService;
+    private CourseService courseService;
     @Autowired
-    ChapterService chapterService;
+    private ChapterService chapterService;
+    @Autowired
+    private LiveService liveService;
+
     //---------------------------课程信息获取--------------------------------
     @Override
     public CommonCountModel<List<CourseModel>> getCourseByUserId(CoursePageModel coursePageModel) {
@@ -127,6 +131,7 @@ public class TeacherServiceImpl implements TeacherService {
 //        }
         courseService.deleteCourse(courseId);
     }
+
     //更新课程封面
     @Override
     public CourseModel updateCourseImageTeacher(Integer userId, CourseModel courseModel) {
@@ -142,24 +147,42 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Override
     public List<ChapterModel> getAllChapterInfoTeacher(Integer userId, Integer courseId) {
-        return CopyPropertiesUtils.mapListObject(chapterService.getAllChapterByCourseId(courseId),ChapterModel.class);
+        return CopyPropertiesUtils.mapListObject(chapterService.getAllChapterByCourseId(courseId), ChapterModel.class);
     }
 
     @Override
     public ChapterModel addChapterTeacher(Integer userId, Integer courseId, ChapterModel chapterModel) {
-        return chapterService.addChapter(courseId,chapterModel);
+        return chapterService.addChapter(courseId, chapterModel);
     }
 
     @Override
     public ChapterModel updateChapterTeacher(Integer userId, Integer courseId, Integer chapterId, ChapterModel chapterModel) {
-        return chapterService.updateChapter(courseId,chapterId,chapterModel);
+        return chapterService.updateChapter(courseId, chapterId, chapterModel);
     }
 
     @Override
     public void deleteChapterTeacher(Integer userId, Integer courseId, Integer chapterId) {
-        chapterService.deleteChapter(courseId,chapterId);
+        chapterService.deleteChapter(courseId, chapterId);
     }
 
+    //---------------------------直播相关--------------------------------
+    @Override //发起直播
+    public LiveRecordModel addLive(Integer userId) {
+        Integer teacherId = getTeacherIdByUserId(userId);
+        return liveService.addLive(teacherId);
+    }
+
+    @Override //结束直播
+    public void stopLive(Integer userId) {
+        Integer teacherId = getTeacherIdByUserId(userId);
+        liveService.stopLive(teacherId);
+    }
+
+    @Override  //修改直播间信息
+    public LiveRoomModel updateLiveRoom(LiveRoomModel liveRoomModel) {
+        liveRoomModel.setTeacherId(getTeacherIdByUserId(liveRoomModel.getUserId()));
+        return liveService.updateLiveRoom(liveRoomModel);
+    }
 
 
     //---------------------------获取教师ID工具--------------------------------

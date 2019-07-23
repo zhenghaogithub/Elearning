@@ -39,7 +39,7 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserLearnDOMapper userLearnDOMapper;
     @Autowired
-    ChapterService chapterService;
+    private ChapterService chapterService;
 
     @Override
     @Transactional
