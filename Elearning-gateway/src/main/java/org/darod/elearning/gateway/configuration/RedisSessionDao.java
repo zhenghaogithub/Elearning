@@ -4,6 +4,7 @@ import org.apache.shiro.session.Session;
 import org.apache.shiro.session.UnknownSessionException;
 import org.apache.shiro.session.mgt.eis.AbstractSessionDAO;
 import org.darod.elearning.gateway.utils.RedisUtils;
+import org.darod.elearning.gateway.utils.RedisUtilsForShiro;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.SerializationUtils;
@@ -23,7 +24,7 @@ import java.util.stream.Collectors;
 @Component
 public class RedisSessionDao extends AbstractSessionDAO {
     @Autowired
-    RedisUtils redisUtils;
+    RedisUtilsForShiro redisUtils;
 
     private final String SHIRO_SESSION_PREFIX = "elearning-gateway-session:";
 

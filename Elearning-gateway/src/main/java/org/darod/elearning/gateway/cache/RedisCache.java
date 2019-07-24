@@ -3,6 +3,7 @@ package org.darod.elearning.gateway.cache;
 import org.apache.shiro.cache.Cache;
 import org.apache.shiro.cache.CacheException;
 import org.darod.elearning.gateway.utils.RedisUtils;
+import org.darod.elearning.gateway.utils.RedisUtilsForShiro;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.SerializationUtils;
@@ -18,7 +19,7 @@ import java.util.Set;
 @Component
 public class RedisCache<K, V> implements Cache<K, V> {
     @Autowired
-    private RedisUtils redisUtils;
+    private RedisUtilsForShiro redisUtils;
 
     private final String CACHE_PREFIX = "elearning-gateway-cache:";
 

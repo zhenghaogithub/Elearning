@@ -1,6 +1,7 @@
 package org.darod.elearning.gateway.utils;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
@@ -18,6 +19,7 @@ import java.util.concurrent.TimeUnit;
 @Component
 public class RedisUtils {
     @Autowired
+    @Qualifier("redisTemplate")
     private RedisTemplate redisTemplate;
 
     /**
@@ -157,6 +159,7 @@ public class RedisUtils {
         }
         return redisTemplate.opsForValue().increment(key, -delta);
     }
+
     public Set<String> keys(String pattern) {
         if (pattern == null) {
             throw new RuntimeException("匹配模式不能为空");

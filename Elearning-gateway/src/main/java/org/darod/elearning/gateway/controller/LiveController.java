@@ -6,10 +6,8 @@ import org.darod.elearning.common.service.user.LiveService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 
@@ -26,31 +24,41 @@ public class LiveController {
 
     @PostMapping("/live/auth")
     @ApiOperation(value = "验证直播权限", httpMethod = "POST")
-    public void authLive(@RequestParam HashMap<String, String> map, HttpServletResponse response) {
-
+    public void authLive(@RequestParam("name") String channelId, @RequestParam("ls") String liveSecret, HttpServletResponse response) {
+        if (liveService.authLive(channelId, liveSecret))
+            response.setStatus(HttpServletResponse.SC_OK);
+        else
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
     }
 
     @PostMapping("/live/beat")
     @ApiOperation(value = "接收直播心跳", httpMethod = "POST")
-    public void beatLive(@RequestParam HashMap<String, String> map, HttpServletResponse response) {
-        response.setStatus(HttpServletResponse.SC_OK);
+    public void beatLive(@RequestParam("name") String channelId, @RequestParam("ls") String liveSecret, HttpServletResponse response) {
+        if (liveService.beatLive(channelId, liveSecret))
+            response.setStatus(HttpServletResponse.SC_OK);
+        else
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
     }
 
     @PostMapping("/live/done")
     @ApiOperation(value = "推流中断", httpMethod = "POST")
-    public void doneLive(@RequestParam HashMap<String, String> map, HttpServletResponse response) {
+    public void doneLive(@RequestParam("name") String channelId, @RequestParam("ls") String liveSecret, HttpServletResponse response) {
+        liveService.doneLive(channelId, liveSecret);
         response.setStatus(HttpServletResponse.SC_OK);
     }
 
     @PostMapping("/live/on_play")
     @ApiOperation(value = "增加观看人数", httpMethod = "POST")
-    public void incWatchNum(@RequestParam HashMap<String, String> map, HttpServletResponse response) {
+    public void incWatchNum(@RequestParam("name") String channelId, HttpServletResponse response) {
+        liveService.incWatchNum(channelId);
         response.setStatus(HttpServletResponse.SC_OK);
     }
 
     @PostMapping("/live/on_play_done")
     @ApiOperation(value = "减少观看人数", httpMethod = "POST")
-    public void decrWatchNum(@RequestParam HashMap<String, String> map, HttpServletResponse response) {
+    public void decrWatchNum(@RequestParam("name") String channelId, HttpServletResponse response) {
+        liveService.decrWatchNum(channelId);
         response.setStatus(HttpServletResponse.SC_OK);
     }
+
 }

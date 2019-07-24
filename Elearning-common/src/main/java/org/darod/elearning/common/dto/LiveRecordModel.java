@@ -22,7 +22,7 @@ public class LiveRecordModel {
     private Date finishTime;
 
     private String channelId;
-    @JSONField(serialize = false)
+//    @JSONField(serialize = false)
     private String liveSecret;
 
     private Integer watchNum;

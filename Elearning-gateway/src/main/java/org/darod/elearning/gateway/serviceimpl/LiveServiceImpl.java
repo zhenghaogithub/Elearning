@@ -52,7 +52,9 @@ public class LiveServiceImpl implements LiveService {
         liveRecordDO.setChannelId(randomChannelId);
         liveRecordDO.setLiveSecret(randomLiveSecret);
         liveRecordDOMapper.insertSelective(liveRecordDO);
-        return CopyPropertiesUtils.copyProperties(liveRecordDOMapper.selectByPrimaryKey(liveRecordDO.getLiveRecordId()), LiveRecordModel.class);
+        LiveRecordDO liveRecordDO1 = liveRecordDOMapper.selectByPrimaryKey(liveRecordDO.getLiveRecordId());
+        redisUtils.set(getLiveKeyInRedis(randomChannelId, randomLiveSecret), liveRecordDO1, 5 * 60); //5分钟后失效
+        return CopyPropertiesUtils.copyProperties(liveRecordDO1, LiveRecordModel.class);
     }
 
     @Override
@@ -79,6 +81,9 @@ public class LiveServiceImpl implements LiveService {
     @Transactional
     @Override
     public boolean authLive(String channelId, String liveSecret) {
+        Object o = redisUtils.get(getLiveKeyInRedis(channelId, liveSecret));
+        if (o == null) return false;  //缓存里没有 则失效
+
         LiveRecordDO liveRecordDO = liveRecordDOMapper.getCurLiveRecordByChannelAndSecretForUpdate(channelId, liveSecret);
         if (liveRecordDO == null || liveRecordDO.getBeatTime() != null) return false; //一个推流码只能使用一次
         liveRecordDO.setBeatTime(new Date());
@@ -106,7 +111,7 @@ public class LiveServiceImpl implements LiveService {
     @Override
     @Transactional
     public void incWatchNum(String channelId) {
-        LiveRecordDO liveRecordDO = liveRecordDOMapper.getCurLiveRecordByChannel(channelId,true);
+        LiveRecordDO liveRecordDO = liveRecordDOMapper.getCurLiveRecordByChannel(channelId, true);
         if (liveRecordDO == null) return;
         liveRecordDO.setWatchNum(liveRecordDO.getWatchNum() + 1);
         liveRecordDOMapper.updateByPrimaryKeySelective(liveRecordDO);
@@ -121,8 +126,8 @@ public class LiveServiceImpl implements LiveService {
         liveRecordDOMapper.updateByPrimaryKeySelective(liveRecordDO);
     }
 
-    @Override
-    public LiveRecordModel getCurLiveRecordModelFromCache(String channelId, String liveSecret) {
+
+    private LiveRecordModel getCurLiveRecordModelFromCache(String channelId, String liveSecret) {
         return CopyPropertiesUtils.copyProperties(getCurLiveRecordDOFromCache(channelId, liveSecret), LiveRecordModel.class);
     }
 
