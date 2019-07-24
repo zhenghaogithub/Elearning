@@ -20,6 +20,8 @@ public interface LiveService {
 
     boolean beatLive(String channelId, String liveSecret);
 
+    boolean doneRecord(String channelId, String liveSecret,String url);
+
     void doneLive(String channelId, String liveSecret);
 
     void incWatchNum(String channelId);

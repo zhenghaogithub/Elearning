@@ -15,6 +15,7 @@
     <result column="live_secret" jdbcType="CHAR" property="liveSecret" />
     <result column="watch_num" jdbcType="INTEGER" property="watchNum" />
     <result column="beat_time" jdbcType="TIMESTAMP" property="beatTime" />
+    <result column="live_image" jdbcType="VARCHAR" property="liveImage" />
   </resultMap>
   <sql id="Base_Column_List">
     <!--
@@ -23,7 +24,7 @@
       This element was generated on Mon Jul 22 21:43:10 CST 2019.
     -->
     live_record_id, teacher_id, start_time, finish_time, channel_id, live_secret, watch_num,
-    beat_time
+    beat_time,live_image
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     <!--
@@ -53,10 +54,10 @@
     -->
     insert into live_record (live_record_id, teacher_id, start_time, 
       finish_time, channel_id, live_secret,
-      watch_num, beat_time)
+      watch_num, beat_time,live_image)
     values (#{liveRecordId,jdbcType=INTEGER}, #{teacherId,jdbcType=INTEGER}, #{startTime,jdbcType=TIMESTAMP}, 
       #{finishTime,jdbcType=TIMESTAMP}, #{channelId,jdbcType=CHAR}, #{liveSecret,jdbcType=CHAR},
-      #{watchNum,jdbcType=INTEGER}, #{beatTime,jdbcType=TIMESTAMP})
+      #{watchNum,jdbcType=INTEGER}, #{beatTime,jdbcType=TIMESTAMP},#{liveImage,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="org.darod.elearning.gateway.dataobject.LiveRecordDO" useGeneratedKeys="true" keyProperty="liveRecordId">
     <!--
@@ -90,6 +91,9 @@
       <if test="beatTime != null">
         beat_time,
       </if>
+      <if test="liveImage != null">
+        live_image,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="liveRecordId != null">
@@ -115,6 +119,9 @@
       </if>
       <if test="beatTime != null">
         #{beatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="liveImage != null">
+        #{liveImage,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -147,6 +154,9 @@
       <if test="beatTime != null">
         beat_time = #{beatTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="liveImage != null">
+        live_image = #{liveImage,jdbcType=VARCHAR},
+      </if>
     </set>
     where live_record_id = #{liveRecordId,jdbcType=INTEGER}
   </update>
@@ -163,7 +173,8 @@
       channel_id = #{channelId,jdbcType=CHAR},
       live_secret = #{liveSecret,jdbcType=CHAR},
       watch_num = #{watchNum,jdbcType=INTEGER},
-      beat_time = #{beatTime,jdbcType=TIMESTAMP}
+      beat_time = #{beatTime,jdbcType=TIMESTAMP},
+      live_image = #{liveImage,jdbcType=VARCHAR}
     where live_record_id = #{liveRecordId,jdbcType=INTEGER}
   </update>
   

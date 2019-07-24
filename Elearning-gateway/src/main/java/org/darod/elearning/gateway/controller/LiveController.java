@@ -22,10 +22,16 @@ public class LiveController {
     @Autowired
     LiveService liveService;
 
+    private static final boolean debug_mode = false;
+
     @PostMapping("/live/auth")
     @ApiOperation(value = "验证直播权限", httpMethod = "POST")
-    public void authLive(@RequestParam("name") String channelId, @RequestParam("ls") String liveSecret, HttpServletResponse response) {
-        if (liveService.authLive(channelId, liveSecret))
+    public void authLive(@RequestParam HashMap<String, String> map, HttpServletResponse response) {
+        if (debug_mode) {
+            response.setStatus(HttpServletResponse.SC_OK);
+            return;
+        }
+        if (liveService.authLive(map.get("name"), map.get("ls")))
             response.setStatus(HttpServletResponse.SC_OK);
         else
             response.setStatus(HttpServletResponse.SC_FORBIDDEN);
@@ -33,8 +39,12 @@ public class LiveController {
 
     @PostMapping("/live/beat")
     @ApiOperation(value = "接收直播心跳", httpMethod = "POST")
-    public void beatLive(@RequestParam("name") String channelId, @RequestParam("ls") String liveSecret, HttpServletResponse response) {
-        if (liveService.beatLive(channelId, liveSecret))
+    public void beatLive(@RequestParam HashMap<String, String> map, HttpServletResponse response) {
+        if (map.get("ls") == null) {  //play发起的update事件 不用理会
+            response.setStatus(HttpServletResponse.SC_OK);
+            return;
+        }
+        if (liveService.beatLive(map.get("name"), map.get("ls")))
             response.setStatus(HttpServletResponse.SC_OK);
         else
             response.setStatus(HttpServletResponse.SC_FORBIDDEN);
@@ -42,23 +52,31 @@ public class LiveController {
 
     @PostMapping("/live/done")
     @ApiOperation(value = "推流中断", httpMethod = "POST")
-    public void doneLive(@RequestParam("name") String channelId, @RequestParam("ls") String liveSecret, HttpServletResponse response) {
-        liveService.doneLive(channelId, liveSecret);
+    //用户中断推流 原则上应该直接结束直播，但用户断网或者网络波动等情况可能需要保持直播状态，可以根据情况选择是否结束
+    //数据库中如果发现用户10分钟内没有推流也会自动结束直播
+    public void doneLive(@RequestParam HashMap<String, String> map, HttpServletResponse response) {
+//        liveService.doneLive(map.get("name"), map.get("ls"));
         response.setStatus(HttpServletResponse.SC_OK);
     }
 
     @PostMapping("/live/on_play")
     @ApiOperation(value = "增加观看人数", httpMethod = "POST")
-    public void incWatchNum(@RequestParam("name") String channelId, HttpServletResponse response) {
-        liveService.incWatchNum(channelId);
+    public void incWatchNum(@RequestParam HashMap<String, String> map, HttpServletResponse response) {
+        liveService.incWatchNum(map.get("name"));
         response.setStatus(HttpServletResponse.SC_OK);
     }
 
     @PostMapping("/live/on_play_done")
     @ApiOperation(value = "减少观看人数", httpMethod = "POST")
-    public void decrWatchNum(@RequestParam("name") String channelId, HttpServletResponse response) {
-        liveService.decrWatchNum(channelId);
+    public void decrWatchNum(@RequestParam HashMap<String, String> map, HttpServletResponse response) {
+        liveService.decrWatchNum(map.get("name"));
         response.setStatus(HttpServletResponse.SC_OK);
     }
 
+    @PostMapping("/live/record_done")
+    @ApiOperation(value = "封面记录完成", httpMethod = "POST")
+    public void doneRecord(@RequestParam HashMap<String, String> map, HttpServletResponse response) {
+        liveService.doneRecord(map.get("name"), map.get("ls"),map.get("path"));
+        response.setStatus(HttpServletResponse.SC_OK);
+    }
 }

@@ -31,4 +31,5 @@ public class LiveRecordModel {
 
     private String rtmpAddress;
 
+    private String liveImage;
 }
