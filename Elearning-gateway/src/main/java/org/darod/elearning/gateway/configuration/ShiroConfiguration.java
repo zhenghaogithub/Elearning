@@ -8,8 +8,9 @@ import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.CookieRememberMeManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.servlet.SimpleCookie;
-import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
-import org.darod.elearning.gateway.cache.RedisCacheManager;
+import org.darod.elearning.common.cache.RedisCacheManager;
+import org.darod.elearning.common.configuration.CustomSessionManager;
+import org.darod.elearning.common.configuration.RedisSessionDao;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.context.annotation.Bean;
 import org.apache.shiro.mgt.SecurityManager;
@@ -43,6 +44,12 @@ public class ShiroConfiguration {
         filterChainDefinitionMap.put("/resources/**", "anon");
         filterChainDefinitionMap.put("/user/user", "anon");
         filterChainDefinitionMap.put("/swagger-ui.html", "anon");
+        //webSocket
+        filterChainDefinitionMap.put("/app/liveroom", "anon");
+        filterChainDefinitionMap.put("/liveroom", "anon");
+        filterChainDefinitionMap.put("/portfolio/**", "anon");
+        filterChainDefinitionMap.put("/webjars/**", "anon");
+        filterChainDefinitionMap.put("/gs-guide-websocket/**", "anon");
         //直播认证
         filterChainDefinitionMap.put("/live/**", "anon");
 

@@ -1,4 +1,4 @@
-package org.darod.elearning.gateway.utils;
+package org.darod.elearning.common.utils;
 
 import org.apache.shiro.SecurityUtils;
 import org.darod.elearning.common.exception.BusinessException;

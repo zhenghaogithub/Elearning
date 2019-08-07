@@ -21,7 +21,7 @@ import java.util.List;
  * @version 1.0
  * @date 2019/6/20 0020 14:24
  */
-@SpringBootApplication(scanBasePackages = {"org.darod.elearning.gateway"})
+@SpringBootApplication(scanBasePackages = {"org.darod.elearning"})
 @MapperScan("org.darod.elearning.gateway.dao")
 @Import({ValidatorImpl.class})
 @EnableAspectJAutoProxy

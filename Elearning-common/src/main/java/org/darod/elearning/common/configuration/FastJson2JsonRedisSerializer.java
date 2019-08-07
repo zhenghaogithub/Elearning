@@ -1,4 +1,4 @@
-package org.darod.elearning.gateway.configuration;
+package org.darod.elearning.common.configuration;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.parser.ParserConfig;

@@ -1,4 +1,4 @@
-package org.darod.elearning.gateway.configuration;
+package org.darod.elearning.common.configuration;
 
 import org.apache.shiro.session.Session;
 import org.apache.shiro.session.UnknownSessionException;

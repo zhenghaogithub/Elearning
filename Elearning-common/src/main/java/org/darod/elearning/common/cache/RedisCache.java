@@ -1,9 +1,8 @@
-package org.darod.elearning.gateway.cache;
+package org.darod.elearning.common.cache;
 
 import org.apache.shiro.cache.Cache;
 import org.apache.shiro.cache.CacheException;
-import org.darod.elearning.gateway.utils.RedisUtils;
-import org.darod.elearning.gateway.utils.RedisUtilsForShiro;
+import org.darod.elearning.common.utils.RedisUtilsForShiro;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.SerializationUtils;

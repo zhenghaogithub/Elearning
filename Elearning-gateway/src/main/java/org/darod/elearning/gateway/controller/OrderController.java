@@ -10,7 +10,7 @@ import org.darod.elearning.common.exception.EmException;
 import org.darod.elearning.common.response.CommonResponse;
 import org.darod.elearning.common.response.ResponseUtils;
 import org.darod.elearning.gateway.serviceimpl.OrderServiceImpl;
-import org.darod.elearning.gateway.utils.ShiroUtils;
+import org.darod.elearning.common.utils.ShiroUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;

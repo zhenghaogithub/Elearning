@@ -25,6 +25,9 @@
 .red_font_color {
     color: red;
 }
+.blue_font_color {
+    color: #1c72e2;
+}
 
 
 /*自定义的按钮组件*/

@@ -1,4 +1,4 @@
-package org.darod.elearning.gateway.utils;
+package org.darod.elearning.common.utils;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

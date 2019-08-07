@@ -12,7 +12,7 @@ import org.darod.elearning.gateway.dao.LiveRoomDOMapper;
 import org.darod.elearning.gateway.dataobject.LiveRecordDO;
 import org.darod.elearning.gateway.dataobject.LiveRoomDO;
 import org.darod.elearning.gateway.utils.RandomUtils;
-import org.darod.elearning.gateway.utils.RedisUtils;
+import org.darod.elearning.common.utils.RedisUtils;
 import org.darod.elearning.gateway.utils.URLUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,6 +27,7 @@ import java.util.List;
  * @date 2019/7/22 0022 15:24
  */
 @Service
+@org.apache.dubbo.config.annotation.Service
 public class LiveServiceImpl implements LiveService {
     @Autowired
     private RedisUtils redisUtils;
@@ -147,6 +148,15 @@ public class LiveServiceImpl implements LiveService {
         if (liveRecordDO == null) return;
         liveRecordDO.setWatchNum(liveRecordDO.getWatchNum() - 1);
         liveRecordDOMapper.updateByPrimaryKeySelective(liveRecordDO);
+    }
+
+    @Override
+    public boolean isLiveExist(String channelId) {
+        LiveRecordDO curLiveRecordByChannel = liveRecordDOMapper.getCurLiveRecordByChannel(channelId, false);
+        if (curLiveRecordByChannel == null) {
+            return false;
+        }
+        return true;
     }
 
 

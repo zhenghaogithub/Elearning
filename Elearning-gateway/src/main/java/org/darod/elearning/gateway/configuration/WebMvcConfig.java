@@ -9,8 +9,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * @version 1.0
  * @date 2019/6/30 0030 15:46
  */
-@Configuration
-public class WebMvcConfig implements WebMvcConfigurer {
-
-
-}
+//@Configuration
+//public class WebMvcConfig implements WebMvcConfigurer {
+//
+//
+//}

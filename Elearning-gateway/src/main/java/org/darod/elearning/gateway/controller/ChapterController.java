@@ -7,7 +7,7 @@ import org.darod.elearning.common.response.ResponseUtils;
 import org.darod.elearning.common.service.user.ChapterService;
 import org.darod.elearning.common.service.user.UserService;
 import org.darod.elearning.gateway.serviceimpl.ChapterServiceImpl;
-import org.darod.elearning.gateway.utils.ShiroUtils;
+import org.darod.elearning.common.utils.ShiroUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;

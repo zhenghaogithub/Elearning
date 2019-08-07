@@ -2,16 +2,11 @@ package org.darod.elearning.gateway.controller;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.subject.Subject;
-import org.darod.elearning.common.dto.CommonCountModel;
-import org.darod.elearning.common.dto.CourseModel;
-import org.darod.elearning.common.dto.UserLearnModel;
 import org.darod.elearning.common.dto.UserModel;
 import org.darod.elearning.common.exception.BusinessException;
 import org.darod.elearning.common.exception.EmException;
@@ -19,24 +14,14 @@ import org.darod.elearning.common.response.CommonResponse;
 import org.darod.elearning.common.response.ResponseUtils;
 import org.darod.elearning.common.service.user.UserLearnService;
 import org.darod.elearning.common.service.user.UserService;
-import org.darod.elearning.gateway.dataobject.UserDO;
 import org.darod.elearning.gateway.serviceimpl.CourseServiceImpl;
-import org.darod.elearning.gateway.utils.RedisUtils;
-import org.darod.elearning.gateway.utils.ShiroUtils;
+import org.darod.elearning.common.utils.RedisUtils;
+import org.darod.elearning.common.utils.ShiroUtils;
 import org.darod.elearning.gateway.utils.ValidateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-import java.security.NoSuchAlgorithmException;
-
-import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
 
 /**
  * @author Darod

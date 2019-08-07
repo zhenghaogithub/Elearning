@@ -28,5 +28,7 @@ public interface LiveService {
 
     void decrWatchNum(String channelId);
 
+    boolean isLiveExist(String channelId);
+
 //    LiveRecordModel getCurLiveRecordModelFromCache(String channelId, String liveSecret);
 }

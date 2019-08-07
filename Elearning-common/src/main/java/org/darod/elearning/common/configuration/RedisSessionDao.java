@@ -1,15 +1,12 @@
-package org.darod.elearning.gateway.configuration;
+package org.darod.elearning.common.configuration;
 
 import org.apache.shiro.session.Session;
 import org.apache.shiro.session.UnknownSessionException;
 import org.apache.shiro.session.mgt.eis.AbstractSessionDAO;
-import org.darod.elearning.gateway.utils.RedisUtils;
-import org.darod.elearning.gateway.utils.RedisUtilsForShiro;
+import org.darod.elearning.common.utils.RedisUtilsForShiro;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.util.SerializationUtils;
 
-import javax.annotation.Resource;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashSet;
